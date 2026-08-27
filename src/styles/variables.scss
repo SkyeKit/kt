@@ -1,0 +1,127 @@
+/**
+ * 全局设计变量（暗黑哥特风格，PRD §5）
+ * 颜色：暗底 + 猩红主色 + 骨白前景 + 金色点缀
+ */
+:root {
+  /* 背景层级 */
+  --bg-deep: #14100e;
+  --bg-base: #1c1714;
+  --bg-raised: #26201c;
+  --bg-card: #2e2722;
+
+  /* 前景与文字 */
+  --text-main: #e8dcc8;
+  --text-dim: #a89a84;
+  --text-faint: #6f6355;
+
+  /* 主色（猩红/锈红） */
+  --accent: #b5482d;
+  --accent-strong: #d9663f;
+  --accent-dim: #7a3220;
+
+  /* 语义色 */
+  --gold: #c9a227;
+  --green: #6f9d5a;
+  --purple: #8a5fa8;
+  --blue: #5a86ad;
+
+  /* 边框与描边 */
+  --border: #3a312a;
+  --border-strong: #4d4036;
+
+  /* 卡牌边框按类型（agent.md §9.3：边框色区分类型） */
+  --card-border-attack: #b5482d;
+  --card-border-skill: #a89a84;
+  --card-border-power: #c9a227;
+  --card-border-curse: #8a5fa8;
+  --card-border-event: #6f9d5a;
+
+  /* 尺寸 */
+  --card-w: 132px;
+  --card-h: 190px;
+  --radius: 8px;
+  --radius-lg: 12px;
+
+  /* 字体 */
+  --font-main: 'Georgia', 'Songti SC', 'SimSun', serif;
+}
+
+/* 基础重置 */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  background: radial-gradient(1200px 600px at 50% -10%, #241d18 0%, var(--bg-deep) 55%);
+  color: var(--text-main);
+  font-family: var(--font-main);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 通用按钮 */
+.btn {
+  padding: 8px 18px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--bg-raised), var(--bg-base));
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    color 0.15s,
+    transform 0.05s;
+}
+.btn:hover:not(:disabled) {
+  border-color: var(--accent-strong);
+  color: var(--accent-strong);
+}
+.btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.btn-primary {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(180deg, var(--accent-dim), var(--bg-raised));
+  color: #f5d9c8;
+}
+
+/* 面板 */
+.panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(38, 32, 28, 0.9), rgba(20, 16, 14, 0.95));
+  padding: 16px;
+}
+
+/* 标题 */
+.h-title {
+  font-size: 22px;
+  letter-spacing: 2px;
+  color: var(--accent-strong);
+  text-shadow: 0 0 12px rgba(217, 102, 63, 0.35);
+}
+
+/* 滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 4px;
+}

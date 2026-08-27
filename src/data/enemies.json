@@ -1,0 +1,1060 @@
+{
+  "enemies": [
+    {
+      "id": "fuzzy_wurm_crawler",
+      "name": "毛绒伏地虫",
+      "hpMin": 55,
+      "hpMax": 57,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["酸液黏球"]
+      },
+      "moves": {
+        "酸液黏球": {
+          "name": "酸液黏球",
+          "intent": "attack",
+          "damage": 4,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 4 点伤害"
+        },
+        "吸入": {
+          "name": "吸入",
+          "intent": "buff",
+          "hits": 1,
+          "effects": [],
+          "desc": "获得 7 点力量"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "nibbit",
+      "name": "小啃兽",
+      "hpMin": 42,
+      "hpMax": 46,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["顶撞", "犹豫斩击", "哈气"]
+      },
+      "moves": {
+        "顶撞": {
+          "name": "顶撞",
+          "intent": "attack",
+          "damage": 12,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 12 点伤害"
+        },
+        "犹豫斩击": {
+          "name": "犹豫斩击",
+          "intent": "attack",
+          "damage": 6,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 6 点伤害，获得 5 点格挡"
+        },
+        "哈气": {
+          "name": "哈气",
+          "intent": "buff",
+          "hits": 1,
+          "effects": [],
+          "desc": "获得 2 点力量"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "shrinker_beetle",
+      "name": "缩小甲虫",
+      "hpMin": 38,
+      "hpMax": 40,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["缩小", "大啃", "践踏"]
+      },
+      "moves": {
+        "缩小": {
+          "name": "缩小",
+          "intent": "status",
+          "hits": 1,
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "enemy",
+              "status": "shrink",
+              "amount": 1
+            }
+          ],
+          "desc": "给予玩家\"缩小\"状态"
+        },
+        "大啃": {
+          "name": "大啃",
+          "intent": "attack",
+          "damage": 7,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 7 点伤害"
+        },
+        "践踏": {
+          "name": "践踏",
+          "intent": "attack",
+          "damage": 13,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 13 点伤害"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "leaf_slime_s",
+      "name": "树叶史莱姆（小）",
+      "hpMin": 11,
+      "hpMax": 15,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "weighted",
+        "sequence": ["冲撞", "黏液"]
+      },
+      "moves": {
+        "冲撞": {
+          "name": "冲撞",
+          "intent": "attack",
+          "damage": 3,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 3 点伤害"
+        },
+        "黏液": {
+          "name": "黏液",
+          "intent": "status",
+          "hits": 1,
+          "effects": [],
+          "desc": "向弃牌堆洗入 1 张【黏液】"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "leaf_slime_m",
+      "name": "树叶史莱姆（中）",
+      "hpMin": 32,
+      "hpMax": 35,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["黏糊射击", "团块射击"]
+      },
+      "moves": {
+        "黏糊射击": {
+          "name": "黏糊射击",
+          "intent": "status",
+          "hits": 1,
+          "effects": [],
+          "desc": "向弃牌堆洗入 2 张【黏液】"
+        },
+        "团块射击": {
+          "name": "团块射击",
+          "intent": "attack",
+          "damage": 8,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 8 点伤害"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "twig_slime_s",
+      "name": "树枝史莱姆（小）",
+      "hpMin": 7,
+      "hpMax": 11,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["冲撞"]
+      },
+      "moves": {
+        "冲撞": {
+          "name": "冲撞",
+          "intent": "attack",
+          "damage": 4,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 4 点伤害"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "twig_slime_m",
+      "name": "树枝史莱姆（中）",
+      "hpMin": 26,
+      "hpMax": 28,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "weighted",
+        "sequence": ["黏糊射击", "戳刺扑击"]
+      },
+      "moves": {
+        "黏糊射击": {
+          "name": "黏糊射击",
+          "intent": "status",
+          "hits": 1,
+          "effects": [],
+          "desc": "向弃牌堆洗入 1 张【黏液】"
+        },
+        "戳刺扑击": {
+          "name": "戳刺扑击",
+          "intent": "attack",
+          "damage": 11,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 11 点伤害"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "cubex_construct",
+      "name": "立柱构造体",
+      "hpMin": 65,
+      "hpMax": 65,
+      "category": "normal",
+      "abilities": ["战斗开始时自带 13 点格挡、1 层**人工制品**（可抵消1次负面效果）"],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["蓄能", "重复轰击", "排出"]
+      },
+      "moves": {
+        "蓄能": {
+          "name": "蓄能",
+          "intent": "buff",
+          "hits": 1,
+          "effects": [],
+          "desc": "获得 2 点力量"
+        },
+        "重复轰击": {
+          "name": "重复轰击",
+          "intent": "attack",
+          "damage": 7,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 7 点伤害，获得 2 点力量"
+        },
+        "排出": {
+          "name": "排出",
+          "intent": "attack",
+          "damage": 5,
+          "hits": 2,
+          "effects": [],
+          "desc": "造成 5 点伤害×2 段（共10点）"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "flyconid",
+      "name": "飞蝇菌子",
+      "hpMin": 47,
+      "hpMax": 49,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "weighted",
+        "sequence": ["脆弱孢子", "猛砸", "易伤孢子"]
+      },
+      "moves": {
+        "脆弱孢子": {
+          "name": "脆弱孢子",
+          "intent": "attack",
+          "damage": 8,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 8 点伤害，给予 2 层脆弱"
+        },
+        "猛砸": {
+          "name": "猛砸",
+          "intent": "attack",
+          "damage": 11,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 11 点伤害"
+        },
+        "易伤孢子": {
+          "name": "易伤孢子",
+          "intent": "status",
+          "hits": 1,
+          "effects": [],
+          "desc": "给予 2 层易伤"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "snapping_jaxfruit",
+      "name": "闪光贾克斯果",
+      "hpMin": 31,
+      "hpMax": 33,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["能量球"]
+      },
+      "moves": {
+        "能量球": {
+          "name": "能量球",
+          "intent": "attack",
+          "damage": 3,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 3 点伤害，获得 2 点力量"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "fogmog",
+      "name": "雾菇",
+      "hpMin": 6,
+      "hpMax": 6,
+      "category": "minion",
+      "abilities": ["始终持有**幻象**状态（死亡后的下一回合以满血复活）、**爪牙**"],
+      "ai": {
+        "mode": "weighted",
+        "sequence": ["虚幻孢子", "重击", "头槌"]
+      },
+      "moves": {
+        "虚幻孢子": {
+          "name": "虚幻孢子",
+          "intent": "status",
+          "hits": 1,
+          "effects": [],
+          "desc": "召唤 1 只利齿之眼"
+        },
+        "重击": {
+          "name": "重击",
+          "intent": "attack",
+          "damage": 8,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 8 点伤害，获得 1 点力量"
+        },
+        "头槌": {
+          "name": "头槌",
+          "intent": "attack",
+          "damage": 14,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 14 点伤害"
+        },
+        "牵制": {
+          "name": "牵制",
+          "intent": "status",
+          "hits": 1,
+          "effects": [],
+          "desc": "向弃牌堆洗入 3 张【晕眩】"
+        }
+      },
+      "spawns": [
+        {
+          "id": "eye_with_teeth",
+          "count": 1,
+          "condition": "onDeath"
+        }
+      ]
+    },
+    {
+      "id": "inklet",
+      "name": "墨宝",
+      "hpMin": 11,
+      "hpMax": 17,
+      "category": "normal",
+      "abilities": [
+        "**滑溜 1 层**：下一次要失去生命值时，只会失去 1 点生命（完全格挡一次命中时不再消耗层数）"
+      ],
+      "ai": {
+        "mode": "weighted",
+        "sequence": ["刺击", "旋风"]
+      },
+      "moves": {
+        "刺击": {
+          "name": "刺击",
+          "intent": "attack",
+          "damage": 3,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 3 点伤害"
+        },
+        "旋风": {
+          "name": "旋风",
+          "intent": "attack",
+          "damage": 2,
+          "hits": 3,
+          "effects": [],
+          "desc": "造成 2 点伤害×3 段（共6点）"
+        },
+        "锐利凝视": {
+          "name": "锐利凝视",
+          "intent": "attack",
+          "damage": 10,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 10 点伤害"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "mawler",
+      "name": "蛮兽",
+      "hpMin": 72,
+      "hpMax": 72,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "weighted",
+        "sequence": ["爪击", "怒吼", "狂乱撕扯"]
+      },
+      "moves": {
+        "爪击": {
+          "name": "爪击",
+          "intent": "attack",
+          "damage": 4,
+          "hits": 2,
+          "effects": [],
+          "desc": "造成 4 点伤害×2 段（共8点）"
+        },
+        "怒吼": {
+          "name": "怒吼",
+          "intent": "status",
+          "hits": 1,
+          "effects": [],
+          "desc": "给予 3 层易伤"
+        },
+        "狂乱撕扯": {
+          "name": "狂乱撕扯",
+          "intent": "attack",
+          "damage": 14,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 14 点伤害"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "slithering_strangler",
+      "name": "蛇行扼杀者",
+      "hpMin": 53,
+      "hpMax": 55,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "weighted",
+        "sequence": ["缠身", "重击", "甩动"]
+      },
+      "moves": {
+        "缠身": {
+          "name": "缠身",
+          "intent": "status",
+          "hits": 1,
+          "effects": [],
+          "desc": "给予 3 层\"紧缠\""
+        },
+        "重击": {
+          "name": "重击",
+          "intent": "attack",
+          "damage": 7,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 7 点伤害，获得 5 点格挡"
+        },
+        "甩动": {
+          "name": "甩动",
+          "intent": "attack",
+          "damage": 12,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 12 点伤害"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "vine_shambler",
+      "name": "藤蔓蹒跚者",
+      "hpMin": 61,
+      "hpMax": 61,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["挥击", "紧绕藤蔓", "大啃"]
+      },
+      "moves": {
+        "挥击": {
+          "name": "挥击",
+          "intent": "attack",
+          "damage": 6,
+          "hits": 2,
+          "effects": [],
+          "desc": "造成 6 点伤害×2 段（共12点）"
+        },
+        "紧绕藤蔓": {
+          "name": "紧绕藤蔓",
+          "intent": "attack",
+          "damage": 8,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 8 点伤害，给予 1 层\"缠结\""
+        },
+        "大啃": {
+          "name": "大啃",
+          "intent": "attack",
+          "damage": 16,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 16 点伤害"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "raider_brute",
+      "name": "劫掠者暴徒",
+      "hpMin": 30,
+      "hpMax": 33,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["殴打", "怒吼"]
+      },
+      "moves": {
+        "殴打": {
+          "name": "殴打",
+          "intent": "attack",
+          "damage": 7,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 7 点伤害"
+        },
+        "怒吼": {
+          "name": "怒吼",
+          "intent": "buff",
+          "hits": 1,
+          "effects": [],
+          "desc": "获得 3 点力量"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "raider_assassin",
+      "name": "劫掠者刺客",
+      "hpMin": 18,
+      "hpMax": 23,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["致命射击"]
+      },
+      "moves": {
+        "致命射击": {
+          "name": "致命射击",
+          "intent": "attack",
+          "damage": 10,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 10 点伤害"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "raider_axe",
+      "name": "劫掠者斧手",
+      "hpMin": 20,
+      "hpMax": 22,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["挥击", "大力挥舞"]
+      },
+      "moves": {
+        "挥击": {
+          "name": "挥击",
+          "intent": "attack",
+          "damage": 5,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 5 点伤害，获得 5 点格挡"
+        },
+        "大力挥舞": {
+          "name": "大力挥舞",
+          "intent": "attack",
+          "damage": 12,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 12 点伤害"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "raider_crossbow",
+      "name": "劫掠者弩手",
+      "hpMin": 18,
+      "hpMax": 21,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["装填", "射击！"]
+      },
+      "moves": {
+        "装填": {
+          "name": "装填",
+          "intent": "defend",
+          "hits": 1,
+          "effects": [],
+          "desc": "获得 3 点格挡"
+        },
+        "射击！": {
+          "name": "射击！",
+          "intent": "attack",
+          "damage": 14,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 14 点伤害"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "raider_tracker",
+      "name": "劫掠者追踪手",
+      "hpMin": 21,
+      "hpMax": 25,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["追踪", "放狗"]
+      },
+      "moves": {
+        "追踪": {
+          "name": "追踪",
+          "intent": "status",
+          "hits": 1,
+          "effects": [],
+          "desc": "给予 2 层脆弱（仅第1回合使用）"
+        },
+        "放狗": {
+          "name": "放狗",
+          "intent": "attack",
+          "damage": 1,
+          "hits": 8,
+          "effects": [],
+          "desc": "造成 1 点伤害×8 段（共8点）"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "byrdonis",
+      "name": "多尼斯异鸟",
+      "hpMin": 81,
+      "hpMax": 84,
+      "category": "elite",
+      "abilities": ["**领地意识 1 层**：该怪物在其回合结束时获得 1 点力量"],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["飞扑", "啄击"]
+      },
+      "moves": {
+        "飞扑": {
+          "name": "飞扑",
+          "intent": "attack",
+          "damage": 17,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 17 点伤害"
+        },
+        "啄击": {
+          "name": "啄击",
+          "intent": "attack",
+          "damage": 3,
+          "hits": 3,
+          "effects": [],
+          "desc": "造成 3 点伤害×3 段（共9点）"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "bygone_effigy",
+      "name": "旧日雕像",
+      "hpMin": 127,
+      "hpMax": 127,
+      "category": "elite",
+      "abilities": ["**缓慢 1 层**：本回合玩家每打出一张牌，该怪物受到的攻击伤害增加 10%"],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["沉睡", "苏醒", "斩击"]
+      },
+      "moves": {
+        "沉睡": {
+          "name": "沉睡",
+          "intent": "special",
+          "hits": 1,
+          "effects": [],
+          "desc": "跳过回合（无行动）"
+        },
+        "苏醒": {
+          "name": "苏醒",
+          "intent": "buff",
+          "hits": 1,
+          "effects": [],
+          "desc": "获得 10 点力量"
+        },
+        "斩击": {
+          "name": "斩击",
+          "intent": "attack",
+          "damage": 13,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 13 点伤害（+10力量=实际23）"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "phrog_parasite",
+      "name": "异蛙寄生虫",
+      "hpMin": 61,
+      "hpMax": 64,
+      "category": "elite",
+      "abilities": ["**寄生物**：死亡后召唤若干\"扭动虫\"（召唤出的扭动虫出场时被击晕1回合）"],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["感染", "甩动"]
+      },
+      "moves": {
+        "感染": {
+          "name": "感染",
+          "intent": "status",
+          "hits": 1,
+          "effects": [],
+          "desc": "向弃牌堆洗入 3 张【感染】"
+        },
+        "甩动": {
+          "name": "甩动",
+          "intent": "attack",
+          "damage": 4,
+          "hits": 4,
+          "effects": [],
+          "desc": "造成 4 点伤害×4 段（共16点）"
+        },
+        "污秽啃咬": {
+          "name": "污秽啃咬",
+          "intent": "attack",
+          "damage": 6,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 6 点伤害"
+        },
+        "扭动": {
+          "name": "扭动",
+          "intent": "buff",
+          "hits": 1,
+          "effects": [],
+          "desc": "向弃牌堆洗入 1 张【感染】，获得 2 点力量"
+        }
+      },
+      "spawns": [
+        {
+          "id": "wriggler",
+          "count": 1,
+          "condition": "onDeath"
+        }
+      ]
+    },
+    {
+      "id": "vantom",
+      "name": "墨影幻灵",
+      "hpMin": 173,
+      "hpMax": 173,
+      "category": "boss",
+      "abilities": [
+        "**滑溜 8 层**：下一次要失去生命值时，只会失去 1 点生命；完全格挡一次命中时不消耗层数"
+      ],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["墨迹", "墨水长枪", "肢解", "准备"]
+      },
+      "moves": {
+        "墨迹": {
+          "name": "墨迹",
+          "intent": "attack",
+          "damage": 7,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 7 点伤害"
+        },
+        "墨水长枪": {
+          "name": "墨水长枪",
+          "intent": "attack",
+          "damage": 6,
+          "hits": 2,
+          "effects": [],
+          "desc": "造成 6 点伤害×2 段（共12点）"
+        },
+        "肢解": {
+          "name": "肢解",
+          "intent": "attack",
+          "damage": 26,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 26 点伤害，向弃牌堆加入 3 张【伤口】"
+        },
+        "准备": {
+          "name": "准备",
+          "intent": "buff",
+          "hits": 1,
+          "effects": [],
+          "desc": "获得 2 点力量"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "ceremonial_beast",
+      "name": "仪式兽",
+      "hpMin": 252,
+      "hpMax": 252,
+      "category": "boss",
+      "abilities": ["无（通过\"横冲直撞\"机制运作，见下）"],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["跺地", "横冲直撞", "野兽咆哮", "踩踏", "碾碎"]
+      },
+      "moves": {
+        "跺地": {
+          "name": "跺地",
+          "intent": "special",
+          "hits": 1,
+          "effects": [],
+          "desc": "获得 150 层横冲直撞"
+        },
+        "横冲直撞": {
+          "name": "横冲直撞",
+          "intent": "attack",
+          "damage": 18,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 18 点伤害，自身获得 2 点力量"
+        },
+        "野兽咆哮": {
+          "name": "野兽咆哮",
+          "intent": "status",
+          "hits": 1,
+          "effects": [],
+          "desc": "给予玩家**昏眩**（本回合只能打出 1 张牌）"
+        },
+        "踩踏": {
+          "name": "踩踏",
+          "intent": "attack",
+          "damage": 15,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 15 点伤害"
+        },
+        "碾碎": {
+          "name": "碾碎",
+          "intent": "attack",
+          "damage": 17,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 17 点伤害，自身获得 3 点力量"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "kin_priest",
+      "name": "同族神官",
+      "hpMin": 190,
+      "hpMax": 190,
+      "category": "boss",
+      "abilities": [],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["脆弱法球", "虚弱法球", "灵魂光束", "黑暗仪式"]
+      },
+      "moves": {
+        "脆弱法球": {
+          "name": "脆弱法球",
+          "intent": "attack",
+          "damage": 8,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 8 点伤害，给予 1 层脆弱"
+        },
+        "虚弱法球": {
+          "name": "虚弱法球",
+          "intent": "attack",
+          "damage": 8,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 8 点伤害，给予 1 层虚弱"
+        },
+        "灵魂光束": {
+          "name": "灵魂光束",
+          "intent": "attack",
+          "damage": 3,
+          "hits": 3,
+          "effects": [],
+          "desc": "造成 3 点伤害×3 段（共9点）"
+        },
+        "黑暗仪式": {
+          "name": "黑暗仪式",
+          "intent": "buff",
+          "hits": 1,
+          "effects": [],
+          "desc": "获得 2 点力量"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "kin_follower",
+      "name": "同族信徒",
+      "hpMin": 58,
+      "hpMax": 59,
+      "category": "minion",
+      "abilities": [],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["快斩", "回旋镖", "力量之舞"]
+      },
+      "moves": {
+        "快斩": {
+          "name": "快斩",
+          "intent": "attack",
+          "damage": 5,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 5 点伤害"
+        },
+        "回旋镖": {
+          "name": "回旋镖",
+          "intent": "attack",
+          "damage": 2,
+          "hits": 2,
+          "effects": [],
+          "desc": "造成 2 点伤害×2 段（共4点）"
+        },
+        "力量之舞": {
+          "name": "力量之舞",
+          "intent": "buff",
+          "hits": 1,
+          "effects": [],
+          "desc": "获得 2 点力量"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "eye_with_teeth",
+      "name": "利齿之眼",
+      "hpMin": 6,
+      "hpMax": 6,
+      "category": "minion",
+      "abilities": ["始终持有**幻象**状态（死亡后的下一回合以满血复活）、**爪牙**"],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["牵制"]
+      },
+      "moves": {
+        "牵制": {
+          "name": "牵制",
+          "intent": "status",
+          "hits": 1,
+          "effects": [],
+          "desc": "向弃牌堆洗入 3 张【晕眩】"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "wriggler",
+      "name": "扭动虫",
+      "hpMin": 50,
+      "hpMax": 50,
+      "category": "minion",
+      "abilities": [],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["污秽啃咬", "扭动"]
+      },
+      "moves": {
+        "污秽啃咬": {
+          "name": "污秽啃咬",
+          "intent": "attack",
+          "damage": 6,
+          "hits": 1,
+          "effects": [],
+          "desc": "造成 6 点伤害"
+        },
+        "扭动": {
+          "name": "扭动",
+          "intent": "buff",
+          "hits": 1,
+          "effects": [],
+          "desc": "向弃牌堆洗入 1 张【感染】，获得 2 点力量"
+        }
+      },
+      "spawns": []
+    }
+  ],
+  "encounters": {
+    "weak": [
+      ["fuzzy_wurm_crawler"],
+      ["nibbit"],
+      ["shrinker_beetle"],
+      ["leaf_slime_s", "leaf_slime_m", "twig_slime_m", "twig_slime_s"]
+    ],
+    "strong": [
+      ["cubex_construct"],
+      ["leaf_slime_m", "twig_slime_m"],
+      ["snapping_jaxfruit"],
+      ["fogmog"],
+      ["inklet", "inklet", "inklet"],
+      ["mawler"],
+      ["nibbit", "nibbit"],
+      ["shrinker_beetle", "fuzzy_wurm_crawler"],
+      ["raider_brute", "raider_assassin", "raider_axe"],
+      ["twig_slime_m", "leaf_slime_m", "leaf_slime_s", "twig_slime_s"],
+      ["snapping_jaxfruit", "leaf_slime_m", "twig_slime_m", "leaf_slime_s", "twig_slime_s"],
+      ["vine_shambler"]
+    ],
+    "elites": ["byrdonis", "bygone_effigy", "phrog_parasite"],
+    "bosses": ["vantom", "ceremonial_beast", "the_kin"]
+  }
+}

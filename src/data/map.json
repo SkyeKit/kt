@@ -1,0 +1,23 @@
+{
+  "totalFloors": 17,
+  "branchWidth": 3,
+  "fixedFloors": {
+    "1": "neow",
+    "2": "monster",
+    "10": "chest",
+    "16": "campfire",
+    "17": "boss"
+  },
+  "floorWeights": {
+    "monster": 55,
+    "elite": 12,
+    "unknown": 8,
+    "shop": 5,
+    "campfire": 12,
+    "chest": 8
+  },
+  "unknownEventChance": 0.85,
+  "eliteLoopPool": ["byrdonis", "bygone_effigy", "phrog_parasite"],
+  "bossPool": ["vantom", "ceremonial_beast", "the_kin"],
+  "maxEdges": 2
+}

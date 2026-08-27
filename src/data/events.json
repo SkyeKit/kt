@@ -1,0 +1,125 @@
+{
+  "events": [
+    {
+      "id": "self_help_book",
+      "name": "自助指南",
+      "stage": "any",
+      "options": [],
+      "excluded": false
+    },
+    {
+      "id": "slippery_bridge",
+      "name": "滑脚木桥",
+      "stage": "any",
+      "trigger": "当前总楼层数大于6，且所有玩家牌组中都有至少1张可移除牌",
+      "options": [],
+      "excluded": false
+    },
+    {
+      "id": "the_future_of_potions",
+      "name": "药水的未来？",
+      "stage": "any",
+      "trigger": "所有玩家至少拥有 2 瓶药水",
+      "options": [],
+      "excluded": true
+    },
+    {
+      "id": "this_or_that",
+      "name": "这个还是那个？",
+      "stage": "any",
+      "options": [],
+      "excluded": false
+    },
+    {
+      "id": "aroma_of_chaos",
+      "name": "混沌芳香",
+      "stage": "overgrowth",
+      "options": [],
+      "excluded": false
+    },
+    {
+      "id": "byrdonis_nest",
+      "name": "多尼斯异鸟巢",
+      "stage": "overgrowth",
+      "trigger": "所有玩家都不能已有事件宠物：没有添加宠物的遗物，且牌组中没有多尼斯异鸟蛋",
+      "options": [],
+      "excluded": false
+    },
+    {
+      "id": "dense_vegetation",
+      "name": "茂密的植被",
+      "stage": "overgrowth",
+      "trigger": "多人模式下所有玩家血量高于本事件失去生命值（8）",
+      "options": [],
+      "excluded": false
+    },
+    {
+      "id": "jungle_maze_adventure",
+      "name": "丛林迷宫奇遇",
+      "stage": "overgrowth",
+      "options": [],
+      "excluded": false
+    },
+    {
+      "id": "luminous_choir",
+      "name": "冷光合唱团",
+      "stage": "overgrowth",
+      "trigger": "所有玩家金币数不小于149",
+      "options": [],
+      "excluded": false
+    },
+    {
+      "id": "morphic_grove",
+      "name": "变形灵林谷",
+      "stage": "overgrowth",
+      "trigger": "所有玩家至少拥有100金币和2张可变化的卡牌",
+      "options": [],
+      "excluded": false
+    },
+    {
+      "id": "sapphire_seed",
+      "name": "蓝宝石种子",
+      "stage": "overgrowth",
+      "options": [],
+      "excluded": false
+    },
+    {
+      "id": "tablet_of_truth",
+      "name": "真理石板",
+      "stage": "overgrowth",
+      "options": [],
+      "excluded": false
+    },
+    {
+      "id": "unrest_site",
+      "name": "无休之处",
+      "stage": "overgrowth",
+      "trigger": "所有玩家当前生命值都不高于自己最大生命值的 70%",
+      "options": [],
+      "excluded": false
+    },
+    {
+      "id": "wellspring",
+      "name": "泉水",
+      "stage": "overgrowth",
+      "options": [],
+      "excluded": false
+    },
+    {
+      "id": "whispering_hollow",
+      "name": "低语空谷",
+      "stage": "overgrowth",
+      "trigger": "所有玩家至少拥有 44 金币",
+      "options": [],
+      "excluded": false
+    },
+    {
+      "id": "wood_carvings",
+      "name": "木雕",
+      "stage": "overgrowth",
+      "trigger": "所有玩家牌库里都要有至少 1 张“可移除的基础牌”",
+      "options": [],
+      "excluded": false
+    }
+  ]
+}
