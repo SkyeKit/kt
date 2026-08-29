@@ -4,15 +4,17 @@
  * targetable：高亮可点（点击态进入"等待选目标"）
  * hovered：拖拽中鼠标悬停在敌怪上（活靶金色描边 + 缩放）
  * selected：已选中态（点击卡后点怪物打出的目标）
+ * fx：伤害/格挡/回复数字跳动（PRD §5.3）
  */
 import { computed } from 'vue'
-import type { CombatUnit } from '@/engine/combatEngine'
+import type { CombatFx, CombatUnit } from '@/engine/combatEngine'
 
 const props = defineProps<{
   unit: CombatUnit
   targetable?: boolean
   hovered?: boolean
   selected?: boolean
+  fx?: CombatFx[]
 }>()
 const emit = defineEmits<{ select: [unit: CombatUnit] }>()
 
@@ -47,12 +49,21 @@ const statusText = computed(() => {
   if (u.strength > 0) parts.push(`力量 ${u.strength}`)
   return parts.join(' · ')
 })
+
+// 敌人 fx（最近的几条）
+const fxList = computed(() => props.fx?.slice(-5) ?? [])
 </script>
 
 <template>
   <div class="enemy" :class="{ targetable, hovered, selected }" @click.stop="emit('select', unit)">
     <!-- 意图（头顶，PRD §5.2：意图图标） -->
     <div class="enemy-intent" :class="{ attack: isAttack }">{{ intentText }}</div>
+    <!-- 伤害数字跳动层 -->
+    <div class="fx-layer">
+      <span v-for="f in fxList" :key="f.id" class="fx-num" :class="'fx-' + f.kind">
+        {{ f.text }}
+      </span>
+    </div>
     <div class="enemy-name">{{ unit.name }}</div>
     <!-- 立绘占位（§5.4：assets/enemies/<id>/idle.png，MVP 用首字色块） -->
     <div class="enemy-art">{{ unit.name.slice(0, 1) }}</div>
@@ -75,6 +86,7 @@ const statusText = computed(() => {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  position: relative; // fx 数字跳动定位基准
   transition:
     border-color 0.12s,
     transform 0.08s,
@@ -126,6 +138,65 @@ const statusText = computed(() => {
 .enemy-status {
   font-size: 11px;
   color: var(--blue);
+}
+
+/* 伤害数字跳动层（PRD §5.3） */
+.fx-layer {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  pointer-events: none;
+  z-index: 6;
+}
+.fx-num {
+  position: absolute;
+  transform: translateX(-50%);
+  font-weight: bold;
+  font-size: 20px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  animation: fx-rise 0.9s ease-out forwards;
+  white-space: nowrap;
+}
+.fx-num:nth-child(1) {
+  animation-delay: 0.5s;
+  opacity: 0;
+}
+.fx-num:nth-child(2) {
+  animation-delay: 0.32s;
+  opacity: 0;
+}
+.fx-num:nth-child(3) {
+  animation-delay: 0.14s;
+  opacity: 0;
+}
+.fx-num:nth-child(n + 4) {
+  animation-delay: 0s;
+  opacity: 0;
+}
+.fx-damage {
+  color: var(--accent-strong);
+}
+.fx-block {
+  color: #6aa8d6;
+}
+.fx-heal {
+  color: #7ac97a;
+}
+.fx-buff {
+  color: var(--gold);
+}
+@keyframes fx-rise {
+  0% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(-46px);
+    opacity: 0;
+  }
 }
 
 /* 目标选择状态（点击卡后等待选目标）*/

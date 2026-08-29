@@ -17,14 +17,27 @@
           "intent": "attack",
           "damage": 4,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 4
+            }
+          ],
           "desc": "造成 4 点伤害"
         },
         "吸入": {
           "name": "吸入",
           "intent": "buff",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "self",
+              "status": "strength",
+              "amount": 7
+            }
+          ],
           "desc": "获得 7 点力量"
         }
       },
@@ -47,7 +60,13 @@
           "intent": "attack",
           "damage": 12,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 12
+            }
+          ],
           "desc": "造成 12 点伤害"
         },
         "犹豫斩击": {
@@ -55,14 +74,31 @@
           "intent": "attack",
           "damage": 6,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 6
+            },
+            {
+              "type": "block",
+              "amount": 5
+            }
+          ],
           "desc": "造成 6 点伤害，获得 5 点格挡"
         },
         "哈气": {
           "name": "哈气",
           "intent": "buff",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "self",
+              "status": "strength",
+              "amount": 2
+            }
+          ],
           "desc": "获得 2 点力量"
         }
       },
@@ -99,7 +135,13 @@
           "intent": "attack",
           "damage": 7,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 7
+            }
+          ],
           "desc": "造成 7 点伤害"
         },
         "践踏": {
@@ -107,7 +149,13 @@
           "intent": "attack",
           "damage": 13,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 13
+            }
+          ],
           "desc": "造成 13 点伤害"
         }
       },
@@ -130,14 +178,26 @@
           "intent": "attack",
           "damage": 3,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 3
+            }
+          ],
           "desc": "造成 3 点伤害"
         },
         "黏液": {
           "name": "黏液",
           "intent": "status",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "addCard",
+              "cardId": "slime",
+              "to": "discard"
+            }
+          ],
           "desc": "向弃牌堆洗入 1 张【黏液】"
         }
       },
@@ -159,7 +219,13 @@
           "name": "黏糊射击",
           "intent": "status",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "addCard",
+              "cardId": "slime",
+              "to": "discard"
+            }
+          ],
           "desc": "向弃牌堆洗入 2 张【黏液】"
         },
         "团块射击": {
@@ -167,7 +233,13 @@
           "intent": "attack",
           "damage": 8,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 8
+            }
+          ],
           "desc": "造成 8 点伤害"
         }
       },
@@ -190,7 +262,13 @@
           "intent": "attack",
           "damage": 4,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 4
+            }
+          ],
           "desc": "造成 4 点伤害"
         }
       },
@@ -212,7 +290,13 @@
           "name": "黏糊射击",
           "intent": "status",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "addCard",
+              "cardId": "slime",
+              "to": "discard"
+            }
+          ],
           "desc": "向弃牌堆洗入 1 张【黏液】"
         },
         "戳刺扑击": {
@@ -220,7 +304,13 @@
           "intent": "attack",
           "damage": 11,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 11
+            }
+          ],
           "desc": "造成 11 点伤害"
         }
       },
@@ -242,7 +332,14 @@
           "name": "蓄能",
           "intent": "buff",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "self",
+              "status": "strength",
+              "amount": 2
+            }
+          ],
           "desc": "获得 2 点力量"
         },
         "重复轰击": {
@@ -250,7 +347,19 @@
           "intent": "attack",
           "damage": 7,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 7
+            },
+            {
+              "type": "applyStatus",
+              "target": "self",
+              "status": "strength",
+              "amount": 2
+            }
+          ],
           "desc": "造成 7 点伤害，获得 2 点力量"
         },
         "排出": {
@@ -258,7 +367,14 @@
           "intent": "attack",
           "damage": 5,
           "hits": 2,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 5,
+              "hits": 2
+            }
+          ],
           "desc": "造成 5 点伤害×2 段（共10点）"
         }
       },
@@ -281,7 +397,19 @@
           "intent": "attack",
           "damage": 8,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 8
+            },
+            {
+              "type": "applyStatus",
+              "target": "enemy",
+              "status": "frail",
+              "amount": 2
+            }
+          ],
           "desc": "造成 8 点伤害，给予 2 层脆弱"
         },
         "猛砸": {
@@ -289,14 +417,27 @@
           "intent": "attack",
           "damage": 11,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 11
+            }
+          ],
           "desc": "造成 11 点伤害"
         },
         "易伤孢子": {
           "name": "易伤孢子",
           "intent": "status",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "enemy",
+              "status": "vulnerable",
+              "amount": 2
+            }
+          ],
           "desc": "给予 2 层易伤"
         }
       },
@@ -319,7 +460,19 @@
           "intent": "attack",
           "damage": 3,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 3
+            },
+            {
+              "type": "applyStatus",
+              "target": "self",
+              "status": "strength",
+              "amount": 2
+            }
+          ],
           "desc": "造成 3 点伤害，获得 2 点力量"
         }
       },
@@ -349,7 +502,19 @@
           "intent": "attack",
           "damage": 8,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 8
+            },
+            {
+              "type": "applyStatus",
+              "target": "self",
+              "status": "strength",
+              "amount": 1
+            }
+          ],
           "desc": "造成 8 点伤害，获得 1 点力量"
         },
         "头槌": {
@@ -357,14 +522,26 @@
           "intent": "attack",
           "damage": 14,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 14
+            }
+          ],
           "desc": "造成 14 点伤害"
         },
         "牵制": {
           "name": "牵制",
           "intent": "status",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "addCard",
+              "cardId": "dizzy",
+              "to": "discard"
+            }
+          ],
           "desc": "向弃牌堆洗入 3 张【晕眩】"
         }
       },
@@ -395,7 +572,13 @@
           "intent": "attack",
           "damage": 3,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 3
+            }
+          ],
           "desc": "造成 3 点伤害"
         },
         "旋风": {
@@ -403,7 +586,14 @@
           "intent": "attack",
           "damage": 2,
           "hits": 3,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 2,
+              "hits": 3
+            }
+          ],
           "desc": "造成 2 点伤害×3 段（共6点）"
         },
         "锐利凝视": {
@@ -411,7 +601,13 @@
           "intent": "attack",
           "damage": 10,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 10
+            }
+          ],
           "desc": "造成 10 点伤害"
         }
       },
@@ -434,14 +630,28 @@
           "intent": "attack",
           "damage": 4,
           "hits": 2,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 4,
+              "hits": 2
+            }
+          ],
           "desc": "造成 4 点伤害×2 段（共8点）"
         },
         "怒吼": {
           "name": "怒吼",
           "intent": "status",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "enemy",
+              "status": "vulnerable",
+              "amount": 3
+            }
+          ],
           "desc": "给予 3 层易伤"
         },
         "狂乱撕扯": {
@@ -449,7 +659,13 @@
           "intent": "attack",
           "damage": 14,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 14
+            }
+          ],
           "desc": "造成 14 点伤害"
         }
       },
@@ -479,7 +695,17 @@
           "intent": "attack",
           "damage": 7,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 7
+            },
+            {
+              "type": "block",
+              "amount": 5
+            }
+          ],
           "desc": "造成 7 点伤害，获得 5 点格挡"
         },
         "甩动": {
@@ -487,7 +713,13 @@
           "intent": "attack",
           "damage": 12,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 12
+            }
+          ],
           "desc": "造成 12 点伤害"
         }
       },
@@ -510,7 +742,14 @@
           "intent": "attack",
           "damage": 6,
           "hits": 2,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 6,
+              "hits": 2
+            }
+          ],
           "desc": "造成 6 点伤害×2 段（共12点）"
         },
         "紧绕藤蔓": {
@@ -518,7 +757,13 @@
           "intent": "attack",
           "damage": 8,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 8
+            }
+          ],
           "desc": "造成 8 点伤害，给予 1 层\"缠结\""
         },
         "大啃": {
@@ -526,7 +771,13 @@
           "intent": "attack",
           "damage": 16,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 16
+            }
+          ],
           "desc": "造成 16 点伤害"
         }
       },
@@ -549,14 +800,27 @@
           "intent": "attack",
           "damage": 7,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 7
+            }
+          ],
           "desc": "造成 7 点伤害"
         },
         "怒吼": {
           "name": "怒吼",
           "intent": "buff",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "self",
+              "status": "strength",
+              "amount": 3
+            }
+          ],
           "desc": "获得 3 点力量"
         }
       },
@@ -579,7 +843,13 @@
           "intent": "attack",
           "damage": 10,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 10
+            }
+          ],
           "desc": "造成 10 点伤害"
         }
       },
@@ -602,7 +872,17 @@
           "intent": "attack",
           "damage": 5,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 5
+            },
+            {
+              "type": "block",
+              "amount": 5
+            }
+          ],
           "desc": "造成 5 点伤害，获得 5 点格挡"
         },
         "大力挥舞": {
@@ -610,7 +890,13 @@
           "intent": "attack",
           "damage": 12,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 12
+            }
+          ],
           "desc": "造成 12 点伤害"
         }
       },
@@ -632,7 +918,12 @@
           "name": "装填",
           "intent": "defend",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "block",
+              "amount": 3
+            }
+          ],
           "desc": "获得 3 点格挡"
         },
         "射击！": {
@@ -640,7 +931,13 @@
           "intent": "attack",
           "damage": 14,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 14
+            }
+          ],
           "desc": "造成 14 点伤害"
         }
       },
@@ -662,7 +959,14 @@
           "name": "追踪",
           "intent": "status",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "enemy",
+              "status": "frail",
+              "amount": 2
+            }
+          ],
           "desc": "给予 2 层脆弱（仅第1回合使用）"
         },
         "放狗": {
@@ -670,7 +974,14 @@
           "intent": "attack",
           "damage": 1,
           "hits": 8,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 1,
+              "hits": 8
+            }
+          ],
           "desc": "造成 1 点伤害×8 段（共8点）"
         }
       },
@@ -693,7 +1004,13 @@
           "intent": "attack",
           "damage": 17,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 17
+            }
+          ],
           "desc": "造成 17 点伤害"
         },
         "啄击": {
@@ -701,7 +1018,14 @@
           "intent": "attack",
           "damage": 3,
           "hits": 3,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 3,
+              "hits": 3
+            }
+          ],
           "desc": "造成 3 点伤害×3 段（共9点）"
         }
       },
@@ -730,7 +1054,14 @@
           "name": "苏醒",
           "intent": "buff",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "self",
+              "status": "strength",
+              "amount": 10
+            }
+          ],
           "desc": "获得 10 点力量"
         },
         "斩击": {
@@ -738,7 +1069,13 @@
           "intent": "attack",
           "damage": 13,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 13
+            }
+          ],
           "desc": "造成 13 点伤害（+10力量=实际23）"
         }
       },
@@ -760,7 +1097,13 @@
           "name": "感染",
           "intent": "status",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "addCard",
+              "cardId": "infection",
+              "to": "discard"
+            }
+          ],
           "desc": "向弃牌堆洗入 3 张【感染】"
         },
         "甩动": {
@@ -768,7 +1111,14 @@
           "intent": "attack",
           "damage": 4,
           "hits": 4,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 4,
+              "hits": 4
+            }
+          ],
           "desc": "造成 4 点伤害×4 段（共16点）"
         },
         "污秽啃咬": {
@@ -776,14 +1126,32 @@
           "intent": "attack",
           "damage": 6,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 6
+            }
+          ],
           "desc": "造成 6 点伤害"
         },
         "扭动": {
           "name": "扭动",
           "intent": "buff",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "self",
+              "status": "strength",
+              "amount": 2
+            },
+            {
+              "type": "addCard",
+              "cardId": "infection",
+              "to": "discard"
+            }
+          ],
           "desc": "向弃牌堆洗入 1 张【感染】，获得 2 点力量"
         }
       },
@@ -814,7 +1182,13 @@
           "intent": "attack",
           "damage": 7,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 7
+            }
+          ],
           "desc": "造成 7 点伤害"
         },
         "墨水长枪": {
@@ -822,7 +1196,14 @@
           "intent": "attack",
           "damage": 6,
           "hits": 2,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 6,
+              "hits": 2
+            }
+          ],
           "desc": "造成 6 点伤害×2 段（共12点）"
         },
         "肢解": {
@@ -830,14 +1211,27 @@
           "intent": "attack",
           "damage": 26,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 26
+            }
+          ],
           "desc": "造成 26 点伤害，向弃牌堆加入 3 张【伤口】"
         },
         "准备": {
           "name": "准备",
           "intent": "buff",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "self",
+              "status": "strength",
+              "amount": 2
+            }
+          ],
           "desc": "获得 2 点力量"
         }
       },
@@ -867,7 +1261,19 @@
           "intent": "attack",
           "damage": 18,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 18
+            },
+            {
+              "type": "applyStatus",
+              "target": "self",
+              "status": "strength",
+              "amount": 2
+            }
+          ],
           "desc": "造成 18 点伤害，自身获得 2 点力量"
         },
         "野兽咆哮": {
@@ -882,7 +1288,13 @@
           "intent": "attack",
           "damage": 15,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 15
+            }
+          ],
           "desc": "造成 15 点伤害"
         },
         "碾碎": {
@@ -890,7 +1302,19 @@
           "intent": "attack",
           "damage": 17,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 17
+            },
+            {
+              "type": "applyStatus",
+              "target": "self",
+              "status": "strength",
+              "amount": 3
+            }
+          ],
           "desc": "造成 17 点伤害，自身获得 3 点力量"
         }
       },
@@ -913,7 +1337,19 @@
           "intent": "attack",
           "damage": 8,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 8
+            },
+            {
+              "type": "applyStatus",
+              "target": "enemy",
+              "status": "frail",
+              "amount": 1
+            }
+          ],
           "desc": "造成 8 点伤害，给予 1 层脆弱"
         },
         "虚弱法球": {
@@ -921,7 +1357,19 @@
           "intent": "attack",
           "damage": 8,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 8
+            },
+            {
+              "type": "applyStatus",
+              "target": "enemy",
+              "status": "weak",
+              "amount": 1
+            }
+          ],
           "desc": "造成 8 点伤害，给予 1 层虚弱"
         },
         "灵魂光束": {
@@ -929,14 +1377,28 @@
           "intent": "attack",
           "damage": 3,
           "hits": 3,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 3,
+              "hits": 3
+            }
+          ],
           "desc": "造成 3 点伤害×3 段（共9点）"
         },
         "黑暗仪式": {
           "name": "黑暗仪式",
           "intent": "buff",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "self",
+              "status": "strength",
+              "amount": 2
+            }
+          ],
           "desc": "获得 2 点力量"
         }
       },
@@ -959,7 +1421,13 @@
           "intent": "attack",
           "damage": 5,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 5
+            }
+          ],
           "desc": "造成 5 点伤害"
         },
         "回旋镖": {
@@ -967,14 +1435,28 @@
           "intent": "attack",
           "damage": 2,
           "hits": 2,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 2,
+              "hits": 2
+            }
+          ],
           "desc": "造成 2 点伤害×2 段（共4点）"
         },
         "力量之舞": {
           "name": "力量之舞",
           "intent": "buff",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "self",
+              "status": "strength",
+              "amount": 2
+            }
+          ],
           "desc": "获得 2 点力量"
         }
       },
@@ -996,7 +1478,13 @@
           "name": "牵制",
           "intent": "status",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "addCard",
+              "cardId": "dizzy",
+              "to": "discard"
+            }
+          ],
           "desc": "向弃牌堆洗入 3 张【晕眩】"
         }
       },
@@ -1019,14 +1507,32 @@
           "intent": "attack",
           "damage": 6,
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "damage",
+              "target": "enemy",
+              "amount": 6
+            }
+          ],
           "desc": "造成 6 点伤害"
         },
         "扭动": {
           "name": "扭动",
           "intent": "buff",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "self",
+              "status": "strength",
+              "amount": 2
+            },
+            {
+              "type": "addCard",
+              "cardId": "infection",
+              "to": "discard"
+            }
+          ],
           "desc": "向弃牌堆洗入 1 张【感染】，获得 2 点力量"
         }
       },

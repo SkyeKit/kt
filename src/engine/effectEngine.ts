@@ -3,8 +3,21 @@
  * 负责解析并执行 Effect[]（卡牌效果/怪物招式/事件结算），是战斗结算的核心执行器。
  * 新增效果类型时必须在此实现执行逻辑，并在 tests/effectEngine.spec.ts 补测试。
  */
-import type { CombatContext, CombatUnit } from './combatEngine'
+import type { CombatContext, CombatFx, CombatUnit } from './combatEngine'
 import type { Effect, EffectChain } from '@/types'
+
+// 追加一条战斗特效（伤害数字跳动，PRD §5.3）：由结算点调用
+export function pushFx(
+  ctx: CombatContext,
+  unitId: string,
+  text: string,
+  kind: CombatFx['kind'],
+): void {
+  ctx.fxId++
+  ctx.fx.push({ id: ctx.fxId, unitId, text, kind })
+  // 限制队列长度，防止无限增长（只保留最近 80 条）
+  if (ctx.fx.length > 80) ctx.fx.splice(0, ctx.fx.length - 80)
+}
 
 // 效果来源：玩家出牌（默认）或敌人招式。来源不同，"enemy/self"的目标语义相反
 export type EffectSource = 'player' | 'enemy'
@@ -80,6 +93,8 @@ function applyEffect(
       for (let i = 0; i < hits; i++) {
         const dmg = calculateFinalDamage(attacker, target, effect.amount, 1)
         const actual = damageUnit(target, dmg)
+        // 伤害数字跳动（PRD §5.3）：挂目标单位（玩家/敌人共用）
+        pushFx(ctx, target.id, `-${actual}`, 'damage')
         logs.push(`对 ${target.name} 造成 ${actual} 点伤害`)
       }
       break
@@ -112,6 +127,7 @@ function applyEffect(
       for (let i = 0; i < hits; i++) {
         const dmg = calculateFinalDamage(attacker, target, value, 1)
         const actual = damageUnit(target, dmg)
+        pushFx(ctx, target.id, `-${actual}`, 'damage')
         logs.push(`对 ${target.name} 造成 ${actual} 点伤害`)
       }
       break
@@ -127,6 +143,8 @@ function applyEffect(
         ),
       )
       unit.block += amount
+      // 格挡数字跳动
+      pushFx(ctx, unit.id, `+${amount} 格挡`, 'block')
       logs.push(`${unit.name} 获得 ${amount} 点格挡`)
       break
     }
@@ -157,6 +175,8 @@ function applyEffect(
       }
       for (const t of targets) {
         addStatus(t, effect.status, effect.amount, 999)
+        // buff 数字跳动（力量/敏捷等正面状态显示金色）
+        pushFx(ctx, t.id, `+${effect.amount} ${statusName(effect.status)}`, 'buff')
         logs.push(`${t.name} 获得 ${effect.amount} 层${statusName(effect.status)}`)
       }
       break
@@ -165,12 +185,15 @@ function applyEffect(
       // 治疗：不超过最大生命
       const before = ctx.player.hp
       ctx.player.hp = Math.min(ctx.player.maxHp, ctx.player.hp + effect.amount)
-      logs.push(`回复 ${ctx.player.hp - before} 点生命`)
+      const healed = ctx.player.hp - before
+      pushFx(ctx, ctx.player.id, `+${healed} 生命`, 'heal')
+      logs.push(`回复 ${healed} 点生命`)
       break
     }
     case 'loseHp': {
       // 失去生命（不经过格挡）
       ctx.player.hp = Math.max(0, ctx.player.hp - effect.amount)
+      pushFx(ctx, ctx.player.id, `-${effect.amount}`, 'damage')
       logs.push(`失去 ${effect.amount} 点生命`)
       break
     }

@@ -3465,6 +3465,11 @@
       "upgradeDesc": "",
       "effects": [
         {
+          "type": "damage",
+          "target": "enemy",
+          "amount": 5
+        },
+        {
           "type": "exhaust"
         }
       ],
@@ -3544,7 +3549,13 @@
       "rarity": "status",
       "desc": "不能被打出。在你的回合结束时，如果这张牌在你的手牌中，你受到3点伤害。",
       "upgradeDesc": "",
-      "effects": [],
+      "effects": [
+        {
+          "type": "damage",
+          "target": "enemy",
+          "amount": 3
+        }
+      ],
       "upgradeEffects": [],
       "keywords": ["unplayable"]
     },
@@ -3556,7 +3567,13 @@
       "rarity": "status",
       "desc": "不能被打出。在你的回合结束时，如果这张牌在你的手牌中，你受到3点伤害。",
       "upgradeDesc": "",
-      "effects": [],
+      "effects": [
+        {
+          "type": "damage",
+          "target": "enemy",
+          "amount": 3
+        }
+      ],
       "upgradeEffects": [],
       "keywords": ["unplayable"]
     },
@@ -3616,7 +3633,13 @@
       "rarity": "status",
       "desc": "不能被打出。在你的回合结束时，如果这张牌在你的手牌中，你受到2点伤害。",
       "upgradeDesc": "",
-      "effects": [],
+      "effects": [
+        {
+          "type": "damage",
+          "target": "enemy",
+          "amount": 2
+        }
+      ],
       "upgradeEffects": [],
       "keywords": ["unplayable"]
     }
@@ -3682,7 +3705,13 @@
       "rarity": "curse",
       "desc": "不能被打出。在你的回合结束时，如果这张牌在你的手牌中, 你受到2点伤害。",
       "upgradeDesc": "",
-      "effects": [],
+      "effects": [
+        {
+          "type": "damage",
+          "target": "enemy",
+          "amount": 2
+        }
+      ],
       "upgradeEffects": [],
       "keywords": ["unplayable"]
     },
@@ -4585,7 +4614,13 @@
       "rarity": "derived",
       "desc": "在你的回合结束时，受到6点伤害。",
       "upgradeDesc": "—（不可升级）",
-      "effects": [],
+      "effects": [
+        {
+          "type": "damage",
+          "target": "enemy",
+          "amount": 6
+        }
+      ],
       "upgradeEffects": [],
       "keywords": []
     },

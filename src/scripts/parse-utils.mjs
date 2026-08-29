@@ -50,10 +50,11 @@ export function firstNum(text) {
 // 效果文本 → 效果链（玩家视角；source 为 'enemy' 时目标语义翻转）
 export function parseEffects(text, source = 'player') {
   const effects = []
-  const t = text.replace(/[。；;]\s*/g, '；')
+  // 敌人文档效果含空格（"造成 4 点伤害"）与卡牌无空格（"造成4点伤害"）并存，统一去掉空白再匹配
+  const t = text.replace(/\s+/g, '').replace(/[。；;]/g, '；')
 
-  // 多段攻击：造成X点伤害×N次/段 或 造成X点伤害N次
-  const multiHit = t.match(/造成(\d+)点伤害[×x]?(\d+)[次段]/)
+  // 多段攻击：造成X点伤害×N次/段 或 1 点伤害 ×8 段（无"造成"前缀）
+  const multiHit = t.match(/(?:造成)?(\d+)点伤害[×x]?(\d+)[次段]/)
   if (multiHit) {
     effects.push({
       type: 'damage',
@@ -62,7 +63,7 @@ export function parseEffects(text, source = 'player') {
       hits: parseInt(multiHit[2], 10),
     })
   } else {
-    const dmg = t.match(/造成(\d+)点伤害/)
+    const dmg = t.match(/(?:造成)?(\d+)点伤害/)
     if (dmg) effects.push({ type: 'damage', target: 'enemy', amount: parseInt(dmg[1], 10) })
   }
   // 对所有敌人造成伤害

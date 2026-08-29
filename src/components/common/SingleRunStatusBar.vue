@@ -2,18 +2,23 @@
 /**
  * 共用单局状态栏（PRD §5.2 / document/ui.md 顶栏布局）
  * 用于 BattleView / RunView / SettlementView 等所有需要显示角色基础信息与遗物的视图
- * 含菜单/卡组弹窗（共用弹窗由组件内维护）
+ * 包含：角色基础信息（HP/金币/药水/层数/Boss）+ 遗物栏 + 卡组/地图/菜单按钮
+ * 地图按钮：任何页面点击 → 中央弹窗显示 17 层地图（只读），点击空白处关闭
+ * 顶栏固定在屏幕上方（sticky），滚动时保持可见
  */
 import { ref, computed } from 'vue'
 import { useGameStore } from '@/stores/gameStore'
 import { getCard, getRelic } from '@/data'
+import { NODE_TYPE_NAME } from '@/composables/useMap'
 import CardView from '@/components/common/CardView.vue'
+import type { MapNode } from '@/types'
 
 const store = useGameStore()
 
 // ===== 弹窗 =====
 const showDeck = ref(false)
 const showMenu = ref(false)
+const showMap = ref(false)
 
 // 遗物栏（替换"页签遗物"小标题）
 const relicChips = computed(() =>
@@ -23,9 +28,7 @@ const relicChips = computed(() =>
   }),
 )
 
-// 在 BattleView 中需要 turn + maxHp（来自 battle ctx）；在地图页只有 run.hp/maxHp
 interface Props {
-  // 战斗上下文（可选）；地图/结算页可不传
   playerHp?: number
   playerMaxHp?: number
   playerBlock?: number
@@ -45,7 +48,6 @@ const props = withDefaults(defineProps<Props>(), {
   maxEnergy: 0,
 })
 
-// HP 来源：battle 时取 props.playerHp；地图时取 store.run.hp
 const hpCurrent = computed(() =>
   props.playerHp > 0 ? props.playerHp : store.run ? store.run.hp : 0,
 )
@@ -58,6 +60,18 @@ const hpPercent = computed(() =>
 
 const turnLabel = computed(() => (props.turn > 0 ? `回合 ${props.turn}` : ''))
 const isBoss = computed(() => store.battleKind === 'boss')
+
+// ===== 地图弹窗（只读，楼层自下而上） =====
+const mapFloors = computed<MapNode[][]>(() => {
+  const nodes = store.run?.map ?? []
+  const total = nodes.reduce((max, n) => Math.max(max, n.floor), 0)
+  const floors: MapNode[][] = []
+  for (let f = 1; f <= total; f++) floors.push(nodes.filter((n) => n.floor === f))
+  return floors
+})
+
+// 节点类型 → 颜色类名（与 RunView 一致）
+const typeClass = (t: string): string => `node-${t}`
 
 // 放弃本局
 function abandon(): void {
@@ -92,6 +106,7 @@ function abandon(): void {
         <button class="btn top-btn" title="查看当前牌组" @click.stop="showDeck = !showDeck">
           卡组
         </button>
+        <button class="btn top-btn" title="查看地图" @click.stop="showMap = !showMap">地图</button>
         <button class="btn top-btn" title="暂停菜单" @click.stop="showMenu = true">菜单</button>
       </div>
     </header>
@@ -113,6 +128,30 @@ function abandon(): void {
       </div>
     </div>
 
+    <!-- 弹窗：地图（只读，点击空白关闭，回到当前页面） -->
+    <div v-if="showMap" class="modal map-modal" @click.self="showMap = false">
+      <div class="modal-panel panel">
+        <h3 class="modal-title">密林幕地图（第 {{ store.run.floor }} 层）</h3>
+        <div class="map-mini">
+          <div v-for="(row, idx) in [...mapFloors].reverse()" :key="idx" class="map-row">
+            <span class="map-floor-no">{{ row[0]?.floor }}</span>
+            <div class="map-nodes">
+              <span
+                v-for="node in row"
+                :key="node.id"
+                class="map-dot"
+                :class="[typeClass(node.type), { current: node.id === store.run?.nodeId }]"
+                :title="NODE_TYPE_NAME[node.type]"
+              >
+                {{ NODE_TYPE_NAME[node.type] }}
+              </span>
+            </div>
+          </div>
+        </div>
+        <button class="btn" @click="showMap = false">关闭</button>
+      </div>
+    </div>
+
     <!-- 弹窗：菜单 -->
     <div v-if="showMenu" class="modal" @click.stop>
       <div class="modal-panel panel">
@@ -128,11 +167,16 @@ function abandon(): void {
 
 <style scoped lang="scss">
 .status-bar {
+  position: sticky;
+  top: 0;
+  z-index: 15;
   display: flex;
   flex-direction: column;
   gap: 6px;
   padding: 8px 18px 6px;
   border-bottom: 1px solid var(--border);
+  background: rgba(20, 16, 14, 0.96); // 固定顶栏半透明底，滚动时内容不被遮挡
+  backdrop-filter: blur(4px);
 }
 .top-bar {
   display: flex;
@@ -227,6 +271,74 @@ function abandon(): void {
   padding: 1px 8px;
   background: rgba(201, 162, 39, 0.08);
 }
+
+/* 地图弹窗 */
+.map-mini {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  max-height: 60vh;
+  overflow: auto;
+}
+.map-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.map-floor-no {
+  width: 24px;
+  text-align: right;
+  font-size: 11px;
+  color: var(--text-faint);
+}
+.map-nodes {
+  flex: 1;
+  display: flex;
+  justify-content: space-around;
+  gap: 6px;
+}
+.map-dot {
+  width: 56px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  background: var(--bg-raised);
+  color: var(--text-dim);
+}
+.map-dot.current {
+  outline: 2px solid var(--gold);
+  color: var(--text-main);
+}
+.node-monster {
+  border-color: #7a3220;
+}
+.node-elite {
+  border-color: #b5482d;
+}
+.node-boss {
+  border-color: #d9663f;
+}
+.node-chest {
+  border-color: #c9a227;
+}
+.node-campfire {
+  border-color: #a89a84;
+}
+.node-shop {
+  border-color: #5a86ad;
+}
+.node-unknown {
+  border-color: #8a5fa8;
+}
+.node-neow {
+  border-color: #6f9d5a;
+}
+
+/* 弹窗 */
 .modal {
   position: fixed;
   inset: 0;
@@ -236,6 +348,9 @@ function abandon(): void {
   justify-content: center;
   z-index: 20;
 }
+.map-modal {
+  cursor: pointer; // 点击空白关闭
+}
 .modal-panel {
   max-width: 720px;
   max-height: 80vh;
@@ -243,6 +358,7 @@ function abandon(): void {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  cursor: default;
 }
 .modal-title {
   color: var(--accent-strong);

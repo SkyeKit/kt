@@ -14,7 +14,7 @@ import { useGameStore } from '@/stores/gameStore'
 import { useSettingsStore } from '@/stores/settingsStore'
 import { getCard, getRelic } from '@/data'
 import SingleRunStatusBar from '@/components/common/SingleRunStatusBar.vue'
-import type { Card } from '@/types'
+import type { CombatFx } from '@/engine/combatEngine'
 
 const { ctx, hand, enemies, canPlay } = useBattle()
 const store = useGameStore()
@@ -330,10 +330,18 @@ const maxEnergy = computed(() => ctx.value?.maxEnergy ?? 0)
 // 遗物栏副本（SingleRunStatusBar 自己接 store.run；这里为了避免重复渲染只在 BattleView 不再渲染）
 void getRelic
 
-// 拖拽浮起的卡牌数据：可能 undefined（找不到则不渲染浮卡）
-const draggedCard = computed<Card | undefined>(() =>
-  drag.value ? getCard(drag.value.cardId) : undefined,
-)
+// ===== 战斗特效（伤害数字跳动，PRD §5.3） =====
+// 取某单位最近的 fx（按 id 逆序，最多显示 5 条）
+function fxOf(unitId: string): CombatFx[] {
+  return ctx.value
+    ? ctx.value.fx
+        .filter((f) => f.unitId === unitId)
+        .slice(-5)
+        .reverse()
+    : []
+}
+// 玩家卡 fx（飘字渲染在玩家卡上方）
+const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
 </script>
 
 <template>
@@ -353,6 +361,12 @@ const draggedCard = computed<Card | undefined>(() =>
     <div ref="fieldRef" class="field" @click.stop>
       <div class="player-side">
         <div ref="playerRef" class="player-card">
+          <!-- 伤害数字跳动（玩家头上） -->
+          <div class="fx-layer">
+            <span v-for="f in playerFx" :key="f.id" class="fx-num" :class="'fx-' + f.kind">
+              {{ f.text }}
+            </span>
+          </div>
           <div class="player-avatar">⚔️</div>
           <div class="player-name">铁甲战士</div>
           <div class="player-hp-bar">
@@ -376,6 +390,7 @@ const draggedCard = computed<Card | undefined>(() =>
           :unit="e"
           :targetable="(Boolean(selectedCardId) || Boolean(isDraggingAttack)) && !readonly"
           :hovered="hoveredEnemyId === e.id"
+          :fx="fxOf(e.id)"
           @select="onEnemyClick(e.id)"
         />
       </div>
@@ -500,18 +515,6 @@ const draggedCard = computed<Card | undefined>(() =>
       </div>
     </div>
 
-    <!-- 拖拽浮起的卡牌（脱离手牌，跟随鼠标） -->
-    <div
-      v-if="draggingCard && drag"
-      class="drag-card"
-      :style="{
-        left: drag.currentX + 'px',
-        top: drag.currentY + 'px',
-      }"
-    >
-      <CardView :card="draggedCard" :dragging="true" />
-    </div>
-
     <!-- 弹窗：单牌堆查看 -->
     <div v-if="inspectingPile" class="modal" @click.stop>
       <div class="modal-panel panel">
@@ -582,9 +585,69 @@ const draggedCard = computed<Card | undefined>(() =>
   display: flex;
   flex-direction: column;
   gap: 6px;
+  position: relative; // fx 数字跳动定位基准
   transition:
     border-color 0.1s,
     box-shadow 0.1s;
+}
+// 伤害数字跳动层（PRD §5.3：角色/怪物头上数字）
+.fx-layer {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  pointer-events: none;
+  z-index: 6;
+}
+.fx-num {
+  position: absolute;
+  transform: translateX(-50%);
+  font-weight: bold;
+  font-size: 20px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  animation: fx-rise 0.9s ease-out forwards;
+  white-space: nowrap;
+}
+// 多条数字依次错开（第 1 条最新在顶部）
+.fx-num:nth-child(1) {
+  animation-delay: 0.5s;
+  opacity: 0;
+}
+.fx-num:nth-child(2) {
+  animation-delay: 0.32s;
+  opacity: 0;
+}
+.fx-num:nth-child(3) {
+  animation-delay: 0.14s;
+  opacity: 0;
+}
+.fx-num:nth-child(n + 4) {
+  animation-delay: 0s;
+  opacity: 0;
+}
+.fx-damage {
+  color: var(--accent-strong);
+}
+.fx-block {
+  color: #6aa8d6;
+}
+.fx-heal {
+  color: #7ac97a;
+}
+.fx-buff {
+  color: var(--gold);
+}
+@keyframes fx-rise {
+  0% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(-46px);
+    opacity: 0;
+  }
 }
 // 拖拽非攻击卡时玩家卡高亮（自身用卡可拖到自己身上）
 .player-card.player-target {
@@ -738,16 +801,6 @@ const draggedCard = computed<Card | undefined>(() =>
   height: 56px;
   font-size: 14px;
   font-weight: bold;
-}
-
-/* 拖拽浮起的卡牌：脱离手牌区域，跟随鼠标 */
-.drag-card {
-  position: fixed;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 100;
-  width: 130px;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
 }
 
 /* 弹窗 */

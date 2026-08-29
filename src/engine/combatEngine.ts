@@ -64,6 +64,17 @@ export interface CombatContext {
   removeQueue: number
   log: string[]
   rng: () => number
+  // 战斗特效队列（伤害数字跳动等，PRD §5.3 动画）
+  fxId: number // 自增 id
+  fx: CombatFx[]
+}
+
+// 战斗特效：伤害/格挡/回复等数字跳动（BattleView 渲染用）
+export interface CombatFx {
+  id: number
+  unitId: string // 目标单位（玩家或敌人 id）
+  text: string // 显示文本（如 -6 / +5 格挡）
+  kind: 'damage' | 'block' | 'heal' | 'buff' // 动画类型
 }
 
 // 战斗结束原因
@@ -145,6 +156,8 @@ export function createCombatContext(
     removeQueue: 0,
     log: [],
     rng,
+    fxId: 0,
+    fx: [],
   }
   return ctx
 }

@@ -42,3 +42,32 @@ stateMachine.onChange((p) => { phase.value = p })
 - **Notes**: stateMachine 加 onChange 订阅 + store ref 同步；36 测试全绿
 
 ---
+## [ERR-20260829-001] parse-effects-space-bug
+
+**Logged**: 2026-08-29T17:00:00+08:00
+**Priority**: critical
+**Status**: resolved
+**Area**: data
+
+### Summary
+敌人招式效果解析全部为空 → 怪物意图不生效（不掉血、不上 buff）。
+
+### Error
+生成数据 enemies.json 中 moves["酸液黏球"].effects === []（应为 damage 4）。
+
+### Context
+- parse-utils.mjs `parseEffects` 用 `/造成(\d+)点伤害/` 匹配。
+- 敌人文档效果文本是"造成 4 点伤害"（数字与"造成"间有空格），卡牌文本是"造成4点伤害"（无空格）。
+- 正则没处理空格 → 敌人招式 75 个里 70 个效果全空；UI 显示意图但结算无效果。
+
+### Suggested Fix
+- parseEffects 开头统一去空白：`text.replace(/\s+/g, '')`（已修）
+- 多段伤害正则加 `(?:造成)?` 前缀覆盖"1 点伤害 ×8 段"（已修）
+- 重新生成数据 + 补 enemyTurn.spec.ts 回归测试（已加）
+
+### Metadata
+- Reproducible: yes
+- Related Files: src/scripts/parse-utils.mjs, src/data/enemies.json, src/tests/enemyTurn.spec.ts
+- See Also: LRN-20260829-001（数据必须对照 md 源）
+
+---
