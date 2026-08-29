@@ -63,8 +63,11 @@ export const useGameStore = defineStore('game', () => {
   const message = ref('') // 顶部提示（遗物/事件/系统消息）
   const log = ref<string[]>([]) // 战斗日志（调试控制台/战斗记录）
 
-  // 阶段（与 stateMachine 同步）
-  const phase = computed<GamePhase>(() => stateMachine.current)
+  // 阶段：响应式 ref，订阅状态机变化同步（stateMachine 本身是纯逻辑，不可被 Vue 侦测）
+  const phase = ref<GamePhase>(stateMachine.current)
+  stateMachine.onChange((p) => {
+    phase.value = p
+  })
 
   // 当前节点
   const currentNode = computed<MapNode | null>(() => {

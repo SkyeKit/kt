@@ -37,12 +37,19 @@ const TRANSITIONS: Record<GamePhase, GamePhase[]> = {
 }
 
 // 状态机：持有当前状态并提供受约束的迁移
+// 注：本模块保持纯逻辑（无 Vue 依赖），通过 onChange 订阅把状态变化同步给 store（响应式）
 export class StateMachine {
   private phase: GamePhase = 'MENU'
+  private listeners: Array<(phase: GamePhase) => void> = []
 
   // 获取当前状态
   get current(): GamePhase {
     return this.phase
+  }
+
+  // 订阅状态变化（gameStore 用其同步响应式 ref）
+  onChange(listener: (phase: GamePhase) => void): void {
+    this.listeners.push(listener)
   }
 
   // 受约束迁移：非法迁移直接抛错（防止组件绕过状态机）
@@ -51,11 +58,18 @@ export class StateMachine {
       throw new Error(`非法状态迁移：${this.phase} → ${to}`)
     }
     this.phase = to
+    this.emit()
   }
 
   // 直接设置（仅用于恢复存档等受控场景）
   force(phase: GamePhase): void {
     this.phase = phase
+    this.emit()
+  }
+
+  // 通知订阅者（store 同步响应式状态）
+  private emit(): void {
+    for (const listener of this.listeners) listener(this.phase)
   }
 }
 

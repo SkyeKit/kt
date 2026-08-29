@@ -1,0 +1,7 @@
+# 构建产物与自动生成文件不参与格式化
+node_modules/
+dist/
+src/auto-imports.d.ts
+src/components.d.ts
+document/
+.learnings/
