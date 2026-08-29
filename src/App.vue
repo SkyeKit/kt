@@ -1,8 +1,24 @@
 <script setup lang="ts">
 // 根组件：顶部栏（单局状态摘要）+ 主视图
+// 阶段 → 路由自动导航（agent.md §5.4：禁止绕过状态机切换页面，此处由阶段驱动路由）
+import { watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useGameStore } from '@/stores/gameStore'
 
 const store = useGameStore()
+const router = useRouter()
+const route = useRoute()
+
+// 阶段与路由的映射：战斗→/battle，结算→/settlement，其余单局阶段→/run
+watch(
+  () => store.phase,
+  (phase) => {
+    if (phase === 'BATTLE' && route.name !== 'battle') router.push('/battle')
+    else if (phase === 'SETTLEMENT' && route.name !== 'settlement') router.push('/settlement')
+    else if (['RUN', 'REWARD', 'SHOP', 'CAMPFIRE', 'EVENT'].includes(phase) && route.name !== 'run')
+      router.push('/run')
+  },
+)
 </script>
 
 <template>

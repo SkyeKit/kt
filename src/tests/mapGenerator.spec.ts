@@ -20,6 +20,22 @@ describe('地图生成：结构', () => {
     expect(f1[0]!.type).toBe('neow')
   })
 
+  it('首局（第 2 局起才触发涅奥）：第 1 层为普通战斗节点（PRD §3.1）', () => {
+    const firstRunMap = generateMap(12345, false)
+    const f1 = firstRunMap.filter((n) => n.floor === 1)
+    expect(f1.length).toBe(1)
+    expect(f1[0]!.type).toBe('monster')
+  })
+
+  it('每层分支路线 2~5 条（第 1/17 层为 1 条）（PRD §3.2.1）', () => {
+    const map2 = generateMap(555)
+    for (let floor = 2; floor <= 16; floor++) {
+      const count = map2.filter((n) => n.floor === floor).length
+      expect(count).toBeGreaterThanOrEqual(MAP.branchMin)
+      expect(count).toBeLessThanOrEqual(MAP.branchMax)
+    }
+  })
+
   it('第 2/10/16/17 层为固定类型（monster/chest/campfire/boss）', () => {
     expect(map.find((n) => n.floor === 2)!.type).toBe('monster')
     expect(map.find((n) => n.floor === 10)!.type).toBe('chest')

@@ -10,14 +10,15 @@ import { fileURLToPath } from 'node:url'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const OUT = join(__dirname, '..', 'data')
 
-// 静态地图规格（与 config/gameConfig.ts 的 MAP 常量一致）
+// 静态地图规格（与 config/gameConfig.ts 的 MAP 常量一致；PRD §3.2.1）
 export function generateMap() {
   const map = {
     totalFloors: 17,
-    branchWidth: 3,
+    branchMin: 2,
+    branchMax: 5,
     fixedFloors: { 1: 'neow', 2: 'monster', 10: 'chest', 16: 'campfire', 17: 'boss' },
-    floorWeights: { monster: 55, elite: 12, unknown: 8, shop: 5, campfire: 12, chest: 8 },
-    unknownEventChance: 0.85,
+    floorWeights: { monster: 40, elite: 15, unknown: 20, shop: 10, campfire: 15, chest: 0 },
+    unknownRoomChance: { event: 0.85, battle: 0.1, shop: 0.03, chest: 0.02 },
     eliteLoopPool: ['byrdonis', 'bygone_effigy', 'phrog_parasite'],
     bossPool: ['vantom', 'ceremonial_beast', 'the_kin'],
     maxEdges: 2,

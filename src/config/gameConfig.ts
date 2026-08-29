@@ -29,26 +29,27 @@ export const PLAYER = {
 // 密林幕地图参数（PRD §3.2.1）
 export const MAP = {
   totalFloors: 17, // 总层数
-  branchWidth: 3, // 每层分支列数（第 1/2 层与 Boss 层为 1 列）
+  branchMin: 2, // 每层分支路线数下限（PRD §3.2.1：2~5 条/层）
+  branchMax: 5, // 每层分支路线数上限
   // 固定楼层（PRD §3.2.1 / Overgrowth.md §1.1）
   fixedFloors: {
-    1: 'neow', // 先古之民
+    1: 'neow', // 先古之民（自第 2 局起；首局为普通节点）
     2: 'monster', // 必定普通战斗
     10: 'chest', // 宝箱
     16: 'campfire', // 篝火
     17: 'boss', // Boss 战
   } as Record<number, MapNodeType>,
-  // 普通楼层房间权重（非固定楼层）
+  // 非固定楼层节点概率（PRD §3.2.1：普通40/精英15/未知20/商店10/篝火15，合计100；宝箱无概率仅第10层固定）
   floorWeights: {
-    monster: 55, // 普通战斗
-    elite: 12, // 精英
-    unknown: 8, // 未知（事件 85% / 战斗 15%）
-    shop: 5, // 商店
-    campfire: 12, // 休息处
-    chest: 8, // 宝箱
+    monster: 40, // 普通战斗
+    elite: 15, // 精英
+    unknown: 20, // 未知（？）
+    shop: 10, // 商店
+    campfire: 15, // 休息处
+    chest: 0, // 宝箱：无概率（仅第 10 层固定）
   } as Record<Exclude<MapNodeType, 'boss' | 'neow'>, number>,
-  // 未知房间判定（PRD §3.7）
-  unknownEventChance: 0.85, // 未知 → 事件
+  // 未知（？）房间内部内容概率（PRD §3.2.1：事件85/战斗10/商店3/宝箱2，合计100）
+  unknownRoomChance: { event: 0.85, battle: 0.1, shop: 0.03, chest: 0.02 },
   // 精英池循环：3→2→1 后重置（不重复）
   eliteLoopPool: ['byrdonis', 'bygone_effigy', 'phrog_parasite'],
   // Boss 三选一
@@ -72,9 +73,16 @@ export const COMBAT = {
 // 战斗奖励（PRD §3.3.5）
 export const REWARD = {
   gold: { monster: [15, 25], elite: [30, 45], boss: [100, 100] }, // 设计值区间 [min,max]
-  cardRarityChance: { common: 0.75, uncommon: 0.23, rare: 0.02 }, // 卡牌奖励稀有度权重
+  // 卡牌奖励质量分级（PRD §3.3.5：普通战保底普通卡、精英战保底罕见卡、Boss 战保底稀有卡）
+  cardRarityChance: {
+    normal: { common: 0.75, uncommon: 0.23, rare: 0.02 },
+    elite: { common: 0.3, uncommon: 0.6, rare: 0.1 },
+    boss: { common: 0, uncommon: 0.2, rare: 0.8 },
+  },
   cardChoices: 3, // 3 选 1
   bloodHeal: 6, // 燃烧之血：战斗结束回复 6 点
+  // 遗物掉落（PRD §3.3.5：精英必掉 1 件，Boss 必掉 1 件；黑星→+1、熔岩石→+2 后续扩展）
+  relicDrop: { elite: 1, boss: 1, monster: 0 },
 } as const
 
 // 商店（PRD §3.5）

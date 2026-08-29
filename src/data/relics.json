@@ -1,251 +1,251 @@
 {
   "neowPool": [
     {
-      "id": "burning_blood",
-      "name": "燃烧之血",
+      "id": "arcane_scroll",
+      "name": "奥术卷轴",
       "rarity": "先古之民",
-      "trigger": "ON_COMBAT_END",
-      "desc": "在战斗结束时，回复6点生命。",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将一张随机稀有牌加入你的牌组。",
       "excluded": false
     },
     {
-      "id": "broken_crown",
-      "name": "残破之环",
-      "rarity": "稀有",
-      "trigger": "PASSIVE",
-      "desc": "(效果见数据文件)",
-      "excluded": false
-    },
-    {
-      "id": "massive_scroll",
-      "name": "巨大卷轴",
-      "rarity": "罕见",
-      "trigger": "ON_COMBAT_START",
-      "desc": "拾起时，从3张多人游戏牌中选择1张加入你的牌组。",
-      "excluded": true
-    },
-    {
-      "id": "uchigatana",
-      "name": "打刀",
-      "rarity": "罕见",
-      "trigger": "PASSIVE",
-      "desc": "(效果见数据文件)",
-      "excluded": false
-    },
-    {
-      "id": "silver_furnace",
+      "id": "silver_crucible",
       "name": "白银熔炉",
-      "rarity": "罕见",
+      "rarity": "先古之民",
       "trigger": "PASSIVE",
       "desc": "你遇到的前3次卡牌奖励将是被升级过的。你打开的第一个宝箱将是空的。",
       "excluded": false
     },
     {
-      "id": "lucky_coin",
-      "name": "幸运硬币",
-      "rarity": "稀有",
+      "id": "hefty_tablet",
+      "name": "沉重石板",
+      "rarity": "先古之民",
       "trigger": "ON_PICKUP",
-      "desc": "(效果见数据文件)",
+      "desc": "拾起时，从3张稀有牌中选择1张加入你的牌组，同时将1张受伤加入你的牌组。",
       "excluded": false
     },
     {
-      "id": "lava_lamp",
-      "name": "熔岩灯",
-      "rarity": "稀有",
-      "trigger": "ON_COMBAT_END",
-      "desc": "在战斗结束时，如果你没有受到伤害，则升级你的所有卡牌奖励。",
+      "id": "pomander",
+      "name": "橙型香盒",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，升级一张牌。",
       "excluded": false
     },
     {
-      "id": "broken_gear",
-      "name": "残破齿轮",
-      "rarity": "罕见",
+      "id": "fishing_rod",
+      "name": "钓鱼竿",
+      "rarity": "先古之民",
       "trigger": "PASSIVE",
-      "desc": "(效果见数据文件)",
+      "desc": "每3场普通战斗，随机升级你牌组中的一张牌。",
       "excluded": false
     },
     {
-      "id": "golem_core",
-      "name": "魔像核心",
-      "rarity": "罕见",
-      "trigger": "ON_TURN_START",
-      "desc": "(效果见数据文件)",
+      "id": "booming_conch",
+      "name": "轰鸣海螺",
+      "rarity": "先古之民",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在精英战的战斗开始时，额外抽2张牌并获得1点能量。",
       "excluded": false
     },
     {
-      "id": "heart_orb",
-      "name": "心脏宝珠",
-      "rarity": "稀有",
+      "id": "silken_tress",
+      "name": "华美发束",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，失去所有金币。为第一次卡牌奖励中的所有牌附魔：华彩。",
+      "excluded": false
+    },
+    {
+      "id": "golden_pearl",
+      "name": "金色珍珠",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得150金币。",
+      "excluded": false
+    },
+    {
+      "id": "precise_scissors",
+      "name": "精准剪刀",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从你的牌组中移除1张牌。",
+      "excluded": false
+    },
+    {
+      "id": "massive_scroll",
+      "name": "巨大卷轴",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从3张多人游戏牌中选择1张加入你的牌组。",
+      "excluded": true
+    },
+    {
+      "id": "large_capsule",
+      "name": "巨大扭蛋",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得2件随机遗物。额外将一对打击和防御，加入你的牌组。",
+      "excluded": false
+    },
+    {
+      "id": "scroll_boxes",
+      "name": "卷轴箱",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从2个卡牌包中选择1包加入你的牌组。",
+      "excluded": false
+    },
+    {
+      "id": "neows_talisman",
+      "name": "涅奥的护符",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，升级你的1张打击和1张防御。",
+      "excluded": false
+    },
+    {
+      "id": "neows_torment",
+      "name": "涅奥的苦痛",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将1张涅奥之怒加入你的牌组。",
+      "excluded": false
+    },
+    {
+      "id": "neows_bones",
+      "name": "涅奥骨骰",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得2件随机涅奥遗物。将1张随机诅咒加入你的牌组。",
+      "excluded": false
+    },
+    {
+      "id": "lead_paperweight",
+      "name": "铅制镇纸",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从2张无色牌中选择1张加入你的牌组。",
+      "excluded": false
+    },
+    {
+      "id": "lava_rock",
+      "name": "熔岩石",
+      "rarity": "先古之民",
       "trigger": "PASSIVE",
-      "desc": "(效果见数据文件)",
+      "desc": "第一阶段的Boss敌人额外掉落2件遗物。",
       "excluded": false
     },
     {
-      "id": "flower_mirror",
-      "name": "花镜",
-      "rarity": "罕见",
+      "id": "lost_coffer",
+      "name": "失物盒",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得1次卡牌奖励和1瓶随机药水。",
+      "excluded": true
+    },
+    {
+      "id": "stone_humidifier",
+      "name": "石炉加湿器",
+      "rarity": "先古之民",
+      "trigger": "ON_REST",
+      "desc": "每当你在休息处休息时，将你的最大生命值提升5点。",
+      "excluded": false
+    },
+    {
+      "id": "leafy_poultice",
+      "name": "树叶药膏",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，变化你的1张打击和1张防御，然后失去12点最大生命。",
+      "excluded": false
+    },
+    {
+      "id": "precarious_shears",
+      "name": "松动羊毛剪",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从你的牌组中移除2张牌并失去16点生命。",
+      "excluded": false
+    },
+    {
+      "id": "kaleidoscope",
+      "name": "万花筒",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得2次来自其他角色的卡牌奖励。",
+      "excluded": true
+    },
+    {
+      "id": "small_capsule",
+      "name": "小型扭蛋",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得一件随机遗物。",
+      "excluded": false
+    },
+    {
+      "id": "new_leaf",
+      "name": "新叶",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，变化1张牌。",
+      "excluded": false
+    },
+    {
+      "id": "phial_holster",
+      "name": "药瓶皮套",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得1个药水栏位并获得2瓶随机药水。",
+      "excluded": true
+    },
+    {
+      "id": "nutritious_oyster",
+      "name": "营养牡蛎",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将你的最大生命值提升11。",
+      "excluded": false
+    },
+    {
+      "id": "winged_boots",
+      "name": "羽翼之靴",
+      "rarity": "先古之民",
       "trigger": "PASSIVE",
-      "desc": "(效果见数据文件)",
+      "desc": "你在选择下一层的房间时有3次机会可以无视当前的路线。",
+      "excluded": false
+    },
+    {
+      "id": "cursed_pearl",
+      "name": "诅咒珍珠",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得一张贪婪，获得333金币。",
       "excluded": false
     },
     {
       "id": "dowsing_rod",
       "name": "寻龙尺",
-      "rarity": "罕见",
-      "trigger": "ON_COMBAT_START",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
       "desc": "拾起时，将1张探寻加入你的牌组。",
       "excluded": false
     },
     {
       "id": "neows_sacrifice",
       "name": "涅奥的牺牲",
-      "rarity": "罕见",
+      "rarity": "先古之民",
       "trigger": "ON_PICKUP",
       "desc": "拾起时，获得1瓶龙涎香，并将1张愧疚加入你的牌组。",
       "excluded": true
-    },
-    {
-      "id": "neows_tears",
-      "name": "涅奥之泪",
-      "rarity": "稀有",
-      "trigger": "ON_PICKUP",
-      "desc": "(效果见数据文件)",
-      "excluded": false
-    },
-    {
-      "id": "broken_dreams",
-      "name": "碎梦",
-      "rarity": "罕见",
-      "trigger": "ON_TURN_START",
-      "desc": "(效果见数据文件)",
-      "excluded": false
-    },
-    {
-      "id": "ancestral_shard",
-      "name": "先祖碎片",
-      "rarity": "罕见",
-      "trigger": "ON_PICKUP",
-      "desc": "(效果见数据文件)",
-      "excluded": false
-    },
-    {
-      "id": "crystal_heart",
-      "name": "结晶之心",
-      "rarity": "稀有",
-      "trigger": "PASSIVE",
-      "desc": "(效果见数据文件)",
-      "excluded": false
-    },
-    {
-      "id": "aether_tears",
-      "name": "以太之泪",
-      "rarity": "稀有",
-      "trigger": "ON_COMBAT_START",
-      "desc": "(效果见数据文件)",
-      "excluded": false
-    },
-    {
-      "id": "curse_box",
-      "name": "咒术之匣",
-      "rarity": "罕见",
-      "trigger": "ON_PICKUP",
-      "desc": "(效果见数据文件)",
-      "excluded": false
-    },
-    {
-      "id": "codex_of_penance",
-      "name": "苦修法典",
-      "rarity": "稀有",
-      "trigger": "ON_TURN_END",
-      "desc": "(效果见数据文件)",
-      "excluded": false
-    },
-    {
-      "id": "kaleidoscope",
-      "name": "万花筒",
-      "rarity": "罕见",
-      "trigger": "PASSIVE",
-      "desc": "拾起时，获得2次来自其他角色的卡牌奖励。",
-      "excluded": true
-    },
-    {
-      "id": "unquenchable_lantern",
-      "name": "不灭明灯",
-      "rarity": "罕见",
-      "trigger": "ON_COMBAT_START",
-      "desc": "(效果见数据文件)",
-      "excluded": false
-    },
-    {
-      "id": "molten_charm",
-      "name": "熔火护符",
-      "rarity": "罕见",
-      "trigger": "PASSIVE",
-      "desc": "(效果见数据文件)",
-      "excluded": false
-    },
-    {
-      "id": "volcanic_heart",
-      "name": "火山之心",
-      "rarity": "稀有",
-      "trigger": "ON_COMBAT_START",
-      "desc": "(效果见数据文件)",
-      "excluded": false
-    },
-    {
-      "id": "twisted_branch",
-      "name": "扭曲之枝",
-      "rarity": "稀有",
-      "trigger": "ON_PICKUP",
-      "desc": "(效果见数据文件)",
-      "excluded": false
-    },
-    {
-      "id": "lost_coffer",
-      "name": "失落背包",
-      "rarity": "罕见",
-      "trigger": "ON_COMBAT_START",
-      "desc": "(效果见数据文件)",
-      "excluded": true
-    },
-    {
-      "id": "shattered_crystal",
-      "name": "碎晶石",
-      "rarity": "罕见",
-      "trigger": "ON_COMBAT_END",
-      "desc": "(效果见数据文件)",
-      "excluded": false
-    },
-    {
-      "id": "ancient_tears",
-      "name": "远古之泪",
-      "rarity": "稀有",
-      "trigger": "ON_COMBAT_START",
-      "desc": "(效果见数据文件)",
-      "excluded": false
-    },
-    {
-      "id": "phial_holster",
-      "name": "药瓶皮套",
-      "rarity": "罕见",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，获得1个药水栏位并获得2瓶随机药水。",
-      "excluded": true
-    },
-    {
-      "id": "spark_of_stars",
-      "name": "星火",
-      "rarity": "罕见",
-      "trigger": "ON_TURN_START",
-      "desc": "(效果见数据文件)",
-      "excluded": false
     }
   ],
   "warrior": [
     {
       "id": "burning_blood",
       "name": "燃烧之血",
-      "rarity": "先古之民",
+      "rarity": "初始",
       "trigger": "ON_COMBAT_END",
       "desc": "在战斗结束时，回复6点生命。",
       "excluded": false
@@ -253,7 +253,7 @@
     {
       "id": "black_blood",
       "name": "黑暗之血",
-      "rarity": "稀有",
+      "rarity": "初始",
       "trigger": "ON_COMBAT_END",
       "desc": "在战斗结束时，回复12点生命。",
       "excluded": false

@@ -31,6 +31,10 @@ import {
   relicsData,
 } from '@/data'
 import { buildEnemyUnit } from '@/engine/enemyAI'
+import { useMetaStore } from '@/stores/metaStore'
+
+// 战斗类型（奖励分级依据，PRD §3.3.5）
+type BattleKind = 'normal' | 'elite' | 'boss'
 
 // 战斗奖励（击杀后待选）
 interface PendingReward {
@@ -42,8 +46,10 @@ interface PendingReward {
 
 export const useGameStore = defineStore('game', () => {
   // ===== 状态 =====
+  const metaStore = useMetaStore() // 元进度（总局数，用于首局判断）
   const run = ref<RunState | null>(null) // 单局存档（null = 未开局）
   const battle = ref<CombatContext | null>(null) // 战斗上下文（BATTLE 阶段非空）
+  const battleKind = ref<BattleKind>('normal') // 当前战斗类型（奖励分级依据）
   const pendingReward = ref<PendingReward | null>(null) // 战斗胜利待选奖励
   const currentEvent = ref<string | null>(null) // 当前事件 id（EVENT 阶段）
   const battleResult = ref<CombatResult | null>(null) // 战斗结算结果
@@ -68,9 +74,12 @@ export const useGameStore = defineStore('game', () => {
 
   // ===== 开局 =====
   // 新开一局：生成种子局 + 地图 + 初始牌组/遗物，进入 RUN
+  // PRD §3.1：涅奥自第 2 局起触发（首局第 1 层为普通节点）——依据元进度总局数判断
   function newRun(seed?: number): void {
     const s = seed ?? Math.floor(Math.random() * 0xffffffff)
-    const map = generateMap(s)
+    const runNumber = metaStore.meta.runs + 1 // 本局是第几局
+    const firstFloorIsNeow = runNumber >= 2
+    const map = generateMap(s, firstFloorIsNeow)
     run.value = {
       version: SAVE.version,
       seed: s,
@@ -127,22 +136,33 @@ export const useGameStore = defineStore('game', () => {
     r.floor = node.floor
     // 固定层：Boss 战
     if (node.type === 'boss') {
-      startBattle([...MAP.bossPool], true)
+      startBattle([...MAP.bossPool], 'boss')
       return
     }
-    if (node.type === 'monster' || node.type === 'unknown') {
-      // 未知房：85% 事件 / 15% 战斗（PRD §3.7）
-      const isEvent =
-        node.type === 'unknown' && mulberry32(r.seed + r.floor * 31)() < MAP.unknownEventChance
-      if (node.type === 'unknown' && isEvent) {
+    if (node.type === 'monster') {
+      startBattle(pickEncounter(), 'normal')
+      return
+    }
+    if (node.type === 'unknown') {
+      // 未知（？）房间内部内容（PRD §3.2.1：事件85/战斗10/商店3/宝箱2）
+      const roll = mulberry32(r.seed + r.floor * 31)()
+      const { event, battle: battleChance, shop, chest } = MAP.unknownRoomChance
+      if (roll < event) {
         enterEvent()
+      } else if (roll < event + battleChance) {
+        startBattle(pickEncounter(), 'normal')
+      } else if (roll < event + battleChance + shop) {
+        setupShop()
+        stateMachine.transition('SHOP')
+      } else if (roll < event + battleChance + shop + chest) {
+        giveChest()
       } else {
-        startBattle(pickEncounter(), false)
+        startBattle(pickEncounter(), 'normal') // 兜底（概率浮点误差）
       }
       return
     }
     if (node.type === 'elite') {
-      startBattle([pickElite()], true)
+      startBattle([pickElite()], 'elite')
       return
     }
     if (node.type === 'chest') {
@@ -181,10 +201,11 @@ export const useGameStore = defineStore('game', () => {
   }
 
   // ===== 战斗 =====
-  // 开战：按敌人 id 构建战斗上下文（PRD §3.3）
-  function startBattle(enemyIds: string[], _isElite: boolean): void {
+  // 开战：按敌人 id 构建战斗上下文（PRD §3.3）；kind 决定奖励质量分级（§3.3.5）
+  function startBattle(enemyIds: string[], kind: BattleKind): void {
     const r = run.value
     if (!r) return
+    battleKind.value = kind
     const enemies = enemyIds
       .map((id) => {
         const def = getEnemy(id)
@@ -266,17 +287,20 @@ export const useGameStore = defineStore('game', () => {
     return ok
   }
 
-  // 结束玩家回合：敌人行动 → 新回合（PRD §3.3.4）
+  // 结束玩家回合：敌人行动 → 新回合（PRD §3.3.2）
   function endTurn(): void {
     const ctx = battle.value
     if (!ctx) return
+    // 回合结束：手牌全部移入弃牌堆（PRD §3.3.2 第 1 步）
+    ctx.discardPile.push(...ctx.hand)
+    ctx.hand.length = 0
     enemyTurn(ctx)
     log.value.push(...ctx.log.slice(-8))
     const result = checkResult(ctx)
     battleResult.value = result
     if (result.status === 'victory') return onVictory()
     if (result.status === 'defeat') return onDefeat()
-    // 新回合：抽牌 + 意图更新
+    // 新回合：能量重置 + 抽牌 + 意图更新（PRD §3.3.2）
     const handSize = 5
     ctx.player.block = 0
     ctx.energy = ctx.maxEnergy
@@ -342,17 +366,16 @@ export const useGameStore = defineStore('game', () => {
     r.hp = ctx.player.hp
     r.gold = ctx.gold
     // 精英/Boss 额外记录
-    const isElite = ctx.enemies.some((e) => e.category === 'elite' || e.category === 'boss')
-    if (isElite) r.meta.elitesKilled++
-    // 生成奖励
-    const isBoss = ctx.enemies.some((e) => e.category === 'boss')
+    const isBoss = battleKind.value === 'boss'
+    if (battleKind.value === 'elite' || isBoss) r.meta.elitesKilled++
+    // Boss 战：直接结算（§3.13），无奖励页
     if (isBoss) {
       r.bossDefeated = true
       stateMachine.transition('SETTLEMENT')
       persist()
       return
     }
-    pendingReward.value = generateReward(isElite)
+    pendingReward.value = generateReward(battleKind.value)
     stateMachine.transition('REWARD')
     persist()
   }
@@ -364,29 +387,51 @@ export const useGameStore = defineStore('game', () => {
     persist()
   }
 
-  // 生成战斗奖励（金币 + 卡牌 3 选 1；PRD §3.3.5）
-  function generateReward(isElite: boolean): PendingReward {
+  // 生成战斗奖励（金币 + 遗物 + 卡牌 3 选 1；PRD §3.3.5/§3.3.7）
+  // 普通战：金币 + 卡牌；精英战：金币 + 遗物 1 件（直接入库）+ 卡牌；Boss 战无奖励页（直接结算）
+  function generateReward(kind: BattleKind): PendingReward {
     const r = run.value!
     const rng = mulberry32(r.seed + r.fightCount * 217)
-    const [gMin, gMax] = isElite ? REWARD.gold.elite : REWARD.gold.monster
+    const [gMin, gMax] = kind === 'elite' ? REWARD.gold.elite : REWARD.gold.monster
     const gold = Math.floor(rng() * (gMax - gMin + 1)) + gMin
     r.gold += gold
-    // 卡牌 3 选 1（按稀有度权重）
-    const cards = pickCardRewards(rng)
-    return { kind: 'card', cards, gold }
+    // 卡牌 3 选 1（按战斗类型质量分级）
+    const cards = pickCardRewards(rng, kind)
+    const result: PendingReward = { kind: 'card', cards, gold }
+    // 精英必掉 1 件遗物（PRD §3.3.5；黑星→+1 后续扩展）：直接入库，页面展示
+    if (kind === 'elite') {
+      const relic = rollRelicDrop()
+      if (relic) {
+        r.relics.push(relic.id)
+        result.relics = [relic]
+      }
+    }
+    return result
   }
 
-  // 抽 3 张奖励卡（稀有度权重）
-  function pickCardRewards(rng: () => number): Card[] {
+  // 遗物掉落（从通用/战士池抽取未拥有的）
+  function rollRelicDrop(): Relic | undefined {
+    const r = run.value!
+    const pool = [...relicsData.general, ...relicsData.warrior].filter(
+      (x) => !x.excluded && !r.relics.includes(x.id),
+    )
+    if (pool.length === 0) return undefined
+    const idx = Math.floor(mulberry32(r.seed + r.fightCount * 331)() * pool.length)
+    return pool[idx]
+  }
+
+  // 抽 3 张奖励卡（按战斗类型质量分级：普通战保底普通、精英战保底罕见、Boss 保底稀有）
+  function pickCardRewards(rng: () => number, kind: BattleKind): Card[] {
     const pool = cardsData.warrior.filter((c) => c.rarity !== 'basic' && c.rarity !== 'ancient')
+    const weights = REWARD.cardRarityChance[kind]
     const picked: Card[] = []
     const used = new Set<string>()
     while (picked.length < 3) {
       const roll = rng()
       const rarity =
-        roll < REWARD.cardRarityChance.common
+        roll < weights.common
           ? 'common'
-          : roll < REWARD.cardRarityChance.common + REWARD.cardRarityChance.uncommon
+          : roll < weights.common + weights.uncommon
             ? 'uncommon'
             : 'rare'
       const candidates = pool.filter((c) => c.rarity === rarity && !used.has(c.id))
@@ -413,6 +458,25 @@ export const useGameStore = defineStore('game', () => {
 
   // 领取金币（无卡可选时）
   function claimGoldOnly(): void {
+    pendingReward.value = null
+    advanceAfterReward()
+  }
+
+  // 奖励页返回战斗界面（已结算，仅可查看；PRD §3.3.7）
+  function backToBattle(): void {
+    if (!pendingReward.value) return
+    stateMachine.transition('BATTLE')
+  }
+
+  // 战斗只读界面返回奖励页（BATTLE → REWARD，PRD §3.3.7）
+  function backToReward(): void {
+    if (!pendingReward.value) return
+    stateMachine.transition('REWARD')
+  }
+
+  // 奖励页前进至地图（未选卡默认跳过；PRD §3.3.7）
+  function forwardToMap(): void {
+    if (!pendingReward.value) return
     pendingReward.value = null
     advanceAfterReward()
   }
@@ -451,7 +515,7 @@ export const useGameStore = defineStore('game', () => {
       const opt = ev.options.find((o) => o.text === optionText)
       if (opt && opt.battle) {
         // 事件战斗（茂密的植被 → 4 只扭动虫）
-        startBattle(['wriggler', 'wriggler', 'wriggler', 'wriggler'], false)
+        startBattle(['wriggler', 'wriggler', 'wriggler', 'wriggler'], 'normal')
         currentEvent.value = null
         return
       }
@@ -688,6 +752,7 @@ export const useGameStore = defineStore('game', () => {
   return {
     run,
     battle,
+    battleKind,
     pendingReward,
     currentEvent,
     battleResult,
@@ -705,6 +770,9 @@ export const useGameStore = defineStore('game', () => {
     endTurn,
     claimCardReward,
     claimGoldOnly,
+    backToBattle,
+    backToReward,
+    forwardToMap,
     enterEvent,
     resolveEventOption,
     buyCard,

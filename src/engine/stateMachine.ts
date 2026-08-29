@@ -24,7 +24,8 @@ const TRANSITIONS: Record<GamePhase, GamePhase[]> = {
   MENU: ['RUN', 'TEST', 'CODEX', 'STATS'],
   RUN: ['BATTLE', 'SHOP', 'CAMPFIRE', 'EVENT', 'PAUSE', 'SETTLEMENT', 'REWARD'],
   BATTLE: ['RUN', 'REWARD', 'SETTLEMENT', 'PAUSE'],
-  REWARD: ['RUN'],
+  // REWARD → BATTLE：奖励页返回战斗界面（已结算只读查看，PRD §3.3.7）
+  REWARD: ['RUN', 'BATTLE'],
   SHOP: ['RUN', 'PAUSE'],
   CAMPFIRE: ['RUN', 'PAUSE'],
   EVENT: ['RUN', 'BATTLE'],

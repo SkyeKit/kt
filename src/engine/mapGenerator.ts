@@ -19,14 +19,18 @@ export function mulberry32(seed: number): () => number {
 }
 
 // 按种子生成整张地图（返回全部节点，含楼层/类型/连接）
-export function generateMap(seed: number): MapNode[] {
+// @param firstFloorIsNeow 第 1 层是否为先古之民（PRD §3.1：自第 2 局起；首局为普通节点）
+export function generateMap(seed: number, firstFloorIsNeow = true): MapNode[] {
   const rng = mulberry32(seed)
   const total = MAP.totalFloors
   const nodes: MapNode[] = []
-  // 每层节点列（第 1 层与 Boss 层固定 1 列）
-  const widths = new Array(total + 1).fill(MAP.branchWidth)
+  // 每层分支宽度：第 1/17 层固定 1 列，其余 2~5 条/层随机（PRD §3.2.1）
+  const widths = new Array(total + 1).fill(0)
   widths[1] = 1
   widths[total] = 1
+  for (let floor = 2; floor < total; floor++) {
+    widths[floor] = MAP.branchMin + Math.floor(rng() * (MAP.branchMax - MAP.branchMin + 1))
+  }
   // 逐层创建节点
   for (let floor = 1; floor <= total; floor++) {
     const w = widths[floor]
@@ -36,7 +40,7 @@ export function generateMap(seed: number): MapNode[] {
         id,
         floor,
         row,
-        type: resolveFloorType(floor, row, rng),
+        type: resolveFloorType(floor, firstFloorIsNeow, rng),
         next: [],
         visited: false,
         locked: floor > 1,
@@ -73,7 +77,14 @@ export function generateMap(seed: number): MapNode[] {
 }
 
 // 解析楼层/列类型：固定楼层优先，其余按权重随机（PRD §3.2.1）
-function resolveFloorType(floor: number, _row: number, rng: () => number): MapNodeType {
+// @param firstFloorIsNeow 首局时第 1 层为普通节点而非先古之民
+function resolveFloorType(
+  floor: number,
+  firstFloorIsNeow: boolean,
+  rng: () => number,
+): MapNodeType {
+  // 第 1 层：首局为普通节点，第 2 局起为先古之民（PRD §3.1/§3.2.1）
+  if (floor === 1) return firstFloorIsNeow ? 'neow' : 'monster'
   const fixed = MAP.fixedFloors[floor]
   if (fixed) return fixed
   // 精英仅在第 4 层及以后出现（避免前期过难），其余按权重

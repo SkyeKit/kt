@@ -4,7 +4,28 @@
       "id": "self_help_book",
       "name": "自助指南",
       "stage": "any",
-      "options": [],
+      "options": [
+        {
+          "text": "读完整本书",
+          "effect": "选择一张能力牌**附魔**：**迅速****2**。",
+          "excluded": false
+        },
+        {
+          "text": "随便读个一段",
+          "effect": "选择一张技能牌**附魔**：**灵巧****2**。",
+          "excluded": false
+        },
+        {
+          "text": "读下封底",
+          "effect": "选择一张攻击牌**附魔**：**锋利****2**。",
+          "excluded": false
+        },
+        {
+          "text": "离开",
+          "effect": "你没有任何可以附魔的牌。",
+          "excluded": false
+        }
+      ],
       "excluded": false
     },
     {
@@ -12,7 +33,18 @@
       "name": "滑脚木桥",
       "stage": "any",
       "trigger": "当前总楼层数大于6，且所有玩家牌组中都有至少1张可移除牌",
-      "options": [],
+      "options": [
+        {
+          "text": "跨越",
+          "effect": "**1张随机卡牌**将从你的**牌组**中被移除。",
+          "excluded": false
+        },
+        {
+          "text": "再撑一会",
+          "effect": "失去**3**点生命。重新随机上方选项中的卡牌。",
+          "excluded": false
+        }
+      ],
       "excluded": false
     },
     {
@@ -20,21 +52,49 @@
       "name": "药水的未来？",
       "stage": "any",
       "trigger": "所有玩家至少拥有 2 瓶药水",
-      "options": [],
+      "options": [
+        {
+          "text": "放入一瓶药水",
+          "effect": "失去**对应药水**。获得一次**3**选**1**卡牌奖励，候选牌均为**升级过**的**同稀有度、同随机类型的牌**。",
+          "excluded": true
+        }
+      ],
       "excluded": true
     },
     {
       "id": "this_or_that",
       "name": "这个还是那个？",
       "stage": "any",
-      "options": [],
+      "options": [
+        {
+          "text": "这个",
+          "effect": "失去**6**点生命。获得**41-68****金币**。",
+          "excluded": false
+        },
+        {
+          "text": "那个",
+          "effect": "将一张**笨拙**加入你的**牌组**。获得一件随机**遗物**。",
+          "excluded": false
+        }
+      ],
       "excluded": false
     },
     {
       "id": "aroma_of_chaos",
       "name": "混沌芳香",
       "stage": "overgrowth",
-      "options": [],
+      "options": [
+        {
+          "text": "放任自流",
+          "effect": "**变化**你**牌组**中的一张牌。",
+          "excluded": false
+        },
+        {
+          "text": "维持理智",
+          "effect": "**升级**你**牌组**中的一张牌。",
+          "excluded": false
+        }
+      ],
       "excluded": false
     },
     {
@@ -42,7 +102,18 @@
       "name": "多尼斯异鸟巢",
       "stage": "overgrowth",
       "trigger": "所有玩家都不能已有事件宠物：没有添加宠物的遗物，且牌组中没有多尼斯异鸟蛋",
-      "options": [],
+      "options": [
+        {
+          "text": "吃掉这颗蛋",
+          "effect": "获得**7**点最大生命值。",
+          "excluded": false
+        },
+        {
+          "text": "带走这颗蛋",
+          "effect": "将一张**多尼斯异鸟蛋**加入你的**牌组**。",
+          "excluded": false
+        }
+      ],
       "excluded": false
     },
     {
@@ -50,14 +121,31 @@
       "name": "茂密的植被",
       "stage": "overgrowth",
       "trigger": "多人模式下所有玩家血量高于本事件失去生命值（8）",
-      "options": [],
+      "options": [
+        {
+          "text": "坚持跋涉",
+          "effect": "获得**61-99****金币**。失去**8**点生命。",
+          "excluded": false
+        }
+      ],
       "excluded": false
     },
     {
       "id": "jungle_maze_adventure",
       "name": "丛林迷宫奇遇",
       "stage": "overgrowth",
-      "options": [],
+      "options": [
+        {
+          "text": "结伴同行",
+          "effect": "获得**35-64****金币**。",
+          "excluded": false
+        },
+        {
+          "text": "独自挑战",
+          "effect": "获得**135-164****金币**。失去**18**点生命。",
+          "excluded": false
+        }
+      ],
       "excluded": false
     },
     {
@@ -65,7 +153,18 @@
       "name": "冷光合唱团",
       "stage": "overgrowth",
       "trigger": "所有玩家金币数不小于149",
-      "options": [],
+      "options": [
+        {
+          "text": "供奉",
+          "effect": "支付**100-149****金币**。获取一件随机**遗物**。",
+          "excluded": false
+        },
+        {
+          "text": "探入菌肉",
+          "effect": "从你的**牌组**移除**2**张牌。将一张**孢子心灵**添加到你的**牌组**。",
+          "excluded": false
+        }
+      ],
       "excluded": false
     },
     {
@@ -73,21 +172,54 @@
       "name": "变形灵林谷",
       "stage": "overgrowth",
       "trigger": "所有玩家至少拥有100金币和2张可变化的卡牌",
-      "options": [],
+      "options": [
+        {
+          "text": "大群变形灵",
+          "effect": "失去**所有****金币**。**变化****2**张牌。",
+          "excluded": false
+        },
+        {
+          "text": "落单变形灵",
+          "effect": "获得**5**点最大生命。",
+          "excluded": false
+        }
+      ],
       "excluded": false
     },
     {
       "id": "sapphire_seed",
       "name": "蓝宝石种子",
       "stage": "overgrowth",
-      "options": [],
+      "options": [
+        {
+          "text": "吃下",
+          "effect": "回复**9**生命。**升级**你**牌组**中的一张牌。",
+          "excluded": false
+        },
+        {
+          "text": "种植培育",
+          "effect": "给一张牌**附魔**：**播种**。",
+          "excluded": false
+        }
+      ],
       "excluded": false
     },
     {
       "id": "tablet_of_truth",
       "name": "真理石板",
       "stage": "overgrowth",
-      "options": [],
+      "options": [
+        {
+          "text": "解读",
+          "effect": "失去**3**点最大生命。随机**升级**一张牌。",
+          "excluded": false
+        },
+        {
+          "text": "砸碎",
+          "effect": "回复**20**点生命。",
+          "excluded": false
+        }
+      ],
       "excluded": false
     },
     {
@@ -95,14 +227,36 @@
       "name": "无休之处",
       "stage": "overgrowth",
       "trigger": "所有玩家当前生命值都不高于自己最大生命值的 70%",
-      "options": [],
+      "options": [
+        {
+          "text": "杀死树木",
+          "effect": "失去**8**点最大生命。获得一件随机**遗物**。",
+          "excluded": false
+        },
+        {
+          "text": "就这样休息",
+          "effect": "**回复全部生命值。**获得**睡眠不佳**。",
+          "excluded": false
+        }
+      ],
       "excluded": false
     },
     {
       "id": "wellspring",
       "name": "泉水",
       "stage": "overgrowth",
-      "options": [],
+      "options": [
+        {
+          "text": "沐浴",
+          "effect": "从你的**牌组**中移除**1**张牌。将**1**张**愧疚**添加到你的**牌组**。",
+          "excluded": false
+        },
+        {
+          "text": "装瓶",
+          "effect": "获得**1**瓶随机**药水**。",
+          "excluded": true
+        }
+      ],
       "excluded": false
     },
     {
@@ -110,7 +264,18 @@
       "name": "低语空谷",
       "stage": "overgrowth",
       "trigger": "所有玩家至少拥有 44 金币",
-      "options": [],
+      "options": [
+        {
+          "text": "交换金币",
+          "effect": "失去**26-44****金币**。获得**2**瓶随机**药水**。",
+          "excluded": true
+        },
+        {
+          "text": "拥抱树木",
+          "effect": "失去**9**点生命。选择一张牌**变化**。",
+          "excluded": false
+        }
+      ],
       "excluded": false
     },
     {
@@ -118,7 +283,23 @@
       "name": "木雕",
       "stage": "overgrowth",
       "trigger": "所有玩家牌库里都要有至少 1 张“可移除的基础牌”",
-      "options": [],
+      "options": [
+        {
+          "text": "鸟",
+          "effect": "选择**1**张初始牌**变化**为**啄击**。",
+          "excluded": false
+        },
+        {
+          "text": "蛇",
+          "effect": "给**1**张牌**附魔**：**蛇行**。",
+          "excluded": false
+        },
+        {
+          "text": "圆环",
+          "effect": "选择**1**张初始牌**变化**为**坚韧之环**。",
+          "excluded": false
+        }
+      ],
       "excluded": false
     }
   ]

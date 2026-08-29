@@ -2,7 +2,9 @@
 /**
  * 战斗视图（PRD §3.3）：敌人（意图）→ 战斗日志 → 玩家状态 → 手牌
  * 点击卡牌打出（对首个存活敌人）；「结束回合」进入敌人回合
+ * 从奖励页返回时处于只读模式（已结算，仅查看战场，PRD §3.3.7）
  */
+import { computed } from 'vue'
 import { useBattle } from '@/composables/useBattle'
 import { useGameStore } from '@/stores/gameStore'
 import { useSettingsStore } from '@/stores/settingsStore'
@@ -11,19 +13,29 @@ const { ctx, hand, enemies, canPlay } = useBattle()
 const store = useGameStore()
 const settings = useSettingsStore()
 
-// 打出卡牌（对首个存活敌人）
+// 只读模式：战斗已结算（胜利后从奖励页返回查看战场）
+const readonly = computed(() => store.battleResult?.status === 'victory')
+
+// 打出卡牌（对首个存活敌人）；只读模式禁用
 function play(cardId: string): void {
+  if (readonly.value) return
   store.playCard(cardId)
 }
 
-// 结束回合
+// 结束回合；只读模式禁用
 function endTurn(): void {
+  if (readonly.value) return
   store.endTurn()
 }
 
 // 返回主菜单（放弃本局）
 function abandon(): void {
   store.abandonRun()
+}
+
+// 只读模式返回奖励页（BATTLE → REWARD，PRD §3.3.7）
+function backToReward(): void {
+  store.backToReward()
 }
 </script>
 
@@ -54,14 +66,21 @@ function abandon(): void {
         v-for="h in hand"
         :key="h.id"
         :card="h.card"
-        :playable="canPlay(h.card)"
-        @select="canPlay(h.card) && play(h.id)"
+        :playable="!readonly && canPlay(h.card)"
+        @select="!readonly && canPlay(h.card) && play(h.id)"
       />
     </div>
 
     <div class="actions">
-      <button class="btn btn-primary" @click="endTurn">结束回合</button>
-      <button class="btn" @click="abandon">放弃本局</button>
+      <!-- 只读模式（战斗已胜利，从奖励页返回）：仅可返回奖励页 -->
+      <template v-if="readonly">
+        <span class="readonly-tip">战斗已结束（查看战场）</span>
+        <button class="btn btn-primary" @click="backToReward">返回奖励 →</button>
+      </template>
+      <template v-else>
+        <button class="btn btn-primary" @click="endTurn">结束回合</button>
+        <button class="btn" @click="abandon">放弃本局</button>
+      </template>
     </div>
 
     <!-- 调试控制台（PRD §3.10） -->
@@ -120,7 +139,12 @@ function abandon(): void {
 .actions {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 12px;
+}
+.readonly-tip {
+  color: var(--text-faint);
+  font-size: 13px;
 }
 .console {
   position: fixed;
