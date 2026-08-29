@@ -2,11 +2,17 @@
 /**
  * 卡牌组件：展示费用/名称/类型/效果（agent.md §9.3：边框色区分类型，灰底统一）
  * 卡面文字直接来自数据（data/cards.json），组件内不硬编码数值
+ * dragging 态：拖拽中浮起的卡牌（去掉 hover 效果，含光标 grabbing）
  */
 import { computed } from 'vue'
 import type { Card } from '@/types'
 
-const props = defineProps<{ card: Card | undefined; playable?: boolean; selected?: boolean }>()
+const props = defineProps<{
+  card: Card | undefined
+  playable?: boolean
+  selected?: boolean
+  dragging?: boolean
+}>()
 const emit = defineEmits<{ select: [] }>()
 
 // 边框色按类型（攻击红/技能灰/能力金/诅咒紫/事件绿）
@@ -29,7 +35,11 @@ const costText = computed(() => {
 </script>
 
 <template>
-  <div class="card" :class="[borderClass, { playable, selected }]" @click="emit('select')">
+  <div
+    class="card"
+    :class="[borderClass, { playable, selected, dragging }]"
+    @click.stop="emit('select')"
+  >
     <div class="card-cost">{{ costText }}</div>
     <div class="card-name">{{ card?.name ?? '?' }}</div>
     <div class="card-type">
@@ -54,7 +64,9 @@ const costText = computed(() => {
   position: relative;
   cursor: pointer;
   user-select: none;
-  transition: transform 0.08s;
+  transition:
+    transform 0.08s,
+    box-shadow 0.08s;
 }
 .card:hover {
   transform: translateY(-4px);
@@ -65,6 +77,18 @@ const costText = computed(() => {
 }
 .card.selected {
   outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+// 拖拽态：抬高 + 旋转小角度 + 阴影
+.card.dragging {
+  transform: scale(1.05) rotate(-3deg);
+  cursor: grabbing;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7);
+}
+// 拖拽态禁用 hover 上抬
+.card.dragging:hover {
+  transform: scale(1.05) rotate(-3deg);
 }
 
 .card-attack {
@@ -122,7 +146,7 @@ const costText = computed(() => {
   line-height: 1.5;
   color: var(--text-main);
   overflow: hidden;
-  background: rgba(0, 0, 0, 0.25); // 文字遮罩（§9.5）
+  background: rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   padding: 4px;
 }

@@ -1,12 +1,19 @@
 <script setup lang="ts">
 /**
  * 敌人组件（PRD §3.3/§5.2）：名称 / 意图图标与数值 / 血槽 / 格挡
- * 支持"目标选择"状态（战斗中选择攻击目标时高亮可点，PRD §3.3.2）
+ * targetable：高亮可点（点击态进入"等待选目标"）
+ * hovered：拖拽中鼠标悬停在敌怪上（活靶金色描边 + 缩放）
+ * selected：已选中态（点击卡后点怪物打出的目标）
  */
 import { computed } from 'vue'
 import type { CombatUnit } from '@/engine/combatEngine'
 
-const props = defineProps<{ unit: CombatUnit; targetable?: boolean; selected?: boolean }>()
+const props = defineProps<{
+  unit: CombatUnit
+  targetable?: boolean
+  hovered?: boolean
+  selected?: boolean
+}>()
 const emit = defineEmits<{ select: [unit: CombatUnit] }>()
 
 // 意图文本（攻击显示伤害，防御显示格挡，其他显示类型）
@@ -43,7 +50,7 @@ const statusText = computed(() => {
 </script>
 
 <template>
-  <div class="enemy" :class="{ targetable, selected }" @click="targetable && emit('select', unit)">
+  <div class="enemy" :class="{ targetable, hovered, selected }" @click.stop="emit('select', unit)">
     <!-- 意图（头顶，PRD §5.2：意图图标） -->
     <div class="enemy-intent" :class="{ attack: isAttack }">{{ intentText }}</div>
     <div class="enemy-name">{{ unit.name }}</div>
@@ -70,7 +77,8 @@ const statusText = computed(() => {
   gap: 4px;
   transition:
     border-color 0.12s,
-    transform 0.08s;
+    transform 0.08s,
+    box-shadow 0.12s;
 }
 .enemy-intent {
   font-size: 12px;
@@ -119,7 +127,8 @@ const statusText = computed(() => {
   font-size: 11px;
   color: var(--blue);
 }
-/* 目标选择状态：可点目标高亮描边（PRD §3.3.2 拖拽指向箭头简化版） */
+
+/* 目标选择状态（点击卡后等待选目标）*/
 .enemy.targetable {
   cursor: pointer;
   border-color: var(--gold);
@@ -128,6 +137,15 @@ const statusText = computed(() => {
 .enemy.targetable:hover {
   transform: scale(1.04);
 }
+
+/* 拖拽中悬停高亮（活靶） */
+.enemy.hovered {
+  border-color: var(--gold);
+  transform: scale(1.08);
+  box-shadow: 0 0 16px rgba(201, 162, 39, 0.55);
+}
+
+/* 已选中 */
 .enemy.selected {
   border-color: var(--accent-strong);
   box-shadow: 0 0 12px rgba(217, 102, 63, 0.5);

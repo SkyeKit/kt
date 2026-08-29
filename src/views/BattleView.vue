@@ -1,16 +1,20 @@
 <script setup lang="ts">
 /**
- * 战斗视图（PRD §5.2 / document/ui.md 布局）
- * 自上而下：顶栏（HP/金币/药水/层数/Boss + 回合/卡组/菜单）→ 遗物栏 → 战场
- * → 底部（左侧 = 抽牌堆，上方为能量球 / 右侧 = 弃牌堆，上方为消耗牌堆 / 中央 = 手牌）
- * 交互（PRD §3.3.2）：点击卡牌选择 → 点击怪物指定目标；仅 1 个怪物时自动使用
- * 牌堆查看：点击抽牌堆 / 弃牌堆 / 消耗牌堆三者之一弹窗查看（PRD ui.md §"牌堆"操作）
+ * 战斗视图（PRD §5.2 / document/ui.md）
+ * 布局：SingleRunStatusBar 顶栏（HP/金币/药水/层数/Boss + 回合/卡组/菜单）→ 战场
+ * → 底栏（左 [能量 / 抽牌堆] / 中 [手牌] / 右 [结束回合 / 消耗堆 / 弃牌堆]）
+ * 交互（PRD §5.3 + §3.3.2）：拖拽玩法
+ *   - 攻击卡：mousedown → 拖拽中显示虚线箭头 → 松手在怪物上指定目标
+ *   - 技能/能力卡：拖拽到玩家身上或手牌外松手即可直接打出
+ *   - 兼容点击：点击攻击卡 → 进入选择态 → 再点怪物
  */
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useBattle } from '@/composables/useBattle'
 import { useGameStore } from '@/stores/gameStore'
 import { useSettingsStore } from '@/stores/settingsStore'
 import { getCard, getRelic } from '@/data'
+import SingleRunStatusBar from '@/components/common/SingleRunStatusBar.vue'
+import type { Card } from '@/types'
 
 const { ctx, hand, enemies, canPlay } = useBattle()
 const store = useGameStore()
@@ -19,70 +23,236 @@ const settings = useSettingsStore()
 // 只读模式：战斗已结算（胜利后从奖励页返回查看战场，PRD §3.3.7）
 const readonly = computed(() => store.battleResult?.status === 'victory')
 
-// ===== 目标选择（PRD §3.3.2） =====
-const selectedCardId = ref<string | null>(null) // 已选中待定目标的卡牌
+// ===== 目标选择 / 拖拽状态 =====
+// 拖拽态：null 表示无拖拽；对象包含卡牌 id、卡牌中心坐标、当前鼠标坐标
+interface DragState {
+  cardId: string
+  startX: number
+  startY: number
+  currentX: number
+  currentY: number
+  // 是否已经离开手牌（拖出去即开始拖拽）
+  moved: boolean
+}
+const drag = ref<DragState | null>(null)
+// 点选态（点攻击卡后等待点怪物）
+const selectedCardId = ref<string | null>(null)
 
-// 点击手牌：可打出时 → 单怪自动使用 / 多怪进入目标选择
-function onCardClick(cardId: string): void {
-  if (readonly.value) return
-  const card = getCard(cardId)
-  if (!canPlay(card)) return
-  if (enemies.value.length <= 1) {
-    play(cardId)
+// 战场 DOM ref（用于计算相对坐标、判定玩家区域）
+const fieldRef = ref<HTMLDivElement | null>(null)
+// 玩家卡 ref
+const playerRef = ref<HTMLDivElement | null>(null)
+// 各敌人 DOM refs（key = enemy.id）→ 用于鼠标进入/离开高亮
+const enemyRefs = ref<Record<string, HTMLElement>>({})
+// 自定义组件 ref 取其 $el 根节点；普通元素直接接收
+function setEnemyRef(id: string, el: unknown): void {
+  if (el instanceof HTMLElement) {
+    enemyRefs.value[id] = el
     return
   }
-  // 再次点击同一张卡 = 取消选择
-  selectedCardId.value = selectedCardId.value === cardId ? null : cardId
+  if (el && typeof el === 'object' && '$el' in el) {
+    const root = (el as { $el: Element | null }).$el
+    if (root instanceof HTMLElement) {
+      enemyRefs.value[id] = root
+      return
+    }
+  }
+  delete enemyRefs.value[id]
 }
 
-// 点击怪物：指定目标打出
+// 当前悬停的敌人 id（拖拽中 + 点击选中时）
+const hoveredEnemyId = ref<string | null>(null)
+
+// ===== 拖拽玩法（PRD §5.3） =====
+// 计算卡牌中心点（在 battle 容器内的相对坐标）
+function getCardCenter(cardId: string): { x: number; y: number } | null {
+  const el = document.querySelector<HTMLElement>(`.hand-slot[data-card-id="${CSS.escape(cardId)}"]`)
+  const field = fieldRef.value
+  if (!el || !field) return null
+  const elRect = el.getBoundingClientRect()
+  const fRect = field.getBoundingClientRect()
+  return {
+    x: elRect.left + elRect.width / 2 - fRect.left,
+    y: elRect.top + elRect.height / 2 - fRect.top,
+  }
+}
+
+// 鼠标按下卡牌：开始拖拽态（只有能打出的牌且非只读）
+function onCardMouseDown(ev: MouseEvent, cardId: string): void {
+  if (readonly.value) return
+  const card = getCard(cardId)
+  if (!card || !canPlay(card)) return
+  // 阻止文本选择 + 阻止 bubble 触发 BattleView 根 @click 清空 selectedCardId
+  ev.preventDefault()
+  ev.stopPropagation()
+  const field = fieldRef.value
+  if (!field) return
+  const fRect = field.getBoundingClientRect()
+  const cardCenter = getCardCenter(cardId) ?? { x: 0, y: 0 }
+  const needsTarget = card.type === 'attack'
+  selectedCardId.value = null
+  // 非攻击类：mousedown 即视为"开始"准备直接使用（不需要拖拽）
+  if (!needsTarget) {
+    drag.value = {
+      cardId,
+      startX: cardCenter.x,
+      startY: cardCenter.y,
+      currentX: ev.clientX - fRect.left,
+      currentY: ev.clientY - fRect.top,
+      moved: false,
+    }
+  } else {
+    // 攻击类：直接进入拖拽态（用户要求的"拖拽到怪物"）
+    drag.value = {
+      cardId,
+      startX: cardCenter.x,
+      startY: cardCenter.y,
+      currentX: ev.clientX - fRect.left,
+      currentY: ev.clientY - fRect.top,
+      moved: true,
+    }
+  }
+}
+
+// 拖拽中：更新坐标、判定悬停敌怪
+function onMouseMove(ev: MouseEvent): void {
+  if (!drag.value) return
+  const field = fieldRef.value
+  if (!field) return
+  const fRect = field.getBoundingClientRect()
+  drag.value.currentX = ev.clientX - fRect.left
+  drag.value.currentY = ev.clientY - fRect.top
+  // 判定悬停敌怪
+  hoveredEnemyId.value = hitTestEnemy(ev.clientX, ev.clientY)
+}
+
+// 松手：根据当前点击位置决定出牌、选中目标或取消
+function onMouseUp(ev: MouseEvent): void {
+  const d = drag.value
+  drag.value = null
+  if (!d) return
+  const card = getCard(d.cardId)
+  if (!card || !canPlay(card)) {
+    selectedCardId.value = null
+    hoveredEnemyId.value = null
+    return
+  }
+  // 玩家区域 = 玩家卡 div 命中
+  if (playerRef.value) {
+    const r = playerRef.value.getBoundingClientRect()
+    if (
+      ev.clientX >= r.left &&
+      ev.clientX <= r.right &&
+      ev.clientY >= r.top &&
+      ev.clientY <= r.bottom
+    ) {
+      // 非攻击类在自己身上 = 使用；攻击类在自己身上 = 取消
+      if (card.type !== 'attack') {
+        play(d.cardId)
+        return
+      }
+      selectedCardId.value = null
+      hoveredEnemyId.value = null
+      return
+    }
+  }
+  // 攻击类：是否命中怪物
+  if (card.type === 'attack') {
+    const enemyId = hitTestEnemy(ev.clientX, ev.clientY)
+    if (enemyId) {
+      play(d.cardId, enemyId)
+      return
+    }
+  } else {
+    // 非攻击类：拖出到手牌"player 区域"之外即视为使用（依据用户需求"拖出手牌区"）
+    // 已先判定 player 区域；如果在玩家身上则上面分支处理；其他地方松手 → 使用
+    play(d.cardId)
+    return
+  }
+  // 空白处松手：取消
+  selectedCardId.value = null
+  hoveredEnemyId.value = null
+}
+
+// 命中测试：鼠标点是否在某敌怪 DOM 内
+function hitTestEnemy(clientX: number, clientY: number): string | null {
+  for (const [id, el] of Object.entries(enemyRefs.value)) {
+    const r = el.getBoundingClientRect()
+    if (clientX >= r.left && clientX <= r.right && clientY >= r.top && clientY <= r.bottom) {
+      return id
+    }
+  }
+  return null
+}
+
+// ===== 兼容点击玩法（点击卡牌→点击怪物） =====
+// 攻击卡：点击进入选择态（先前的 click 实现）；再点怪物出牌
+function onCardClick(cardId: string): void {
+  if (readonly.value) return
+  if (drag.value) return // 拖拽中忽略点击
+  const card = getCard(cardId)
+  if (!card || !canPlay(card)) return
+  if (card.type === 'attack') {
+    // 单怪时直接打出，多怪时进入"等待选怪"态
+    if (enemies.value.length <= 1 && enemies.value[0]) {
+      play(cardId, enemies.value[0].id)
+      return
+    }
+    selectedCardId.value = selectedCardId.value === cardId ? null : cardId
+  } else {
+    // 技能/能力：单次点击直接打出
+    play(cardId)
+  }
+}
+
+// 点击敌人：点击态时作为目标；若在拖拽中则忽略（拖拽用松手判定）
 function onEnemyClick(unitId: string): void {
+  if (drag.value) return
   if (!selectedCardId.value) return
   play(selectedCardId.value, unitId)
   selectedCardId.value = null
 }
 
-// 打出卡牌（对指定目标；未指定时取首个存活敌人）
+// 真正出牌入口
 function play(cardId: string, targetId?: string): void {
   if (readonly.value) return
   store.playCard(cardId, targetId)
 }
 
-// 结束回合；只读模式禁用
+// ===== 结束回合 =====
 function endTurn(): void {
   if (readonly.value) return
   store.endTurn()
 }
 
-// 返回主菜单（放弃本局）
-function abandon(): void {
-  store.abandonRun()
+// 返回奖励页（已结算只读战斗 → 奖励页）
+function backToReward(): void {
+  store.backToReward()
 }
 
-// ===== 弹窗：卡组 / 菜单 / 单个牌堆 =====
-// 点击抽牌堆 / 弃牌堆 / 消耗牌堆直接查看对应牌堆详情（PRD ui.md）
-const showDeck = ref(false)
-const showMenu = ref(false)
+// ===== 弹窗：单牌堆查看 =====
 const inspectingPile = ref<'draw' | 'discard' | 'exhaust' | null>(null)
-
-// 当前查看牌堆的卡牌列表（按堆顺序，方便定位）
 const inspectingCards = computed(() => {
   if (!inspectingPile.value) return []
   const list =
     inspectingPile.value === 'draw'
-      ? ctx.value!.drawPile.slice().reverse() // 抽牌堆顶部在前
+      ? ctx.value!.drawPile.slice().reverse()
       : inspectingPile.value === 'discard'
-        ? ctx.value!.discardPile.slice().reverse() // 弃牌堆顶在前
-        : ctx.value!.exhaustPile.slice().reverse() // 消耗堆顶在前
+        ? ctx.value!.discardPile.slice().reverse()
+        : ctx.value!.exhaustPile.slice().reverse()
   return list.map((id) => ({ id, card: getCard(id) }))
 })
-
-// 点击对应牌堆：开/关弹窗（点击同一堆可关闭）
 function openPile(pile: 'draw' | 'discard' | 'exhaust'): void {
   inspectingPile.value = inspectingPile.value === pile ? null : pile
 }
 
-// 卡牌扇形角度（手牌越多角度越大，§5.3 抽牌动画静态版）
+const pileLabel: Record<'draw' | 'discard' | 'exhaust', string> = {
+  draw: '抽牌堆',
+  discard: '弃牌堆',
+  exhaust: '消耗牌堆',
+}
+
+// ===== 卡牌扇形角度 =====
 function fanStyle(index: number, total: number): Record<string, string> {
   if (total <= 1) return {}
   const spread = Math.min(24, total * 4)
@@ -92,48 +262,97 @@ function fanStyle(index: number, total: number): Record<string, string> {
   }
 }
 
-// 遗物栏
-const relicNames = computed(() => (store.run?.relics ?? []).map((id) => getRelic(id)?.name ?? id))
+// 拖拽时卡牌是否需要浮起 + 跟随光标（脱离原位）
+const draggingCard = computed(() => drag.value)
+const isDraggingAttack = computed(() => drag.value && getCard(drag.value.cardId)?.type === 'attack')
 
-// 牌堆文案
-const pileLabel: Record<'draw' | 'discard' | 'exhaust', string> = {
-  draw: '抽牌堆',
-  discard: '弃牌堆',
-  exhaust: '消耗牌堆',
+// 箭头终点：拖到敌怪上时指向敌怪中心；否则指向鼠标
+const arrow = computed(() => {
+  if (!drag.value) return null
+  let tx = drag.value.currentX
+  let ty = drag.value.currentY
+  let toEnemy: string | null = null
+  if (isDraggingAttack.value) {
+    if (hoveredEnemyId.value && enemyRefs.value[hoveredEnemyId.value]) {
+      const r = enemyRefs.value[hoveredEnemyId.value]!.getBoundingClientRect()
+      const f = fieldRef.value!.getBoundingClientRect()
+      tx = r.left + r.width / 2 - f.left
+      ty = r.top + r.height / 2 - f.top
+      toEnemy = hoveredEnemyId.value
+    }
+  } else {
+    // 非攻击卡：让鼠标悬停玩家卡时指向玩家中心（自身用的视觉反馈）
+    if (playerRef.value && hoveredEnemyId.value === null) {
+      const r = playerRef.value.getBoundingClientRect()
+      const f = fieldRef.value!.getBoundingClientRect()
+      const cursorX = drag.value.currentX
+      const cursorY = drag.value.currentY
+      // 鼠标若落在玩家卡区域内 → 替换为玩家卡中心
+      if (
+        cursorX >= r.left - f.left &&
+        cursorX <= r.right - f.left &&
+        cursorY >= r.top - f.top &&
+        cursorY <= r.bottom - f.top
+      ) {
+        tx = r.left + r.width / 2 - f.left
+        ty = r.top + r.height / 2 - f.top
+      }
+    }
+  }
+  return { x1: drag.value.startX, y1: drag.value.startY, x2: tx, y2: ty, toEnemy }
+})
+
+// ===== 全局 mouseup 监听：即使鼠标在 BattleView 外松开也能捕获 =====
+function handleWindowMouseUp(ev: MouseEvent): void {
+  if (drag.value) onMouseUp(ev)
 }
+function handleWindowMouseMove(ev: MouseEvent): void {
+  if (drag.value) onMouseMove(ev)
+}
+onMounted(() => {
+  window.addEventListener('mousemove', handleWindowMouseMove)
+  window.addEventListener('mouseup', handleWindowMouseUp)
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('mousemove', handleWindowMouseMove)
+  window.removeEventListener('mouseup', handleWindowMouseUp)
+})
+
+// ===== 战斗页面所需的 battle ctx 用于 status bar =====
+const playerHp = computed(() => ctx.value?.player.hp ?? 0)
+const playerMaxHp = computed(() => ctx.value?.player.maxHp ?? 0)
+const playerBlock = computed(() => ctx.value?.player.block ?? 0)
+const playerStrength = computed(() => ctx.value?.player.strength ?? 0)
+const turn = computed(() => ctx.value?.turn ?? 0)
+const energy = computed(() => ctx.value?.energy ?? 0)
+const maxEnergy = computed(() => ctx.value?.maxEnergy ?? 0)
+
+// 遗物栏副本（SingleRunStatusBar 自己接 store.run；这里为了避免重复渲染只在 BattleView 不再渲染）
+void getRelic
+
+// 拖拽浮起的卡牌数据：可能 undefined（找不到则不渲染浮卡）
+const draggedCard = computed<Card | undefined>(() =>
+  drag.value ? getCard(drag.value.cardId) : undefined,
+)
 </script>
 
 <template>
   <div v-if="ctx" class="battle" @click="selectedCardId = null">
-    <!-- ① 顶部状态栏（ui.md：HP/金币/药水/层数/Boss + 回合/卡组/菜单） -->
-    <header class="top-bar">
-      <div class="top-left">
-        <span class="avatar" title="铁甲战士">⚔️</span>
-        <span class="hp">❤ {{ ctx.player.hp }}/{{ ctx.player.maxHp }}</span>
-        <span class="gold">💰 {{ store.run?.gold ?? 0 }}</span>
-        <span class="potion-slot" title="药水系统未上线">药水（—）</span>
-        <span class="floor">第 {{ store.run?.floor ?? 1 }} 层</span>
-        <span v-if="store.battleKind === 'boss'" class="boss-tag">BOSS</span>
-      </div>
-      <div class="top-right">
-        <span class="turn">回合 {{ ctx.turn }}</span>
-        <button class="btn top-btn" title="查看当前牌组" @click.stop="showDeck = !showDeck">
-          卡组
-        </button>
-        <button class="btn top-btn" title="暂停菜单" @click.stop="showMenu = true">菜单</button>
-      </div>
-    </header>
+    <!-- ① 共用状态栏（HP/金币/药水/层数/Boss + 回合/能量/卡组/菜单 + 遗物栏） -->
+    <SingleRunStatusBar
+      :player-hp="playerHp"
+      :player-max-hp="playerMaxHp"
+      :player-block="playerBlock"
+      :player-strength="playerStrength"
+      :turn="turn"
+      :energy="energy"
+      :max-energy="maxEnergy"
+    />
 
-    <!-- ② 遗物栏（ui.md：遗物从左往右添加） -->
-    <div class="relic-bar">
-      <span class="relic-label">遗物</span>
-      <span v-for="(name, i) in relicNames" :key="i" class="relic-chip">{{ name }}</span>
-    </div>
-
-    <!-- ③ 战场：左玩家 | 右怪物（ui.md：意图 意图 意图 / 怪物1-2-3） -->
-    <div class="field" @click.stop>
+    <!-- ② 战场：左玩家 | 右怪物 -->
+    <div ref="fieldRef" class="field" @click.stop>
       <div class="player-side">
-        <div class="player-card">
+        <div ref="playerRef" class="player-card">
           <div class="player-avatar">⚔️</div>
           <div class="player-name">铁甲战士</div>
           <div class="player-hp-bar">
@@ -153,16 +372,53 @@ const pileLabel: Record<'draw' | 'discard' | 'exhaust', string> = {
         <EnemyView
           v-for="e in enemies"
           :key="e.id"
+          :ref="(el) => setEnemyRef(e.id, el)"
           :unit="e"
-          :targetable="Boolean(selectedCardId) && !readonly"
+          :targetable="(Boolean(selectedCardId) || Boolean(isDraggingAttack)) && !readonly"
+          :hovered="hoveredEnemyId === e.id"
           @select="onEnemyClick(e.id)"
         />
       </div>
+
+      <!-- 拖拽中的 SVG 虚线箭头叠加层 -->
+      <svg
+        v-if="arrow"
+        class="drag-arrow"
+        :viewBox="`0 0 ${fieldRef?.clientWidth ?? 1000} ${fieldRef?.clientHeight ?? 600}`"
+        preserveAspectRatio="none"
+      >
+        <defs>
+          <marker
+            id="arrowhead"
+            viewBox="0 0 10 10"
+            refX="9"
+            refY="5"
+            markerWidth="6"
+            markerHeight="6"
+            orient="auto-start-reverse"
+          >
+            <path
+              d="M 0 0 L 10 5 L 0 10 z"
+              :fill="arrow.toEnemy ? 'var(--gold)' : 'var(--text-dim)'"
+            />
+          </marker>
+        </defs>
+        <line
+          :x1="arrow.x1"
+          :y1="arrow.y1"
+          :x2="arrow.x2"
+          :y2="arrow.y2"
+          :stroke="arrow.toEnemy ? 'var(--gold)' : 'var(--text-dim)'"
+          stroke-width="3"
+          stroke-dasharray="6 5"
+          stroke-linecap="round"
+          marker-end="url(#arrowhead)"
+        />
+      </svg>
     </div>
 
-    <!-- ④ 底部操作区（左侧：抽牌堆 + 上方能量球 / 中央：手牌 / 右侧：弃牌堆 + 上方消耗堆） -->
+    <!-- ③ 底栏：左 [能量 / 抽牌堆] / 中 [手牌] / 右 [结束回合 / 消耗堆 / 弃牌堆] -->
     <div class="bottom">
-      <!-- 左侧：能量球（上方） + 抽牌堆（可点击查看） -->
       <div class="side-col">
         <div
           class="side-pile energy-orb"
@@ -183,32 +439,46 @@ const pileLabel: Record<'draw' | 'discard' | 'exhaust', string> = {
         </button>
       </div>
 
-      <!-- 中央：手牌 -->
       <div class="hand-area">
         <div class="hand">
           <div
             v-for="(h, i) in hand"
             :key="h.id + i"
             class="hand-slot"
+            :data-card-id="h.id"
             :style="fanStyle(i, hand.length)"
           >
             <CardView
               :card="h.card"
               :playable="!readonly && canPlay(h.card)"
-              :selected="selectedCardId === h.id"
+              :selected="selectedCardId === h.id && !draggingCard"
               @select="onCardClick(h.id)"
+              @mousedown="(ev: MouseEvent) => onCardMouseDown(ev, h.id)"
             />
           </div>
         </div>
-        <!-- 目标选择提示（PRD §3.3.2） -->
-        <p v-if="selectedCardId" class="target-hint">点击一个怪物作为目标（或再次点击卡牌取消）</p>
-        <button class="btn btn-primary end-btn" :disabled="readonly" @click="endTurn">
-          结束回合
-        </button>
+        <p v-if="selectedCardId && !draggingCard" class="target-hint">
+          点击一个怪物作为目标（或再次点击卡牌取消）
+        </p>
+        <p v-if="isDraggingAttack" class="target-hint">拖拽到目标怪物上松手释放</p>
+        <p v-else-if="draggingCard && !isDraggingAttack" class="target-hint">
+          拖出手牌区（到自己/场上任意位置）松手释放
+        </p>
       </div>
 
-      <!-- 右侧：消耗牌堆（上方） + 弃牌堆（可点击查看） -->
+      <!-- 右侧：结束回合（最上方）+ 消耗堆 + 弃牌堆 -->
       <div class="side-col">
+        <button
+          v-if="!readonly"
+          class="end-btn btn btn-primary"
+          title="结束玩家回合"
+          @click="endTurn"
+        >
+          结束回合
+        </button>
+        <button v-else class="end-btn btn" title="返回奖励页" @click="backToReward">
+          返回奖励 →
+        </button>
         <button
           class="side-pile pile-btn exhaust-pile"
           title="点击查看消耗牌堆"
@@ -230,18 +500,19 @@ const pileLabel: Record<'draw' | 'discard' | 'exhaust', string> = {
       </div>
     </div>
 
-    <!-- ⑤ 弹窗：卡组查看 -->
-    <div v-if="showDeck" class="modal" @click.stop>
-      <div class="modal-panel panel">
-        <h3 class="modal-title">卡组（{{ store.run?.deck.length ?? 0 }}）</h3>
-        <div class="modal-cards">
-          <CardView v-for="(id, i) in store.run?.deck ?? []" :key="i" :card="getCard(id)" />
-        </div>
-        <button class="btn" @click="showDeck = false">关闭</button>
-      </div>
+    <!-- 拖拽浮起的卡牌（脱离手牌，跟随鼠标） -->
+    <div
+      v-if="draggingCard && drag"
+      class="drag-card"
+      :style="{
+        left: drag.currentX + 'px',
+        top: drag.currentY + 'px',
+      }"
+    >
+      <CardView :card="draggedCard" :dragging="true" />
     </div>
 
-    <!-- ⑥ 弹窗：单牌堆查看（点击抽/弃/消耗牌堆触发） -->
+    <!-- 弹窗：单牌堆查看 -->
     <div v-if="inspectingPile" class="modal" @click.stop>
       <div class="modal-panel panel">
         <h3 class="modal-title">
@@ -269,18 +540,7 @@ const pileLabel: Record<'draw' | 'discard' | 'exhaust', string> = {
       </div>
     </div>
 
-    <!-- ⑦ 弹窗：暂停菜单（PRD §3.11） -->
-    <div v-if="showMenu" class="modal" @click.stop>
-      <div class="modal-panel panel">
-        <h3 class="modal-title">菜单</h3>
-        <div class="menu-btns">
-          <button class="btn btn-primary" @click="showMenu = false">继续游戏</button>
-          <button class="btn" @click="abandon">放弃本局（回主菜单）</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- 调试控制台（PRD §3.10） -->
+    <!-- 调试控制台 -->
     <div v-if="settings.settings.showDebugConsole" class="console">
       <ConsolePanel />
     </div>
@@ -295,81 +555,10 @@ const pileLabel: Record<'draw' | 'discard' | 'exhaust', string> = {
   padding: 10px 18px;
   gap: 8px;
   user-select: none;
+  position: relative;
 }
 
-/* ① 顶部状态栏 */
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 6px;
-  font-size: 14px;
-}
-.top-left {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-.avatar {
-  font-size: 20px;
-}
-.hp {
-  color: var(--accent-strong);
-}
-.gold {
-  color: var(--gold);
-}
-.potion-slot {
-  color: var(--text-faint);
-  font-size: 12px;
-}
-.floor {
-  color: var(--text-dim);
-}
-.boss-tag {
-  color: var(--accent-strong);
-  border: 1px solid var(--accent);
-  border-radius: 4px;
-  padding: 0 6px;
-  font-size: 12px;
-}
-.top-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.turn {
-  color: var(--text-dim);
-  font-size: 13px;
-}
-.top-btn {
-  font-size: 13px;
-  padding: 4px 10px;
-}
-
-/* ② 遗物栏 */
-.relic-bar {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 24px;
-  flex-wrap: wrap;
-}
-.relic-label {
-  font-size: 12px;
-  color: var(--text-faint);
-}
-.relic-chip {
-  font-size: 12px;
-  color: var(--gold);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 1px 8px;
-  background: rgba(201, 162, 39, 0.08);
-}
-
-/* ③ 战场 */
+/* ② 战场 */
 .field {
   flex: 1;
   display: flex;
@@ -377,6 +566,7 @@ const pileLabel: Record<'draw' | 'discard' | 'exhaust', string> = {
   align-items: stretch;
   gap: 20px;
   min-height: 0;
+  position: relative;
 }
 .player-side {
   display: flex;
@@ -392,6 +582,14 @@ const pileLabel: Record<'draw' | 'discard' | 'exhaust', string> = {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  transition:
+    border-color 0.1s,
+    box-shadow 0.1s;
+}
+// 拖拽非攻击卡时玩家卡高亮（自身用卡可拖到自己身上）
+.player-card.player-target {
+  border-color: var(--gold);
+  box-shadow: 0 0 12px rgba(201, 162, 39, 0.3);
 }
 .player-avatar {
   font-size: 44px;
@@ -428,15 +626,23 @@ const pileLabel: Record<'draw' | 'discard' | 'exhaust', string> = {
   flex-wrap: wrap;
 }
 
-/* ④ 底部操作区：左 [能量 / 抽牌堆] / 中央手牌 / 右 [消耗堆 / 弃牌堆] */
+/* 拖拽 SVG 箭头 */
+.drag-arrow {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ③ 底栏 */
 .bottom {
   display: flex;
   align-items: center;
   gap: 12px;
   padding-top: 6px;
 }
-
-// 牌堆列：上下一对（左 = 能量球 + 抽牌堆 / 右 = 消耗堆 + 弃牌堆）
 .side-col {
   display: flex;
   flex-direction: column;
@@ -526,11 +732,25 @@ const pileLabel: Record<'draw' | 'discard' | 'exhaust', string> = {
   color: var(--gold);
   font-size: 12px;
 }
+
+// 结束回合按钮（占据右侧列顶部）
 .end-btn {
-  margin-top: 2px;
+  height: 56px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
-/* ⑤ 弹窗 */
+/* 拖拽浮起的卡牌：脱离手牌区域，跟随鼠标 */
+.drag-card {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 100;
+  width: 130px;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
+}
+
+/* 弹窗 */
 .modal {
   position: fixed;
   inset: 0;
@@ -564,11 +784,6 @@ const pileLabel: Record<'draw' | 'discard' | 'exhaust', string> = {
 .modal-cards {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-}
-.menu-btns {
-  display: flex;
-  flex-direction: column;
   gap: 10px;
 }
 

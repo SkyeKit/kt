@@ -1,10 +1,12 @@
 <script setup lang="ts">
 /**
  * 单局主视图（PRD §3.2）：密林幕 17 层地图 + 商店/篝火/事件/奖励浮层
+ * 顶部显示 SingleRunStatusBar（角色基础信息 + 遗物栏，含卡组/菜单弹窗）
  * 节点类型按颜色/图标区分；锁定节点不可点击
  */
 import { useGameStore } from '@/stores/gameStore'
 import { useMap, NODE_TYPE_NAME } from '@/composables/useMap'
+import SingleRunStatusBar from '@/components/common/SingleRunStatusBar.vue'
 import type { MapNode } from '@/types'
 
 const store = useGameStore()
@@ -26,6 +28,9 @@ const showOverlay = (phase: string): boolean => store.phase === phase
 
 <template>
   <div class="run-view">
+    <!-- 顶部：单局状态栏（HP/金币/药水/层数 + 遗物 + 卡组/菜单） -->
+    <SingleRunStatusBar />
+
     <!-- 地图：楼层自下而上（1 层在下） -->
     <div class="map">
       <div v-for="(row, idx) in [...floors].reverse()" :key="idx" class="map-floor">
@@ -72,16 +77,18 @@ const showOverlay = (phase: string): boolean => store.phase === phase
 .run-view {
   height: 100%;
   display: flex;
-  justify-content: center;
-  padding: 20px;
+  flex-direction: column;
+  padding: 8px 20px;
+  overflow: auto;
 }
 
 .map {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  width: 420px;
-  margin: auto;
+  width: 460px;
+  margin: 12px auto 24px;
+  flex-shrink: 0;
 }
 
 .map-floor {
@@ -103,8 +110,8 @@ const showOverlay = (phase: string): boolean => store.phase === phase
 }
 
 .map-node {
-  width: 66px;
-  height: 40px;
+  width: 72px;
+  height: 42px;
   border: 1px solid var(--border-strong);
   border-radius: 6px;
   background: var(--bg-raised);

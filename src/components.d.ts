@@ -16,5 +16,6 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ShopPanel: typeof import('./components/shop/ShopPanel.vue')['default']
+    SingleRunStatusBar: typeof import('./components/common/SingleRunStatusBar.vue')['default']
   }
 }

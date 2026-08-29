@@ -176,6 +176,12 @@ export function startPlayerTurn(ctx: CombatContext, handSize = 5): void {
 // 玩家打出卡牌：扣费 → 解析效果 → 计牌数；返回是否成功打出
 export function playCard(ctx: CombatContext, card: Card, targetId?: string): boolean {
   if (ctx.energy < (card.cost === 'X' ? 1 : (card.cost as number))) return false
+  // 攻击类卡牌必须指定有效目标（防御/能力卡不需要；未指定目标自动取首个存活敌人）
+  if (card.type === 'attack') {
+    if (targetId !== undefined && !ctx.enemies.some((e) => e.id === targetId && e.alive)) {
+      return false // 无效目标：仍消耗能量报错？本实现按 PRD：攻击前选好目标，校验失败返回 false 不出
+    }
+  }
   // 扣费（X 费用按剩余能量扣）
   const cost = card.cost === 'X' ? ctx.energy : (card.cost as number)
   ctx.energy -= cost
