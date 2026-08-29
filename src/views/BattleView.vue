@@ -1,9 +1,10 @@
 <script setup lang="ts">
 /**
  * 战斗视图（PRD §5.2 / document/ui.md 布局）
- * 自上而下：顶部状态栏（HP/金币/药水占位/层数/Boss + 回合/地图/卡组/菜单）
- * → 遗物栏 → 战场（左玩家 | 右怪物：意图+血槽）→ 底部操作区（能量球/抽牌堆/手牌/弃牌堆/消耗堆）
+ * 自上而下：顶栏（HP/金币/药水/层数/Boss + 回合/卡组/菜单）→ 遗物栏 → 战场
+ * → 底部（左侧 = 抽牌堆，上方为能量球 / 右侧 = 弃牌堆，上方为消耗牌堆 / 中央 = 手牌）
  * 交互（PRD §3.3.2）：点击卡牌选择 → 点击怪物指定目标；仅 1 个怪物时自动使用
+ * 牌堆查看：点击抽牌堆 / 弃牌堆 / 消耗牌堆三者之一弹窗查看（PRD ui.md §"牌堆"操作）
  */
 import { ref, computed } from 'vue'
 import { useBattle } from '@/composables/useBattle'
@@ -58,10 +59,28 @@ function abandon(): void {
   store.abandonRun()
 }
 
-// ===== 弹窗：卡组 / 菜单 / 牌堆 =====
+// ===== 弹窗：卡组 / 菜单 / 单个牌堆 =====
+// 点击抽牌堆 / 弃牌堆 / 消耗牌堆直接查看对应牌堆详情（PRD ui.md）
 const showDeck = ref(false)
 const showMenu = ref(false)
-const showPiles = ref(false)
+const inspectingPile = ref<'draw' | 'discard' | 'exhaust' | null>(null)
+
+// 当前查看牌堆的卡牌列表（按堆顺序，方便定位）
+const inspectingCards = computed(() => {
+  if (!inspectingPile.value) return []
+  const list =
+    inspectingPile.value === 'draw'
+      ? ctx.value!.drawPile.slice().reverse() // 抽牌堆顶部在前
+      : inspectingPile.value === 'discard'
+        ? ctx.value!.discardPile.slice().reverse() // 弃牌堆顶在前
+        : ctx.value!.exhaustPile.slice().reverse() // 消耗堆顶在前
+  return list.map((id) => ({ id, card: getCard(id) }))
+})
+
+// 点击对应牌堆：开/关弹窗（点击同一堆可关闭）
+function openPile(pile: 'draw' | 'discard' | 'exhaust'): void {
+  inspectingPile.value = inspectingPile.value === pile ? null : pile
+}
 
 // 卡牌扇形角度（手牌越多角度越大，§5.3 抽牌动画静态版）
 function fanStyle(index: number, total: number): Record<string, string> {
@@ -75,11 +94,18 @@ function fanStyle(index: number, total: number): Record<string, string> {
 
 // 遗物栏
 const relicNames = computed(() => (store.run?.relics ?? []).map((id) => getRelic(id)?.name ?? id))
+
+// 牌堆文案
+const pileLabel: Record<'draw' | 'discard' | 'exhaust', string> = {
+  draw: '抽牌堆',
+  discard: '弃牌堆',
+  exhaust: '消耗牌堆',
+}
 </script>
 
 <template>
   <div v-if="ctx" class="battle" @click="selectedCardId = null">
-    <!-- ① 顶部状态栏（ui.md：头像|❤血量|💰金币|药水|层数|Boss | 回合|地图|卡组|菜单） -->
+    <!-- ① 顶部状态栏（ui.md：HP/金币/药水/层数/Boss + 回合/卡组/菜单） -->
     <header class="top-bar">
       <div class="top-left">
         <span class="avatar" title="铁甲战士">⚔️</span>
@@ -93,9 +119,6 @@ const relicNames = computed(() => (store.run?.relics ?? []).map((id) => getRelic
         <span class="turn">回合 {{ ctx.turn }}</span>
         <button class="btn top-btn" title="查看当前牌组" @click.stop="showDeck = !showDeck">
           卡组
-        </button>
-        <button class="btn top-btn" title="查看抽/弃/消耗牌堆" @click.stop="showPiles = !showPiles">
-          牌堆
         </button>
         <button class="btn top-btn" title="暂停菜单" @click.stop="showMenu = true">菜单</button>
       </div>
@@ -137,18 +160,30 @@ const relicNames = computed(() => (store.run?.relics ?? []).map((id) => getRelic
       </div>
     </div>
 
-    <!-- 战斗日志 -->
-    <div class="battle-log">
-      <p v-for="(line, i) in store.log.slice(-8)" :key="i" class="log-line">{{ line }}</p>
-    </div>
-
-    <!-- ④ 底部操作区（ui.md：能量 | 抽牌堆 | 手牌 | 弃牌堆 | 结束回合） -->
+    <!-- ④ 底部操作区（左侧：抽牌堆 + 上方能量球 / 中央：手牌 / 右侧：弃牌堆 + 上方消耗堆） -->
     <div class="bottom">
-      <div class="side-pile energy-orb" :class="{ full: ctx.energy >= ctx.maxEnergy }">
-        {{ ctx.energy }}<small>/{{ ctx.maxEnergy }}</small>
+      <!-- 左侧：能量球（上方） + 抽牌堆（可点击查看） -->
+      <div class="side-col">
+        <div
+          class="side-pile energy-orb"
+          :class="{ full: ctx.energy >= ctx.maxEnergy }"
+          title="当前能量"
+          @click.stop="openPile('draw')"
+        >
+          {{ ctx.energy }}<small>/{{ ctx.maxEnergy }}</small>
+        </div>
+        <button
+          class="side-pile pile-btn draw-pile"
+          title="点击查看抽牌堆"
+          @click.stop="openPile('draw')"
+        >
+          <span class="pile-icon">🂠</span>
+          <span class="pile-num">{{ ctx.drawPile.length }}</span>
+          <span class="pile-label">抽牌</span>
+        </button>
       </div>
-      <div class="side-pile" title="抽牌堆">🂠 {{ ctx.drawPile.length }}</div>
 
+      <!-- 中央：手牌 -->
       <div class="hand-area">
         <div class="hand">
           <div
@@ -172,8 +207,27 @@ const relicNames = computed(() => (store.run?.relics ?? []).map((id) => getRelic
         </button>
       </div>
 
-      <div class="side-pile" title="弃牌堆">🂠 {{ ctx.discardPile.length }}</div>
-      <div class="side-pile" title="消耗牌堆">🔥 {{ ctx.exhaustPile.length }}</div>
+      <!-- 右侧：消耗牌堆（上方） + 弃牌堆（可点击查看） -->
+      <div class="side-col">
+        <button
+          class="side-pile pile-btn exhaust-pile"
+          title="点击查看消耗牌堆"
+          @click.stop="openPile('exhaust')"
+        >
+          <span class="pile-icon">🔥</span>
+          <span class="pile-num">{{ ctx.exhaustPile.length }}</span>
+          <span class="pile-label">消耗</span>
+        </button>
+        <button
+          class="side-pile pile-btn discard-pile"
+          title="点击查看弃牌堆"
+          @click.stop="openPile('discard')"
+        >
+          <span class="pile-icon">🂠</span>
+          <span class="pile-num">{{ ctx.discardPile.length }}</span>
+          <span class="pile-label">弃牌</span>
+        </button>
+      </div>
     </div>
 
     <!-- ⑤ 弹窗：卡组查看 -->
@@ -187,14 +241,31 @@ const relicNames = computed(() => (store.run?.relics ?? []).map((id) => getRelic
       </div>
     </div>
 
-    <!-- ⑥ 弹窗：牌堆查看 -->
-    <div v-if="showPiles" class="modal" @click.stop>
+    <!-- ⑥ 弹窗：单牌堆查看（点击抽/弃/消耗牌堆触发） -->
+    <div v-if="inspectingPile" class="modal" @click.stop>
       <div class="modal-panel panel">
-        <h3 class="modal-title">牌堆</h3>
-        <p>抽牌堆（{{ ctx.drawPile.length }}）：{{ ctx.drawPile.join('、') }}</p>
-        <p>弃牌堆（{{ ctx.discardPile.length }}）：{{ ctx.discardPile.join('、') }}</p>
-        <p>消耗堆（{{ ctx.exhaustPile.length }}）：{{ ctx.exhaustPile.join('、') }}</p>
-        <button class="btn" @click="showPiles = false">关闭</button>
+        <h3 class="modal-title">
+          {{ pileLabel[inspectingPile] }}
+          <span class="dim"
+            >（{{
+              inspectingPile === 'draw'
+                ? ctx.drawPile.length
+                : inspectingPile === 'discard'
+                  ? ctx.discardPile.length
+                  : ctx.exhaustPile.length
+            }}
+            张）</span
+          >
+        </h3>
+        <p class="modal-hint">
+          <span v-if="inspectingPile === 'draw'">顶部在前（下一个抽到）</span>
+          <span v-else-if="inspectingPile === 'discard'">弃牌堆顶在前（最近弃掉的牌）</span>
+          <span v-else>消耗堆顶在前（最近消耗的牌）</span>
+        </p>
+        <div class="modal-cards">
+          <CardView v-for="c in inspectingCards" :key="c.id" :card="c.card" />
+        </div>
+        <button class="btn" @click="inspectingPile = null">关闭</button>
       </div>
     </div>
 
@@ -357,49 +428,81 @@ const relicNames = computed(() => (store.run?.relics ?? []).map((id) => getRelic
   flex-wrap: wrap;
 }
 
-/* 战斗日志 */
-.battle-log {
-  min-height: 44px;
-  max-height: 90px;
-  overflow: auto;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 6px 10px;
-  background: rgba(0, 0, 0, 0.25);
-  font-size: 12px;
-  color: var(--text-dim);
-  line-height: 1.5;
-}
-
-/* ④ 底部操作区 */
+/* ④ 底部操作区：左 [能量 / 抽牌堆] / 中央手牌 / 右 [消耗堆 / 弃牌堆] */
 .bottom {
   display: flex;
   align-items: center;
   gap: 12px;
   padding-top: 6px;
 }
+
+// 牌堆列：上下一对（左 = 能量球 + 抽牌堆 / 右 = 消耗堆 + 弃牌堆）
+.side-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 .side-pile {
-  width: 72px;
+  width: 76px;
   text-align: center;
   font-size: 13px;
   color: var(--text-dim);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 10px 4px;
+  padding: 8px 4px;
   background: rgba(0, 0, 0, 0.3);
+  transition:
+    transform 0.1s,
+    border-color 0.1s;
+}
+.pile-btn {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: var(--text-main);
+}
+.pile-btn:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+.pile-icon {
+  font-size: 22px;
+  line-height: 1;
+}
+.pile-num {
+  font-size: 13px;
+  color: var(--gold);
+}
+.pile-label {
+  font-size: 11px;
+  color: var(--text-faint);
+}
+.draw-pile .pile-icon {
+  color: #6aa8d6;
+}
+.discard-pile .pile-icon {
+  color: #b06a6a;
+}
+.exhaust-pile .pile-icon {
+  color: #d9b066;
 }
 .energy-orb {
   color: var(--gold);
-  font-size: 18px;
+  font-size: 20px;
   border-color: var(--border-strong);
+  cursor: pointer;
+  font-weight: bold;
 }
 .energy-orb.full {
   border-color: var(--gold);
   box-shadow: 0 0 8px rgba(201, 162, 39, 0.3);
 }
 .energy-orb small {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-dim);
+  font-weight: normal;
 }
 .hand-area {
   flex: 1;
@@ -447,6 +550,16 @@ const relicNames = computed(() => (store.run?.relics ?? []).map((id) => getRelic
 }
 .modal-title {
   color: var(--accent-strong);
+}
+.modal-title .dim {
+  color: var(--text-dim);
+  font-size: 13px;
+  font-weight: normal;
+  margin-left: 6px;
+}
+.modal-hint {
+  font-size: 12px;
+  color: var(--text-faint);
 }
 .modal-cards {
   display: flex;

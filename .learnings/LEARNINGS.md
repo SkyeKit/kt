@@ -28,3 +28,31 @@ STS2 复刻项目首次交付时，涅奥遗物池（先古之民开局三选一
 - Pattern-Key: data_authority.md_must_be_source_of_truth
 
 ---
+## [LRN-20260829-002] correction
+
+**Logged**: 2026-08-29T16:05:00+08:00
+**Priority**: high
+**Status**: resolved
+**Area**: frontend
+
+### Summary
+战斗界面首版完全偏离 ui.md/PRD §5.2 布局；且 playCard 未从手牌移除卡牌导致"卡牌可重复使用"。
+
+### Details
+- playCard 只做了扣费/结算/进弃牌堆，漏了 `ctx.hand` 移除 → 手牌渲染不变化，同一张牌可反复打出。
+- 目标选择缺失：出牌固定打第一个敌人，违背 PRD §3.3.2（拖拽/箭头指定目标；单怪自动）。
+- UI 布局未按 document/ui.md 的线框图（顶部状态栏/遗物栏/左玩家右怪物/底部能量-抽牌堆-手牌-弃牌堆）。
+
+### Suggested Action
+- 打出牌必须从手牌移除（splice 一张）——已修 + 回归测试。
+- 目标选择：点击卡牌→敌人高亮可点→指定目标；单怪自动用。已实现（点击式，拖拽+箭头留作后续）。
+- 战斗布局按 ui.md 重做：顶部栏/遗物栏/战场左右/底部能量-牌堆-手牌。已完成。
+- 经验：UI 交付前先把 PRD §5.2 + ui.md 布局转成组件结构清单再动手，避免"完全不符"。
+
+### Metadata
+- Source: user_feedback
+- Related Files: src/engine/combatEngine.ts, src/views/BattleView.vue, src/components/common/EnemyView.vue
+- Tags: battle_ui, hand_management, targeting
+- Pattern-Key: verify_ui_layout_spec_before_build
+
+---
