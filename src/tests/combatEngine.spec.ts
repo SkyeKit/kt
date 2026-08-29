@@ -102,14 +102,17 @@ describe('战斗引擎：玩家回合', () => {
     expect(ctx.hand.length).toBe(5)
   })
 
-  it('打出打击：扣能量 + 造成伤害 + 进入弃牌堆', () => {
+  it('打出打击：扣能量 + 造成伤害 + 手牌移除 + 进入弃牌堆', () => {
     const ctx = makeCtx()
     const enemy = ctx.enemies[0]!
     const before = enemy.hp
+    const handBefore = ctx.hand.length
     const ok = playCard(ctx, strike, enemy.id)
     expect(ok).toBe(true)
     expect(ctx.energy).toBe(2)
     expect(enemy.hp).toBe(before - 6)
+    // 手牌应移除已打出的牌（防"卡牌重复使用"回归）
+    expect(ctx.hand.length).toBe(handBefore - 1)
     expect(ctx.discardPile).toContain('strike_ironclad')
   })
 

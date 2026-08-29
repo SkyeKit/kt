@@ -20,7 +20,7 @@ describe('地图生成：结构', () => {
     expect(f1[0]!.type).toBe('neow')
   })
 
-  it('首局（第 2 局起才触发涅奥）：第 1 层为普通战斗节点（PRD §3.1）', () => {
+  it('firstFloorIsNeow=false 时第 1 层为普通战斗节点（保留能力，store 恒传 true）', () => {
     const firstRunMap = generateMap(12345, false)
     const f1 = firstRunMap.filter((n) => n.floor === 1)
     expect(f1.length).toBe(1)

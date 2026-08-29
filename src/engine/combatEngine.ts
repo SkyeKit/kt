@@ -190,7 +190,10 @@ export function playCard(ctx: CombatContext, card: Card, targetId?: string): boo
     targetId,
   })
   ctx.log.push(`打出【${card.name}】`, ...logs)
-  // 打出后去向：消耗牌进消耗堆，否则进弃牌堆
+  // 打出后从手牌移除一张（相同 id 可能有复数张，只移除一张）
+  const handIdx = ctx.hand.lastIndexOf(card.id)
+  if (handIdx >= 0) ctx.hand.splice(handIdx, 1)
+  // 去向：消耗牌进消耗堆，否则进弃牌堆
   if (card.keywords.includes('exhaust')) ctx.exhaustPile.push(card.id)
   else ctx.discardPile.push(card.id)
   return true

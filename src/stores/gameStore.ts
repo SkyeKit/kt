@@ -31,7 +31,6 @@ import {
   relicsData,
 } from '@/data'
 import { buildEnemyUnit } from '@/engine/enemyAI'
-import { useMetaStore } from '@/stores/metaStore'
 
 // 战斗类型（奖励分级依据，PRD §3.3.5）
 type BattleKind = 'normal' | 'elite' | 'boss'
@@ -46,7 +45,6 @@ interface PendingReward {
 
 export const useGameStore = defineStore('game', () => {
   // ===== 状态 =====
-  const metaStore = useMetaStore() // 元进度（总局数，用于首局判断）
   const run = ref<RunState | null>(null) // 单局存档（null = 未开局）
   const battle = ref<CombatContext | null>(null) // 战斗上下文（BATTLE 阶段非空）
   const battleKind = ref<BattleKind>('normal') // 当前战斗类型（奖励分级依据）
@@ -77,12 +75,10 @@ export const useGameStore = defineStore('game', () => {
 
   // ===== 开局 =====
   // 新开一局：生成种子局 + 地图 + 初始牌组/遗物，进入 RUN
-  // PRD §3.1：涅奥自第 2 局起触发（首局第 1 层为普通节点）——依据元进度总局数判断
+  // 第 1 层固定为先古之民节点（用户确认：每局开局都要有遗物三选一）
   function newRun(seed?: number): void {
     const s = seed ?? Math.floor(Math.random() * 0xffffffff)
-    const runNumber = metaStore.meta.runs + 1 // 本局是第几局
-    const firstFloorIsNeow = runNumber >= 2
-    const map = generateMap(s, firstFloorIsNeow)
+    const map = generateMap(s, true)
     run.value = {
       version: SAVE.version,
       seed: s,
