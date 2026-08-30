@@ -117,18 +117,18 @@ function abandon(): void {
       <span v-for="r in relicChips" :key="r.id" class="relic-chip">{{ r.name }}</span>
     </div>
 
-    <!-- 弹窗：卡组 -->
+    <!-- 弹窗：卡组（全屏透明 + 左下角返回箭头） -->
     <div v-if="showDeck" class="modal" @click.stop>
       <div class="modal-panel panel">
         <h3 class="modal-title">卡组（{{ store.run.deck.length }}）</h3>
         <div class="modal-cards">
           <CardView v-for="(id, i) in store.run.deck" :key="i" :card="getCard(id)" />
         </div>
-        <button class="btn" @click="showDeck = false">关闭</button>
       </div>
+      <button class="back-arrow" title="返回当前场景" @click="showDeck = false">←</button>
     </div>
 
-    <!-- 弹窗：地图（只读，点击空白关闭，回到当前页面） -->
+    <!-- 弹窗：地图（只读，点击空白或返回箭头关闭，回到当前页面） -->
     <div v-if="showMap" class="modal map-modal" @click.self="showMap = false">
       <div class="modal-panel panel">
         <h3 class="modal-title">密林幕地图（第 {{ store.run.floor }} 层）</h3>
@@ -148,8 +148,8 @@ function abandon(): void {
             </div>
           </div>
         </div>
-        <button class="btn" @click="showMap = false">关闭</button>
       </div>
+      <button class="back-arrow" title="返回当前场景" @click="showMap = false">←</button>
     </div>
 
     <!-- 弹窗：菜单 -->
@@ -161,6 +161,7 @@ function abandon(): void {
           <button class="btn" @click="abandon">放弃本局（回主菜单）</button>
         </div>
       </div>
+      <button class="back-arrow" title="返回当前场景" @click="showMenu = false">←</button>
     </div>
   </div>
 </template>
@@ -338,11 +339,12 @@ function abandon(): void {
   border-color: #6f9d5a;
 }
 
-/* 弹窗 */
+/* 弹窗：全屏覆盖 + 透明背景（透出当前场景，如战斗/地图），左下角返回箭头关闭 */
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(10, 8, 7, 0.8);
+  // 透明遮罩：几乎不遮挡背景场景（PRD 需求：地图/卡组浮层下仍可见当前场景）
+  background: rgba(8, 6, 5, 0.25);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -359,6 +361,12 @@ function abandon(): void {
   flex-direction: column;
   gap: 12px;
   cursor: default;
+  // 半透明深色底：内容可读且场景透出
+  background: rgba(20, 16, 14, 0.88);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 18px;
+  backdrop-filter: blur(2px);
 }
 .modal-title {
   color: var(--accent-strong);
@@ -372,5 +380,35 @@ function abandon(): void {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+/* 左下角返回箭头（关闭弹窗回到当前场景） */
+.back-arrow {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  background: rgba(20, 16, 14, 0.85);
+  color: var(--gold);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.15s,
+    transform 0.1s;
+}
+.back-arrow:hover {
+  background: rgba(201, 162, 39, 0.25);
+  transform: scale(1.06);
+}
+.back-arrow:active {
+  transform: scale(0.94);
 }
 </style>
