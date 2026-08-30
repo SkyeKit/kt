@@ -116,22 +116,23 @@ function abandon(): void {
       <span class="relic-label">遗物</span>
       <span v-for="r in relicChips" :key="r.id" class="relic-chip">{{ r.name }}</span>
     </div>
+  </div>
 
-    <!-- 全屏页：卡组（覆盖整个屏幕，两边透明可看当前场景，中央 panel 显示内容） -->
+  <!-- 全屏页用 Teleport 挂到 body，强制全屏覆盖并拦截背景事件 -->
+  <Teleport to="body">
     <div v-if="showDeck" class="full-page">
       <div class="page-panel">
-        <h3 class="page-title">卡组（{{ store.run.deck.length }}）</h3>
+        <h3 class="page-title">卡组（{{ store.run?.deck.length ?? 0 }}）</h3>
         <div class="page-deck-grid">
-          <CardView v-for="(id, i) in store.run.deck" :key="i" :card="getCard(id)" />
+          <CardView v-for="(id, i) in store.run?.deck ?? []" :key="i" :card="getCard(id)" />
         </div>
       </div>
       <button class="back-arrow" title="返回当前场景" @click="showDeck = false">← 返回</button>
     </div>
 
-    <!-- 全屏页：地图（17 层全显，中央 panel，两边透明） -->
     <div v-if="showMap" class="full-page map-page" @click.self="showMap = false">
       <div class="page-panel">
-        <h3 class="page-title">密林幕地图（第 {{ store.run.floor }} 层）</h3>
+        <h3 class="page-title">密林幕地图（第 {{ store.run?.floor ?? 0 }} 层）</h3>
         <div class="page-map">
           <div v-for="(row, idx) in [...mapFloors].reverse()" :key="idx" class="map-row">
             <span class="map-floor-no">{{ row[0]?.floor }}</span>
@@ -152,7 +153,6 @@ function abandon(): void {
       <button class="back-arrow" title="返回当前场景" @click="showMap = false">← 返回</button>
     </div>
 
-    <!-- 全屏页：菜单 -->
     <div v-if="showMenu" class="full-page">
       <div class="page-panel">
         <h3 class="page-title">菜单</h3>
@@ -163,7 +163,7 @@ function abandon(): void {
       </div>
       <button class="back-arrow" title="返回当前场景" @click="showMenu = false">← 返回</button>
     </div>
-  </div>
+  </Teleport>
 </template>
 
 <style scoped lang="scss">
