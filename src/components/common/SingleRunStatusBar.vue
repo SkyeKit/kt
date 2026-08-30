@@ -116,10 +116,8 @@ function abandon(): void {
       <span class="relic-label">遗物</span>
       <span v-for="r in relicChips" :key="r.id" class="relic-chip">{{ r.name }}</span>
     </div>
-  </div>
 
-  <!-- 全屏页用 Teleport 挂到 body，强制全屏覆盖并拦截背景事件 -->
-  <Teleport to="body">
+    <!-- 全屏页：覆盖整个屏幕、左右透明透出当前场景（用 z-index:9999 强制最上层） -->
     <div v-if="showDeck" class="full-page">
       <div class="page-panel">
         <h3 class="page-title">卡组（{{ store.run?.deck.length ?? 0 }}）</h3>
@@ -163,7 +161,7 @@ function abandon(): void {
       </div>
       <button class="back-arrow" title="返回当前场景" @click="showMenu = false">← 返回</button>
     </div>
-  </Teleport>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -176,8 +174,12 @@ function abandon(): void {
   gap: 6px;
   padding: 8px 18px 6px;
   border-bottom: 1px solid var(--border);
-  background: rgba(20, 16, 14, 0.96); // 固定顶栏半透明底，滚动时内容不被遮挡
-  backdrop-filter: blur(4px);
+  background: rgba(
+    20,
+    16,
+    14,
+    0.96
+  ); // 固定顶栏半透明底（不加 backdrop-filter，避免创建 containing block 干扰子元素 fixed 定位）
 }
 .top-bar {
   display: flex;
@@ -369,7 +371,6 @@ function abandon(): void {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  backdrop-filter: blur(2px);
 }
 .page-title {
   color: var(--accent-strong);
