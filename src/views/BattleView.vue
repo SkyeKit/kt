@@ -806,10 +806,7 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
 /* 全屏覆盖页：覆盖整个屏幕、两边透明可看当前场景、中央 panel 不透明 */
 .full-page {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 1; // 用户要求：用 inset 简写替代四向定位，设为 1 避免边界裁切
   pointer-events: auto; // 拦截背景操作
   display: flex;
   flex-direction: column;

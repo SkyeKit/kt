@@ -342,10 +342,7 @@ function abandon(): void {
 /* 全屏覆盖页：覆盖整个屏幕、左右两边透明透出当前场景、中央不透明 panel 显示内容 */
 .full-page {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 1; // 用户要求：用 inset 简写替代四向定位，设为 1 避免边界裁切
   pointer-events: auto; // 拦截背景操作
   display: flex;
   flex-direction: column;
