@@ -347,13 +347,13 @@ function abandon(): void {
   inset: 1;
   pointer-events: auto;
   display: flex;
-  flex-direction: column;
-  align-items: center; // panel 水平居中
-  justify-content: center; // panel 垂直居中
-  padding: 70px 24px 80px; // 顶避顶栏、底避返回按钮
+  flex-direction: row; // 水平排列，panel 靠右
+  justify-content: flex-end; // panel 在右侧
+  align-items: stretch; // panel 上下撑满整个高度
+  padding: 70px 0 24px 0; // 顶避顶栏、底留返回按钮空间
   z-index: 20;
   overflow: auto;
-  background: transparent; // 显式透明，panel 之外能透出场景
+  background: transparent; // 显式透明，左半侧透出当前场景
 }
 .map-page {
   cursor: pointer; // 点击空白关闭
@@ -367,10 +367,12 @@ function abandon(): void {
   border-radius: var(--radius);
   padding: 20px 24px 24px;
   width: 920px;
-  max-width: calc(100vw - 24px);
+  max-width: calc(60vw);
+  margin-right: 24px;
   display: flex;
   flex-direction: column;
   gap: 14px;
+  height: 100%; // 上下撑满 full-page 高度
 }
 .page-title {
   color: var(--accent-strong);
