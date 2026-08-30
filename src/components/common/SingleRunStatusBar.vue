@@ -117,31 +117,35 @@ function abandon(): void {
       <span v-for="r in relicChips" :key="r.id" class="relic-chip">{{ r.name }}</span>
     </div>
 
-    <!-- 全屏页：卡组（透明背景覆盖整个屏幕，铺满布局，红色长方形返回箭头回到当前场景） -->
+    <!-- 全屏页：卡组（覆盖整个屏幕，两边透明可看当前场景，中央 panel 显示内容） -->
     <div v-if="showDeck" class="full-page">
-      <h3 class="page-title">卡组（{{ store.run.deck.length }}）</h3>
-      <div class="page-deck-grid">
-        <CardView v-for="(id, i) in store.run.deck" :key="i" :card="getCard(id)" />
+      <div class="page-panel">
+        <h3 class="page-title">卡组（{{ store.run.deck.length }}）</h3>
+        <div class="page-deck-grid">
+          <CardView v-for="(id, i) in store.run.deck" :key="i" :card="getCard(id)" />
+        </div>
       </div>
       <button class="back-arrow" title="返回当前场景" @click="showDeck = false">← 返回</button>
     </div>
 
-    <!-- 全屏页：地图（透明背景覆盖整个屏幕，17 层全显） -->
+    <!-- 全屏页：地图（17 层全显，中央 panel，两边透明） -->
     <div v-if="showMap" class="full-page map-page" @click.self="showMap = false">
-      <h3 class="page-title">密林幕地图（第 {{ store.run.floor }} 层）</h3>
-      <div class="page-map">
-        <div v-for="(row, idx) in [...mapFloors].reverse()" :key="idx" class="map-row">
-          <span class="map-floor-no">{{ row[0]?.floor }}</span>
-          <div class="map-nodes">
-            <span
-              v-for="node in row"
-              :key="node.id"
-              class="map-dot"
-              :class="[typeClass(node.type), { current: node.id === store.run?.nodeId }]"
-              :title="NODE_TYPE_NAME[node.type]"
-            >
-              {{ NODE_TYPE_NAME[node.type] }}
-            </span>
+      <div class="page-panel">
+        <h3 class="page-title">密林幕地图（第 {{ store.run.floor }} 层）</h3>
+        <div class="page-map">
+          <div v-for="(row, idx) in [...mapFloors].reverse()" :key="idx" class="map-row">
+            <span class="map-floor-no">{{ row[0]?.floor }}</span>
+            <div class="map-nodes">
+              <span
+                v-for="node in row"
+                :key="node.id"
+                class="map-dot"
+                :class="[typeClass(node.type), { current: node.id === store.run?.nodeId }]"
+                :title="NODE_TYPE_NAME[node.type]"
+              >
+                {{ NODE_TYPE_NAME[node.type] }}
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -150,10 +154,12 @@ function abandon(): void {
 
     <!-- 全屏页：菜单 -->
     <div v-if="showMenu" class="full-page">
-      <h3 class="page-title">菜单</h3>
-      <div class="page-menu">
-        <button class="btn btn-primary big-btn" @click="showMenu = false">继续游戏</button>
-        <button class="btn big-btn" @click="abandon">放弃本局（回主菜单）</button>
+      <div class="page-panel">
+        <h3 class="page-title">菜单</h3>
+        <div class="page-menu">
+          <button class="btn btn-primary big-btn" @click="showMenu = false">继续游戏</button>
+          <button class="btn big-btn" @click="abandon">放弃本局（回主菜单）</button>
+        </div>
       </div>
       <button class="back-arrow" title="返回当前场景" @click="showMenu = false">← 返回</button>
     </div>
@@ -333,44 +339,62 @@ function abandon(): void {
   border-color: #6f9d5a;
 }
 
-/* 全屏覆盖页：覆盖整个屏幕、透明背景（透出当前场景）、红色长方形返回箭头 */
+/* 全屏覆盖页：覆盖整个屏幕、左右两边透明透出当前场景、中央不透明 panel 显示内容 */
 .full-page {
   position: fixed;
-  inset: 0;
-  // 透明遮罩：场景透出，但内容仍可读
-  background: rgba(8, 6, 5, 0.3);
+  // 显式四向定位（避免 inset 兼容性问题）
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: auto; // 拦截背景操作（PRD：地图/卡组页面无法操作背景）
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 70px 32px 32px; // 顶部避开顶栏
+  justify-content: flex-start;
+  padding: 90px 24px 80px; // 顶部避开顶栏，底部预留返回按钮空间
   z-index: 20;
   overflow: auto;
 }
 .map-page {
   cursor: pointer; // 点击空白关闭
 }
+
+/* 中央不透明 panel（PRD：背景要有，但两边透明可看当前页面） */
+.page-panel {
+  pointer-events: auto;
+  background: rgba(14, 11, 9, 0.96); // 接近不透明，保证内容可读
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 20px 24px 24px;
+  width: 820px;
+  max-width: calc(100vw - 24px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  backdrop-filter: blur(2px);
+}
 .page-title {
   color: var(--accent-strong);
   font-size: 26px;
-  margin: 0 0 20px;
+  margin: 0;
   letter-spacing: 2px;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
   flex-shrink: 0;
+  text-align: center;
 }
 .page-deck-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(6, 1fr); // 卡组一行固定 6 张
+  gap: 8px;
   width: 100%;
-  max-width: 1200px;
   margin: 0 auto;
 }
 .page-map {
   width: 100%;
-  max-width: 1000px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
   align-items: center;
 }
 .page-menu {
@@ -378,7 +402,7 @@ function abandon(): void {
   flex-direction: column;
   gap: 14px;
   align-items: center;
-  margin-top: 60px;
+  margin-top: 30px;
 }
 .big-btn {
   font-size: 18px !important;
@@ -386,11 +410,12 @@ function abandon(): void {
   min-width: 220px;
 }
 
-/* 左上角返回箭头：红色长方形（PRD：上调、红色、长方形） */
+/* 返回按钮：下调到下方居中（PRD：调整到下方，但不要太过下面） */
 .back-arrow {
   position: fixed;
-  top: 70px; // 顶栏下方
-  left: 18px;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 90px;
   height: 32px;
   border-radius: 4px;
@@ -412,9 +437,9 @@ function abandon(): void {
 }
 .back-arrow:hover {
   background: #b53a20;
-  transform: scale(1.04);
+  transform: translateX(-50%) scale(1.04);
 }
 .back-arrow:active {
-  transform: scale(0.96);
+  transform: translateX(-50%) scale(0.96);
 }
 </style>

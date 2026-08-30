@@ -515,28 +515,30 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
       </div>
     </div>
 
-    <!-- 全屏页：单牌堆查看（透明背景覆盖整个屏幕，红色长方形返回箭头） -->
+    <!-- 全屏页：单牌堆查看（覆盖整个屏幕，两边透明可看战斗场景，中央 panel） -->
     <div v-if="inspectingPile" class="full-page">
-      <h3 class="page-title">
-        {{ pileLabel[inspectingPile] }}
-        <span class="dim"
-          >（{{
-            inspectingPile === 'draw'
-              ? ctx.drawPile.length
-              : inspectingPile === 'discard'
-                ? ctx.discardPile.length
-                : ctx.exhaustPile.length
-          }}
-          张）</span
-        >
-      </h3>
-      <p class="page-hint">
-        <span v-if="inspectingPile === 'draw'">顶部在前（下一个抽到）</span>
-        <span v-else-if="inspectingPile === 'discard'">弃牌堆顶在前（最近弃掉的牌）</span>
-        <span v-else>消耗堆顶在前（最近消耗的牌）</span>
-      </p>
-      <div class="page-cards-grid">
-        <CardView v-for="c in inspectingCards" :key="c.id" :card="c.card" />
+      <div class="page-panel">
+        <h3 class="page-title">
+          {{ pileLabel[inspectingPile] }}
+          <span class="dim"
+            >（{{
+              inspectingPile === 'draw'
+                ? ctx.drawPile.length
+                : inspectingPile === 'discard'
+                  ? ctx.discardPile.length
+                  : ctx.exhaustPile.length
+            }}
+            张）</span
+          >
+        </h3>
+        <p class="page-hint">
+          <span v-if="inspectingPile === 'draw'">顶部在前（下一个抽到）</span>
+          <span v-else-if="inspectingPile === 'discard'">弃牌堆顶在前（最近弃掉的牌）</span>
+          <span v-else>消耗堆顶在前（最近消耗的牌）</span>
+        </p>
+        <div class="page-cards-grid">
+          <CardView v-for="c in inspectingCards" :key="c.id" :card="c.card" />
+        </div>
       </div>
       <button class="back-arrow" title="返回当前场景" @click="inspectingPile = null">← 返回</button>
     </div>
@@ -801,25 +803,43 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
   font-weight: bold;
 }
 
-/* 全屏覆盖页：覆盖整个屏幕、透明背景（透出当前战斗场景）、红色长方形返回箭头 */
+/* 全屏覆盖页：覆盖整个屏幕、两边透明可看当前场景、中央 panel 不透明 */
 .full-page {
   position: fixed;
-  inset: 0;
-  background: rgba(8, 6, 5, 0.3);
+  // 显式四向定位（避免 inset 兼容性问题）
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: auto; // 拦截背景操作
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 70px 32px 32px;
+  padding: 90px 24px 80px;
   z-index: 20;
   overflow: auto;
+}
+.page-panel {
+  pointer-events: auto;
+  background: rgba(14, 11, 9, 0.96);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 20px 24px 24px;
+  width: 820px;
+  max-width: calc(100vw - 24px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  backdrop-filter: blur(2px);
 }
 .page-title {
   color: var(--accent-strong);
   font-size: 26px;
-  margin: 0 0 12px;
+  margin: 0;
   letter-spacing: 2px;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
   flex-shrink: 0;
+  text-align: center;
 }
 .page-title .dim {
   color: var(--text-dim);
@@ -830,22 +850,22 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
 .page-hint {
   font-size: 13px;
   color: var(--text-faint);
-  margin: 0 0 16px;
+  margin: 0;
 }
 .page-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(6, 1fr); // 牌堆查看也按 6 列铺
+  gap: 8px;
   width: 100%;
-  max-width: 1200px;
   margin: 0 auto;
 }
 
-/* 左上角返回箭头：红色长方形 */
+/* 返回按钮：下方居中（PRD：调整到下方，但不要太过下面） */
 .back-arrow {
   position: fixed;
-  top: 70px;
-  left: 18px;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 90px;
   height: 32px;
   border-radius: 4px;
@@ -867,10 +887,10 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
 }
 .back-arrow:hover {
   background: #b53a20;
-  transform: scale(1.04);
+  transform: translateX(-50%) scale(1.04);
 }
 .back-arrow:active {
-  transform: scale(0.96);
+  transform: translateX(-50%) scale(0.96);
 }
 
 .console {
