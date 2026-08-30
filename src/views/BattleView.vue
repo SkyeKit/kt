@@ -806,14 +806,16 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
 /* 全屏覆盖页：覆盖整个屏幕、两边透明可看当前场景、中央 panel 不透明 */
 .full-page {
   position: fixed;
-  inset: 1; // 用户要求：用 inset 简写替代四向定位，设为 1 避免边界裁切
-  pointer-events: auto; // 拦截背景操作
+  inset: 1;
+  pointer-events: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 70px 24px 24px;
+  align-items: center; // panel 水平居中
+  justify-content: center; // panel 垂直居中
+  padding: 70px 24px 80px; // 顶避顶栏、底避返回按钮
   z-index: 20;
   overflow: auto;
+  background: transparent; // 显式透明，panel 之外能透出场景
 }
 .page-panel {
   pointer-events: auto;
@@ -865,9 +867,12 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
 
 /* 返回按钮：左下角固定（PRD：箭头调整到左下角） */
 .back-arrow {
-  position: fixed;
-  bottom: 24px;
-  left: 24px;
+  position: fixed !important;
+  bottom: 24px !important;
+  left: 24px !important;
+  top: auto !important;
+  right: auto !important;
+  transform: none !important;
   width: 90px;
   height: 32px;
   border-radius: 4px;
@@ -889,10 +894,10 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
 }
 .back-arrow:hover {
   background: #b53a20;
-  transform: scale(1.04);
+  transform: scale(1.04) !important;
 }
 .back-arrow:active {
-  transform: scale(0.96);
+  transform: scale(0.96) !important;
 }
 
 .console {
