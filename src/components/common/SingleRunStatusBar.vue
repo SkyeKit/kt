@@ -166,20 +166,17 @@ function abandon(): void {
 
 <style scoped lang="scss">
 .status-bar {
-  position: sticky;
+  position: fixed; // 改 fixed 而非 sticky：sticky 元素会创建 containing block 让子元素 fixed 相对 status-bar 定位
   top: 0;
-  z-index: 15;
+  left: 0;
+  right: 0;
+  z-index: 100; // 顶栏 fixed 提高 z-index
   display: flex;
   flex-direction: column;
   gap: 6px;
   padding: 8px 18px 6px;
   border-bottom: 1px solid var(--border);
-  background: rgba(
-    20,
-    16,
-    14,
-    0.96
-  ); // 固定顶栏半透明底（不加 backdrop-filter，避免创建 containing block 干扰子元素 fixed 定位）
+  background: rgba(20, 16, 14, 0.96); // 半透明底（不加 backdrop-filter）
 }
 .top-bar {
   display: flex;

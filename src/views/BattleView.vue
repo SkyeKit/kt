@@ -556,6 +556,7 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
   display: flex;
   flex-direction: column;
   padding: 10px 18px;
+  padding-top: 80px; // 让出 SingleRunStatusBar 顶栏空间（顶栏 fixed）
   gap: 8px;
   user-select: none;
   position: relative;

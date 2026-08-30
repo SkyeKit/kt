@@ -79,6 +79,7 @@ const showOverlay = (phase: string): boolean => store.phase === phase
   display: flex;
   flex-direction: column;
   padding: 8px 20px;
+  padding-top: 80px; // 让出 SingleRunStatusBar 顶栏空间（顶栏 fixed）
   overflow: auto;
 }
 
