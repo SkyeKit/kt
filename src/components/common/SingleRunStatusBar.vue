@@ -117,51 +117,45 @@ function abandon(): void {
       <span v-for="r in relicChips" :key="r.id" class="relic-chip">{{ r.name }}</span>
     </div>
 
-    <!-- 弹窗：卡组（全屏透明 + 左下角返回箭头） -->
-    <div v-if="showDeck" class="modal" @click.stop>
-      <div class="modal-panel panel">
-        <h3 class="modal-title">卡组（{{ store.run.deck.length }}）</h3>
-        <div class="modal-cards">
-          <CardView v-for="(id, i) in store.run.deck" :key="i" :card="getCard(id)" />
-        </div>
+    <!-- 全屏页：卡组（透明背景覆盖整个屏幕，铺满布局，红色长方形返回箭头回到当前场景） -->
+    <div v-if="showDeck" class="full-page">
+      <h3 class="page-title">卡组（{{ store.run.deck.length }}）</h3>
+      <div class="page-deck-grid">
+        <CardView v-for="(id, i) in store.run.deck" :key="i" :card="getCard(id)" />
       </div>
-      <button class="back-arrow" title="返回当前场景" @click="showDeck = false">←</button>
+      <button class="back-arrow" title="返回当前场景" @click="showDeck = false">← 返回</button>
     </div>
 
-    <!-- 弹窗：地图（只读，点击空白或返回箭头关闭，回到当前页面） -->
-    <div v-if="showMap" class="modal map-modal" @click.self="showMap = false">
-      <div class="modal-panel panel">
-        <h3 class="modal-title">密林幕地图（第 {{ store.run.floor }} 层）</h3>
-        <div class="map-mini">
-          <div v-for="(row, idx) in [...mapFloors].reverse()" :key="idx" class="map-row">
-            <span class="map-floor-no">{{ row[0]?.floor }}</span>
-            <div class="map-nodes">
-              <span
-                v-for="node in row"
-                :key="node.id"
-                class="map-dot"
-                :class="[typeClass(node.type), { current: node.id === store.run?.nodeId }]"
-                :title="NODE_TYPE_NAME[node.type]"
-              >
-                {{ NODE_TYPE_NAME[node.type] }}
-              </span>
-            </div>
+    <!-- 全屏页：地图（透明背景覆盖整个屏幕，17 层全显） -->
+    <div v-if="showMap" class="full-page map-page" @click.self="showMap = false">
+      <h3 class="page-title">密林幕地图（第 {{ store.run.floor }} 层）</h3>
+      <div class="page-map">
+        <div v-for="(row, idx) in [...mapFloors].reverse()" :key="idx" class="map-row">
+          <span class="map-floor-no">{{ row[0]?.floor }}</span>
+          <div class="map-nodes">
+            <span
+              v-for="node in row"
+              :key="node.id"
+              class="map-dot"
+              :class="[typeClass(node.type), { current: node.id === store.run?.nodeId }]"
+              :title="NODE_TYPE_NAME[node.type]"
+            >
+              {{ NODE_TYPE_NAME[node.type] }}
+            </span>
           </div>
         </div>
       </div>
-      <button class="back-arrow" title="返回当前场景" @click="showMap = false">←</button>
+      <button class="back-arrow" title="返回当前场景" @click="showMap = false">← 返回</button>
     </div>
 
-    <!-- 弹窗：菜单 -->
-    <div v-if="showMenu" class="modal" @click.stop>
-      <div class="modal-panel panel">
-        <h3 class="modal-title">菜单</h3>
-        <div class="menu-btns">
-          <button class="btn btn-primary" @click="showMenu = false">继续游戏</button>
-          <button class="btn" @click="abandon">放弃本局（回主菜单）</button>
-        </div>
+    <!-- 全屏页：菜单 -->
+    <div v-if="showMenu" class="full-page">
+      <h3 class="page-title">菜单</h3>
+      <div class="page-menu">
+        <button class="btn btn-primary big-btn" @click="showMenu = false">继续游戏</button>
+        <button class="btn big-btn" @click="abandon">放弃本局（回主菜单）</button>
       </div>
-      <button class="back-arrow" title="返回当前场景" @click="showMenu = false">←</button>
+      <button class="back-arrow" title="返回当前场景" @click="showMenu = false">← 返回</button>
     </div>
   </div>
 </template>
@@ -339,76 +333,88 @@ function abandon(): void {
   border-color: #6f9d5a;
 }
 
-/* 弹窗：全屏覆盖 + 透明背景（透出当前场景，如战斗/地图），左下角返回箭头关闭 */
-.modal {
+/* 全屏覆盖页：覆盖整个屏幕、透明背景（透出当前场景）、红色长方形返回箭头 */
+.full-page {
   position: fixed;
   inset: 0;
-  // 透明遮罩：几乎不遮挡背景场景（PRD 需求：地图/卡组浮层下仍可见当前场景）
-  background: rgba(8, 6, 5, 0.25);
+  // 透明遮罩：场景透出，但内容仍可读
+  background: rgba(8, 6, 5, 0.3);
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  padding: 70px 32px 32px; // 顶部避开顶栏
   z-index: 20;
+  overflow: auto;
 }
-.map-modal {
+.map-page {
   cursor: pointer; // 点击空白关闭
 }
-.modal-panel {
-  max-width: 720px;
-  max-height: 80vh;
-  overflow: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  cursor: default;
-  // 半透明深色底：内容可读且场景透出
-  background: rgba(20, 16, 14, 0.88);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  padding: 18px;
-  backdrop-filter: blur(2px);
-}
-.modal-title {
+.page-title {
   color: var(--accent-strong);
+  font-size: 26px;
+  margin: 0 0 20px;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+  flex-shrink: 0;
 }
-.modal-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+.page-deck-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
-.menu-btns {
+.page-map {
+  width: 100%;
+  max-width: 1000px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
+  align-items: center;
+}
+.page-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  margin-top: 60px;
+}
+.big-btn {
+  font-size: 18px !important;
+  padding: 12px 30px !important;
+  min-width: 220px;
 }
 
-/* 左下角返回箭头（关闭弹窗回到当前场景） */
+/* 左上角返回箭头：红色长方形（PRD：上调、红色、长方形） */
 .back-arrow {
   position: fixed;
-  left: 24px;
-  bottom: 24px;
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  border: 2px solid var(--gold);
-  background: rgba(20, 16, 14, 0.85);
-  color: var(--gold);
-  font-size: 28px;
-  line-height: 1;
+  top: 70px; // 顶栏下方
+  left: 18px;
+  width: 90px;
+  height: 32px;
+  border-radius: 4px;
+  border: 2px solid #fff;
+  background: var(--accent-strong); // 红色
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1px;
   cursor: pointer;
   z-index: 25;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 4px;
   transition:
     background 0.15s,
     transform 0.1s;
 }
 .back-arrow:hover {
-  background: rgba(201, 162, 39, 0.25);
-  transform: scale(1.06);
+  background: #b53a20;
+  transform: scale(1.04);
 }
 .back-arrow:active {
-  transform: scale(0.94);
+  transform: scale(0.96);
 }
 </style>

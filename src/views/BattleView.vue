@@ -515,32 +515,30 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
       </div>
     </div>
 
-    <!-- 弹窗：单牌堆查看（全屏透明 + 左下角返回箭头，与卡组/地图风格一致） -->
-    <div v-if="inspectingPile" class="modal" @click.stop>
-      <div class="modal-panel panel">
-        <h3 class="modal-title">
-          {{ pileLabel[inspectingPile] }}
-          <span class="dim"
-            >（{{
-              inspectingPile === 'draw'
-                ? ctx.drawPile.length
-                : inspectingPile === 'discard'
-                  ? ctx.discardPile.length
-                  : ctx.exhaustPile.length
-            }}
-            张）</span
-          >
-        </h3>
-        <p class="modal-hint">
-          <span v-if="inspectingPile === 'draw'">顶部在前（下一个抽到）</span>
-          <span v-else-if="inspectingPile === 'discard'">弃牌堆顶在前（最近弃掉的牌）</span>
-          <span v-else>消耗堆顶在前（最近消耗的牌）</span>
-        </p>
-        <div class="modal-cards">
-          <CardView v-for="c in inspectingCards" :key="c.id" :card="c.card" />
-        </div>
+    <!-- 全屏页：单牌堆查看（透明背景覆盖整个屏幕，红色长方形返回箭头） -->
+    <div v-if="inspectingPile" class="full-page">
+      <h3 class="page-title">
+        {{ pileLabel[inspectingPile] }}
+        <span class="dim"
+          >（{{
+            inspectingPile === 'draw'
+              ? ctx.drawPile.length
+              : inspectingPile === 'discard'
+                ? ctx.discardPile.length
+                : ctx.exhaustPile.length
+          }}
+          张）</span
+        >
+      </h3>
+      <p class="page-hint">
+        <span v-if="inspectingPile === 'draw'">顶部在前（下一个抽到）</span>
+        <span v-else-if="inspectingPile === 'discard'">弃牌堆顶在前（最近弃掉的牌）</span>
+        <span v-else>消耗堆顶在前（最近消耗的牌）</span>
+      </p>
+      <div class="page-cards-grid">
+        <CardView v-for="c in inspectingCards" :key="c.id" :card="c.card" />
       </div>
-      <button class="back-arrow" title="返回当前场景" @click="inspectingPile = null">←</button>
+      <button class="back-arrow" title="返回当前场景" @click="inspectingPile = null">← 返回</button>
     </div>
 
     <!-- 调试控制台 -->
@@ -803,78 +801,76 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
   font-weight: bold;
 }
 
-/* 弹窗：全屏覆盖 + 透明背景（透出当前战斗场景），左下角返回箭头关闭 */
-.modal {
+/* 全屏覆盖页：覆盖整个屏幕、透明背景（透出当前战斗场景）、红色长方形返回箭头 */
+.full-page {
   position: fixed;
   inset: 0;
-  // 透明遮罩：几乎不遮挡背景战斗场景
-  background: rgba(8, 6, 5, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 20;
-}
-.modal-panel {
-  max-width: 720px;
-  max-height: 80vh;
-  overflow: auto;
+  background: rgba(8, 6, 5, 0.3);
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  // 半透明深色底：内容可读且场景透出
-  background: rgba(20, 16, 14, 0.88);
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  padding: 18px;
-  backdrop-filter: blur(2px);
+  align-items: center;
+  padding: 70px 32px 32px;
+  z-index: 20;
+  overflow: auto;
 }
-.modal-title {
+.page-title {
   color: var(--accent-strong);
+  font-size: 26px;
+  margin: 0 0 12px;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+  flex-shrink: 0;
 }
-.modal-title .dim {
+.page-title .dim {
   color: var(--text-dim);
-  font-size: 13px;
+  font-size: 16px;
   font-weight: normal;
-  margin-left: 6px;
+  margin-left: 8px;
 }
-.modal-hint {
-  font-size: 12px;
+.page-hint {
+  font-size: 13px;
   color: var(--text-faint);
+  margin: 0 0 16px;
 }
-.modal-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+.page-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* 左下角返回箭头（关闭弹窗回到当前场景） */
+/* 左上角返回箭头：红色长方形 */
 .back-arrow {
   position: fixed;
-  left: 24px;
-  bottom: 24px;
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  border: 2px solid var(--gold);
-  background: rgba(20, 16, 14, 0.85);
-  color: var(--gold);
-  font-size: 28px;
-  line-height: 1;
+  top: 70px;
+  left: 18px;
+  width: 90px;
+  height: 32px;
+  border-radius: 4px;
+  border: 2px solid #fff;
+  background: var(--accent-strong);
+  color: #fff;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1px;
   cursor: pointer;
   z-index: 25;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 4px;
   transition:
     background 0.15s,
     transform 0.1s;
 }
 .back-arrow:hover {
-  background: rgba(201, 162, 39, 0.25);
-  transform: scale(1.06);
+  background: #b53a20;
+  transform: scale(1.04);
 }
 .back-arrow:active {
-  transform: scale(0.94);
+  transform: scale(0.96);
 }
 
 .console {
