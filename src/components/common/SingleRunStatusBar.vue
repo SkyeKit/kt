@@ -342,17 +342,15 @@ function abandon(): void {
 /* 全屏覆盖页：覆盖整个屏幕、左右两边透明透出当前场景、中央不透明 panel 显示内容 */
 .full-page {
   position: fixed;
-  // 显式四向定位（避免 inset 兼容性问题）
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  pointer-events: auto; // 拦截背景操作（PRD：地图/卡组页面无法操作背景）
+  pointer-events: auto; // 拦截背景操作
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding: 90px 24px 80px; // 顶部避开顶栏，底部预留返回按钮空间
+  padding: 70px 24px 24px; // 顶部避开顶栏
   z-index: 20;
   overflow: auto;
 }
@@ -360,14 +358,14 @@ function abandon(): void {
   cursor: pointer; // 点击空白关闭
 }
 
-/* 中央不透明 panel（PRD：背景要有，但两边透明可看当前页面） */
+/* 中央不透明 panel：宽度容纳 6 张 132px 卡牌 + 间隔 + padding */
 .page-panel {
   pointer-events: auto;
-  background: rgba(14, 11, 9, 0.96); // 接近不透明，保证内容可读
+  background: rgba(14, 11, 9, 0.96);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius);
   padding: 20px 24px 24px;
-  width: 820px;
+  width: 920px;
   max-width: calc(100vw - 24px);
   display: flex;
   flex-direction: column;
@@ -383,12 +381,20 @@ function abandon(): void {
   flex-shrink: 0;
   text-align: center;
 }
+/* 卡组网格：固定 6 列 × 132px = 792 + 5*8 gap = 832，panel 内宽 920-48=872 容纳 */
 .page-deck-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr); // 卡组一行固定 6 张
+  grid-template-columns: repeat(6, 132px);
   gap: 8px;
+  justify-content: center;
   width: 100%;
   margin: 0 auto;
+}
+// CardView 在 grid item 中自适应列宽（深选择器穿透 scoped）
+.page-deck-grid :deep(.card) {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 132 / 190; // 保持原卡牌 132:190 比例
 }
 .page-map {
   width: 100%;
@@ -410,12 +416,11 @@ function abandon(): void {
   min-width: 220px;
 }
 
-/* 返回按钮：下调到下方居中（PRD：调整到下方，但不要太过下面） */
+/* 返回按钮：左下角固定（PRD：箭头调整到左下角） */
 .back-arrow {
   position: fixed;
-  bottom: 28px;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 24px;
+  left: 24px;
   width: 90px;
   height: 32px;
   border-radius: 4px;
@@ -437,9 +442,9 @@ function abandon(): void {
 }
 .back-arrow:hover {
   background: #b53a20;
-  transform: translateX(-50%) scale(1.04);
+  transform: scale(1.04);
 }
 .back-arrow:active {
-  transform: translateX(-50%) scale(0.96);
+  transform: scale(0.96);
 }
 </style>

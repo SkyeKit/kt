@@ -806,7 +806,6 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
 /* 全屏覆盖页：覆盖整个屏幕、两边透明可看当前场景、中央 panel 不透明 */
 .full-page {
   position: fixed;
-  // 显式四向定位（避免 inset 兼容性问题）
   top: 0;
   left: 0;
   right: 0;
@@ -815,7 +814,7 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 90px 24px 80px;
+  padding: 70px 24px 24px;
   z-index: 20;
   overflow: auto;
 }
@@ -825,7 +824,7 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
   border: 1px solid var(--border-strong);
   border-radius: var(--radius);
   padding: 20px 24px 24px;
-  width: 820px;
+  width: 920px;
   max-width: calc(100vw - 24px);
   display: flex;
   flex-direction: column;
@@ -854,18 +853,24 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
 }
 .page-cards-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr); // 牌堆查看也按 6 列铺
+  grid-template-columns: repeat(6, 132px);
   gap: 8px;
+  justify-content: center;
   width: 100%;
   margin: 0 auto;
 }
+// CardView 在 grid item 中自适应列宽（深选择器穿透 scoped）
+.page-cards-grid :deep(.card) {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 132 / 190;
+}
 
-/* 返回按钮：下方居中（PRD：调整到下方，但不要太过下面） */
+/* 返回按钮：左下角固定（PRD：箭头调整到左下角） */
 .back-arrow {
   position: fixed;
-  bottom: 28px;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 24px;
+  left: 24px;
   width: 90px;
   height: 32px;
   border-radius: 4px;
@@ -887,10 +892,10 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
 }
 .back-arrow:hover {
   background: #b53a20;
-  transform: translateX(-50%) scale(1.04);
+  transform: scale(1.04);
 }
 .back-arrow:active {
-  transform: translateX(-50%) scale(0.96);
+  transform: scale(0.96);
 }
 
 .console {
