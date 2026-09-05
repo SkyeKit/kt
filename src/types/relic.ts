@@ -23,8 +23,17 @@ export type RelicTrigger =
 export interface Relic {
   id: string // snake_case
   name: string
-  rarity: string // 普通/罕见/稀有/商店/事件/先古之民…
+  rarity: string // 普通/罕见/稀有/商店/事件/遗物/先古之民…
   trigger: RelicTrigger
   desc: string // 效果描述（原样引用数据文件文本）
-  excluded?: boolean // 是否 MVP 剔除（如依赖药水/多人系统）
+  pool?:
+    | 'warrior'
+    | 'silent'
+    | 'juggler'
+    | 'religion'
+    | 'robomancer'
+    | 'general'
+    | 'neowPool'
+    | 'ancient' // 所属池
+  excluded?: boolean // 是否 MVP 剔除（如依赖药水/附魔/充能球/网格等缺失子系统）
 }

@@ -6,6 +6,7 @@ import { generateCards } from './parse-cards.mjs'
 import { generateEnemies } from './parse-enemies.mjs'
 import { generateRelics } from './parse-relics.mjs'
 import { generateEvents } from './parse-events.mjs'
+import { generateEnchantments } from './parse-enchantments.mjs'
 import { generateMap } from './generate-map.mjs'
 
 console.log('🔄 开始生成游戏数据（document/*.md → data/*.json）...')
@@ -13,5 +14,6 @@ generateCards()
 generateEnemies()
 generateRelics()
 generateEvents()
+generateEnchantments()
 generateMap()
 console.log('✅ 全部数据生成完成')

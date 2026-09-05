@@ -39,6 +39,12 @@ export const useMetaStore = defineStore('meta', () => {
     persist()
   }
 
+  // 重置元进度（主菜单"设置 → 重置存档"调用，需二次确认后由界面触发）
+  function reset(): void {
+    meta.value = { runs: 0, victories: 0, kills: 0, elitesKilled: 0, bestFloor: 0 }
+    persist()
+  }
+
   function persist(): void {
     try {
       localStorage.setItem(META_KEY, JSON.stringify(meta.value))
@@ -47,5 +53,5 @@ export const useMetaStore = defineStore('meta', () => {
     }
   }
 
-  return { meta, recordRun }
+  return { meta, recordRun, reset }
 })

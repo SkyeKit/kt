@@ -3,7 +3,13 @@
  * 数值/概率/价格等设计常量（PRD §3.2.1 / §3.5 / §3.6 / §3.3.5）。
  * 注意：卡牌/敌人/遗物/事件数据一律在 data/*.json，此处只放"规则性"配置。
  */
-import type { MapNodeType } from '@/types'
+import type { MapNodeType, ActId } from '@/types'
+
+// 幕注册表：中文名 + 事件过滤 stage（供运行时按幕选择遭遇/事件/标题）
+export const ACTS: Record<ActId, { name: string; stage: string }> = {
+  overgrowth: { name: '密林', stage: 'overgrowth' }, // 密林丘（Overgrowth）
+  underdocks: { name: '暗港', stage: 'harbor' }, // 暗港（Underdocks）
+} as const
 
 // 战士基础属性（PRD §3.4，对应数据：燃烧之血为战士初始遗物）
 export const PLAYER = {
@@ -21,8 +27,9 @@ export const PLAYER = {
     'defend_ironclad',
     'defend_ironclad',
     'defend_ironclad',
+    'defend_ironclad',
     'bash',
-  ], // 打击×5 防御×4 痛击×1
+  ], // 打击×5 防御×5 痛击×1
   startingRelic: ['burning_blood'], // 燃烧之血（战斗结束回复 6 点生命）
 } as const
 
@@ -80,6 +87,8 @@ export const REWARD = {
     boss: { common: 0, uncommon: 0.2, rare: 0.8 },
   },
   cardChoices: 3, // 3 选 1
+  // 卡牌奖励"白/蓝/金"档位下，每张候选卡小概率升一级稀有度的概率（白→罕见、蓝→稀有、金保持稀有）
+  tierUpgradeChance: 0.25,
   bloodHeal: 6, // 燃烧之血：战斗结束回复 6 点
   // 遗物掉落（PRD §3.3.5：精英必掉 1 件，Boss 必掉 1 件；黑星→+1、熔岩石→+2 后续扩展）
   relicDrop: { elite: 1, boss: 1, monster: 0 },
@@ -87,15 +96,33 @@ export const REWARD = {
 
 // 商店（PRD §3.5）
 export const SHOP = {
-  cardCount: 7, // 卡牌商品数
-  cardWarrior: 5, // 战士卡池张数
-  cardColorless: 2, // 无色卡池张数
+  cardCount: 8, // 卡牌商品数（战士 6 + 无色 2，等于 cardWarrior+cardColorless）
+  cardWarrior: 6, // 战士卡池张数（商店上方区域）
+  cardColorless: 2, // 无色卡池张数（商店下方区域）
   relicCount: 3,
   removeCount: 1,
   removeBaseCost: 75, // 卡牌移除基础价
   removeIncrement: 25, // 每次移除 +25
   prices: { common: 50, uncommon: 75, rare: 150 }, // 卡牌价格（±10% 浮动）
   relicPrice: [150, 300], // 遗物价格区间
+} as const
+
+// 遗物规则性数值（PRD §3.8；卡牌真实数值以 relic.md / data/relics.json 为准，此处仅回合制/结算层通用值）
+export const RELIC = {
+  // 战斗结束回血类遗物（由 gameStore.onVictory 结算）
+  relicHeal: {
+    blackBlood: 12, // 黑暗之血：战斗结束回复 12 点生命
+    meatOnTheBone: 12, // 带骨肉：生命 ≤50% 时回复 12 点生命
+  },
+  // 拾起即生效的最大生命增益（草莓等，由 gameStore.onRelicGained 结算）
+  maxHpBonus: {
+    strawberry: 7, // 草莓：最大生命 +7
+    oyster: 11, // 营养牡蛎：最大生命 +11
+  },
+  // 会员卡：商店价格立减比例（15%）
+  shopDiscount: 0.15,
+  // 白银熔炉：前 N 次卡牌奖励会被升级
+  silverRewardCount: 3,
 } as const
 
 // 篝火（PRD §3.6）
@@ -114,7 +141,7 @@ export const NEOW = {
 // 存档
 export const SAVE = {
   storageKey: 'sts2_run_v1', // localStorage 键（含版本号）
-  version: 1,
+  version: 2, // v2：deck 由 id 数组改为卡实例数组（DeckCard[]），旧档因版本号不匹配自动作废
 } as const
 
 // 结算（PRD §3.13）

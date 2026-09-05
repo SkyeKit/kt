@@ -15,6 +15,10 @@ const props = defineProps<{
   hovered?: boolean
   selected?: boolean
   fx?: CombatFx[]
+  // 攻击突进动画触发（PRD §5.3 敌人攻击 400ms）
+  lunge?: boolean
+  // 死亡消散动画中（PRD §5.3 敌人死亡 600ms）
+  dying?: boolean
 }>()
 const emit = defineEmits<{ select: [unit: CombatUnit] }>()
 
@@ -41,23 +45,18 @@ const isAttack = computed(() => props.unit.intentType === 'attack')
 // 血条宽度百分比
 const hpPct = computed(() => Math.max(0, (props.unit.hp / props.unit.maxHp) * 100))
 
-// 状态摘要（力量/格挡等）
-const statusText = computed(() => {
-  const u = props.unit
-  const parts: string[] = []
-  if (u.block > 0) parts.push(`格挡 ${u.block}`)
-  if (u.strength > 0) parts.push(`力量 ${u.strength}`)
-  return parts.join(' · ')
-})
-
 // 敌人 fx（最近的几条）
 const fxList = computed(() => props.fx?.slice(-5) ?? [])
 </script>
 
 <template>
-  <div class="enemy" :class="{ targetable, hovered, selected }" @click.stop="emit('select', unit)">
-    <!-- 意图（头顶，PRD §5.2：意图图标） -->
-    <div class="enemy-intent" :class="{ attack: isAttack }">{{ intentText }}</div>
+  <div
+    class="enemy"
+    :class="{ targetable, hovered, selected, lunge, dying }"
+    @click.stop="emit('select', unit)"
+  >
+    <!-- 意图（头顶，PRD §5.2：意图图标）；死亡消散时隐藏 -->
+    <div v-if="!dying" class="enemy-intent" :class="{ attack: isAttack }">{{ intentText }}</div>
     <!-- 伤害数字跳动层 -->
     <div class="fx-layer">
       <span v-for="f in fxList" :key="f.id" class="fx-num" :class="'fx-' + f.kind">
@@ -71,7 +70,7 @@ const fxList = computed(() => props.fx?.slice(-5) ?? [])
       <span class="enemy-hp-fill" :style="{ width: hpPct + '%' }" />
     </div>
     <div class="enemy-hp">{{ unit.hp }}/{{ unit.maxHp }}</div>
-    <div v-if="statusText" class="enemy-status">{{ statusText }}</div>
+    <div class="enemy-status"><UnitStatusChips :unit="unit" /></div>
   </div>
 </template>
 
@@ -136,8 +135,9 @@ const fxList = computed(() => props.fx?.slice(-5) ?? [])
   color: var(--text-dim);
 }
 .enemy-status {
-  font-size: 11px;
-  color: var(--blue);
+  // 状态徽章条：不再用旧的纯文本样式，交给 UnitStatusChips 内部渲染，此处仅居中
+  display: flex;
+  justify-content: center;
 }
 
 /* 伤害数字跳动层（PRD §5.3） */
@@ -154,7 +154,7 @@ const fxList = computed(() => props.fx?.slice(-5) ?? [])
   font-weight: bold;
   font-size: 20px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-  animation: fx-rise 0.9s ease-out forwards;
+  animation: fx-rise 1.1s ease-out forwards;
   white-space: nowrap;
 }
 .fx-num:nth-child(1) {
@@ -220,5 +220,46 @@ const fxList = computed(() => props.fx?.slice(-5) ?? [])
 .enemy.selected {
   border-color: var(--accent-strong);
   box-shadow: 0 0 12px rgba(217, 102, 63, 0.5);
+}
+
+/* 攻击突进：朝左侧玩家前冲（PRD §5.3 敌人攻击 600ms） */
+.enemy.lunge {
+  animation: enemy-lunge 0.6s ease-out;
+  z-index: 4;
+}
+@keyframes enemy-lunge {
+  0% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  30% {
+    transform: translateX(-16px) scale(1.08);
+  }
+  60% {
+    transform: translateX(-6px) scale(1.03);
+  }
+  100% {
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* 死亡消散：放大 + 下沉淡出（PRD §5.3 敌人死亡 900ms） */
+.enemy.dying {
+  animation: enemy-death 0.9s ease-in forwards;
+  pointer-events: none;
+}
+@keyframes enemy-death {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.06) rotate(-3deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.6) translateY(18px);
+  }
 }
 </style>

@@ -43,6 +43,8 @@ export interface Enemy {
   hpMax: number // HP 区间上限
   category: EnemyCategory
   abilities: string[] // 初始能力/机制（如 滑溜、领地意识、寄生物）
+  // 初始状态（战斗开始时直接施加，供需引擎钩子的机制使用：覆甲/吮吸/硬化外壳/尖叫/蒸汽/胆小等）
+  initialStatuses?: Array<{ status: string; amount: number }>
   ai: EnemyAiPattern
   moves: Record<string, EnemyMove>
   // 衍生物声明（死亡时召唤等）：{ id, count }

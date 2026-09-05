@@ -47,20 +47,65 @@ export function firstNum(text) {
   return m ? parseInt(m[0], 10) : null
 }
 
+// 中文数字/阿拉伯数字 → 阿拉伯数字（用于解析"两次/二段/十次"等攻击次数）
+// 支持单一中文数字（两/二/三…九/十）与组合（十二/二十/二十三）；纯数字直接 parseInt
+function numToAr(s) {
+  if (/^\d+$/.test(s)) return parseInt(s, 10)
+  const map = { 两: 2, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9, 十: 10 }
+  // 组合式：以"十"为分界，前面是十位（缺省为 1），后面是个位
+  if (s.includes('十')) {
+    const [hiPart, loPart] = s.split('十')
+    const hi = hiPart ? (map[hiPart] ?? parseInt(hiPart, 10)) : 1
+    const lo = loPart ? (map[loPart] ?? parseInt(loPart, 10)) : 0
+    return hi * 10 + lo
+  }
+  const n = map[s] ?? parseInt(s, 10)
+  return Number.isNaN(n) ? 0 : n
+}
+
 // 效果文本 → 效果链（玩家视角；source 为 'enemy' 时目标语义翻转）
 export function parseEffects(text, source = 'player') {
   const effects = []
   // 敌人文档效果含空格（"造成 4 点伤害"）与卡牌无空格（"造成4点伤害"）并存，统一去掉空白再匹配
   const t = text.replace(/\s+/g, '').replace(/[。；;]/g, '；')
 
-  // 多段攻击：造成X点伤害×N次/段 或 1 点伤害 ×8 段（无"造成"前缀）
-  const multiHit = t.match(/(?:造成)?(\d+)点伤害[×x]?(\d+)[次段]/)
+  // === 内在/触发类（状态/诅咒牌）：先于通用解析判定，避免"你受到X点伤害"被误判为对敌方伤害 ===
+  // 倾泻（X 费用）：打出抽牌堆顶部的 X 张牌；升级为 X+1（数值以投入能量为基准，升级 plus=1）
+  const pour = t.match(/打出你抽牌堆顶部的X(\+1)?张牌/)
+  if (pour) {
+    effects.push(pour[1] ? { type: 'playTopXCards', plus: 1 } : { type: 'playTopXCards' })
+    return effects
+  }
+  // 回合结束时若在手牌中则触发（如 灼伤/凋萎/毒素/腐朽/霉运/悔恨/债务/羞耻/疑虑 等）
+  const endTurn = t.match(/在你的回合结束时，如果这张牌在你的手牌中，(?:你)?(.+)/)
+  if (endTurn) {
+    effects.push({
+      type: 'intrinsic',
+      trigger: 'endOfTurn',
+      effects: parseIntrinsic(endTurn[1]),
+    })
+    // 仍保留"消耗"等关键词解析（由调用方统一 parseKeywords，此处无需重复）
+    return effects
+  }
+  // 抽到这张牌时触发（如 虚空：抽到失去 1 点能量）
+  const onDraw = t.match(/每当你?抽到这张牌时，(?:你)?(.+)/)
+  if (onDraw) {
+    effects.push({
+      type: 'intrinsic',
+      trigger: 'onDraw',
+      effects: parseIntrinsic(onDraw[1]),
+    })
+    return effects
+  }
+
+  // 多段攻击：支持"造成X点伤害N次/段"、"造成X点伤害两次"(中文数字)、"造成X点伤害3次" 三种写法
+  const multiHit = t.match(/(?:造成)?(\d+)点伤害[×x]?([0-9两二三四五六七八九十]+)[次段]/)
   if (multiHit) {
     effects.push({
       type: 'damage',
       target: 'enemy',
       amount: parseInt(multiHit[1], 10),
-      hits: parseInt(multiHit[2], 10),
+      hits: numToAr(multiHit[2]),
     })
   } else {
     const dmg = t.match(/(?:造成)?(\d+)点伤害/)
@@ -151,11 +196,65 @@ export function parseEffects(text, source = 'player') {
     }
   }
 
+  // 选择一张牌加入手牌（无色交互卡：发现/飞溅/秘密技法/秘密武器/许愿/探寻打击）
+  // 注意顺序：先匹配更具体的句式，避免互相误命中
+  const wish = t.match(/将你抽牌堆中的(?:一张|1张)牌放?入你的手牌/)
+  if (wish) effects.push({ type: 'chooseAdd', filter: 'anyInDraw' })
+  const seek = t.match(/从抽牌堆的随机(\d+)张牌中选择一张加?入你的手牌/)
+  if (seek) effects.push({ type: 'chooseAdd', filter: 'seek', count: parseInt(seek[1], 10) })
+  const tech = t.match(/从抽牌堆中选择一张技能牌放?入你的手牌/)
+  if (tech) effects.push({ type: 'chooseAdd', filter: 'skillInDraw' })
+  const weapon = t.match(/从抽牌堆中选择一张攻击牌放?入你的手牌/)
+  if (weapon) effects.push({ type: 'chooseAdd', filter: 'attackInDraw' })
+  const find = t.match(/从(\d+)张随机牌中选择1张加?入你的手牌/)
+  if (find)
+    effects.push({ type: 'chooseAdd', filter: 'random', count: parseInt(find[1], 10), free: true })
+  const splash = t.match(/从(\d+)张其他角色的攻击牌中选择1张加?入你的手牌/)
+  if (splash)
+    effects.push({
+      type: 'chooseAdd',
+      filter: 'attack',
+      count: parseInt(splash[1], 10),
+      free: true,
+    })
+
+  // 本回合保留手牌（均衡/箭雨等）
+  if (t.includes('在本回合保留你的手牌')) effects.push({ type: 'retainHandThisTurn' })
+
+  // 重放：抽牌堆中一张无重放的随机牌获得 X 层重放（未掘宝石）
+  const replay = t.match(/获得(\d+)层重放/)
+  if (replay) effects.push({ type: 'grantReplay', count: parseInt(replay[1], 10) })
+
   // 消耗关键词
   if (t.includes('消耗')) effects.push({ type: 'exhaust' })
 
   // 去重
   return dedupe(effects)
+}
+
+// 解析"在你回合结束时/抽到这张牌时"的内在触发效果（均针对玩家自身）
+// 覆盖常见句式：受X点伤害/失去X点生命/失去X金币/失去手牌数生命/获得X层脆弱或虚弱
+function parseIntrinsic(innerText) {
+  const inner = []
+  const loseHp = innerText.match(/你?受到(\d+)点伤害/)
+  if (loseHp) inner.push({ type: 'loseHp', amount: parseInt(loseHp[1], 10) })
+  const loseHp2 = innerText.match(/你?失去(\d+)点生命/)
+  if (loseHp2) inner.push({ type: 'loseHp', amount: parseInt(loseHp2[1], 10) })
+  const loseGold = innerText.match(/你?失去(\d+)金币/)
+  if (loseGold) inner.push({ type: 'loseGold', amount: parseInt(loseGold[1], 10) })
+  // 虚空：抽到这张牌时失去能量
+  const loseEn = innerText.match(/你?失去(\d+)点能量/)
+  if (loseEn) inner.push({ type: 'loseEnergy', amount: parseInt(loseEn[1], 10) })
+  // 悔恨：失去等同于手牌数量的生命
+  if (innerText.includes('手牌数量')) inner.push({ type: 'loseHpHandSize' })
+  // 羞耻/疑虑：获得 1 层脆弱/虚弱（施加给自己）
+  for (const [zh, id] of STATUS_MAP) {
+    const re = new RegExp(`获得(\\d+)层${escapeRe(zh)}`)
+    const m = innerText.match(re)
+    if (m)
+      inner.push({ type: 'applyStatus', target: 'self', status: id, amount: parseInt(m[1], 10) })
+  }
+  return inner
 }
 
 // 状态中文名 → id
@@ -212,6 +311,7 @@ export function parseKeywords(text) {
   if (text.includes('保留')) keywords.push('retain')
   if (text.includes('虚无')) keywords.push('ethereal')
   if (text.includes('不能被打出')) keywords.push('unplayable')
+  if (text.includes('永恒')) keywords.push('unique')
   return keywords
 }
 

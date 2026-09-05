@@ -44,7 +44,7 @@ describe('BattleView 出牌语义', () => {
     expect(ok).toBe(true)
     // 打出后手牌减少 1 张（不校验内容是否包含，因牌组中有多张同 id）
     expect(store.battle!.hand.length).toBe(handBefore - 1)
-    expect(store.battle!.discardPile).toContain('defend_ironclad')
+    expect(store.battle!.discardPile.some((c) => c.id === 'defend_ironclad')).toBe(true)
   })
 
   it('攻击卡：需指定目标 enemyId；未指定时多怪时挑首个', () => {

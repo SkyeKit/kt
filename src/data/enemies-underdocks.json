@@ -1,0 +1,874 @@
+﻿{
+  "enemies": [
+    {
+      "id": "toadpole",
+      "name": "蟾蜍蝌蚪",
+      "hpMin": 21,
+      "hpMax": 25,
+      "category": "normal",
+      "abilities": [],
+      "ai": { "mode": "loop", "sequence": ["带刺", "吐刺", "旋转"] },
+      "moves": {
+        "带刺": {
+          "name": "带刺",
+          "intent": "buff",
+          "effects": [{ "type": "applyStatus", "target": "self", "status": "thorns", "amount": 2 }],
+          "desc": "获得 2 层荆棘"
+        },
+        "吐刺": {
+          "name": "吐刺",
+          "intent": "attack",
+          "damage": 3,
+          "hits": 3,
+          "effects": [
+            { "type": "damage", "target": "enemy", "amount": 3, "hits": 3 },
+            { "type": "applyStatus", "target": "self", "status": "thorns", "amount": -2 }
+          ],
+          "desc": "造成 3 点伤害×3 段，失去 2 层荆棘"
+        },
+        "旋转": {
+          "name": "旋转",
+          "intent": "attack",
+          "damage": 7,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 7 }],
+          "desc": "造成 7 点伤害"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "seapunk",
+      "name": "海洋混混",
+      "hpMin": 44,
+      "hpMax": 46,
+      "category": "normal",
+      "abilities": [],
+      "ai": { "mode": "loop", "sequence": ["海洋踢", "回旋踢", "吐泡泡"] },
+      "moves": {
+        "海洋踢": {
+          "name": "海洋踢",
+          "intent": "attack",
+          "damage": 11,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 11 }],
+          "desc": "造成 11 点伤害"
+        },
+        "回旋踢": {
+          "name": "回旋踢",
+          "intent": "attack",
+          "damage": 2,
+          "hits": 4,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 2, "hits": 4 }],
+          "desc": "造成 2 点伤害×4 段（共 8 点）"
+        },
+        "吐泡泡": {
+          "name": "吐泡泡",
+          "intent": "buff",
+          "block": 7,
+          "effects": [
+            { "type": "block", "amount": 7 },
+            { "type": "applyStatus", "target": "self", "status": "strength", "amount": 1 }
+          ],
+          "desc": "获得 7 点格挡与 1 点力量"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "corpse_slug",
+      "name": "噬尸蛞蝓",
+      "hpMin": 25,
+      "hpMax": 27,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "weighted",
+        "sequence": [],
+        "weights": { "鞭打": 1, "扑上": 1, "黏液": 1 }
+      },
+      "moves": {
+        "鞭打": {
+          "name": "鞭打",
+          "intent": "attack",
+          "damage": 3,
+          "hits": 2,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 3, "hits": 2 }],
+          "desc": "造成 3 点伤害×2 段（共 6 点）"
+        },
+        "扑上": {
+          "name": "扑上",
+          "intent": "attack",
+          "damage": 8,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 8 }],
+          "desc": "造成 8 点伤害"
+        },
+        "黏液": {
+          "name": "黏液",
+          "intent": "status",
+          "effects": [
+            { "type": "applyStatus", "target": "enemy", "status": "vulnerable", "amount": 2 }
+          ],
+          "desc": "给予 2 层脆弱"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "sludge_spinner",
+      "name": "淤泥旋螺",
+      "hpMin": 37,
+      "hpMax": 39,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "weighted",
+        "sequence": [],
+        "weights": { "喷油": 1, "砸击": 1, "狂怒": 1 },
+        "cooldowns": { "砸击": 1, "狂怒": 1 }
+      },
+      "moves": {
+        "喷油": {
+          "name": "喷油",
+          "intent": "attack",
+          "damage": 8,
+          "effects": [
+            { "type": "damage", "target": "enemy", "amount": 8 },
+            { "type": "applyStatus", "target": "enemy", "status": "weak", "amount": 1 }
+          ],
+          "desc": "造成 8 点伤害，给予 1 层虚弱"
+        },
+        "砸击": {
+          "name": "砸击",
+          "intent": "attack",
+          "damage": 11,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 11 }],
+          "desc": "造成 11 点伤害"
+        },
+        "狂怒": {
+          "name": "狂怒",
+          "intent": "attack",
+          "damage": 6,
+          "effects": [
+            { "type": "damage", "target": "enemy", "amount": 6 },
+            { "type": "applyStatus", "target": "self", "status": "strength", "amount": 3 }
+          ],
+          "desc": "造成 6 点伤害，获得 3 点力量"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "calcified_cultist",
+      "name": "钙化邪教徒",
+      "hpMin": 38,
+      "hpMax": 41,
+      "category": "normal",
+      "abilities": [],
+      "ai": { "mode": "scripted", "sequence": ["念咒", "黑暗打击"] },
+      "moves": {
+        "念咒": {
+          "name": "念咒",
+          "intent": "buff",
+          "effects": [{ "type": "applyStatus", "target": "self", "status": "ritual", "amount": 2 }],
+          "desc": "获得 2 层仪式"
+        },
+        "黑暗打击": {
+          "name": "黑暗打击",
+          "intent": "attack",
+          "damage": 9,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 9 }],
+          "desc": "造成 9 点伤害"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "damp_cultist",
+      "name": "潮湿邪教徒",
+      "hpMin": 51,
+      "hpMax": 53,
+      "category": "normal",
+      "abilities": [],
+      "ai": { "mode": "scripted", "sequence": ["念咒", "黑暗打击"] },
+      "moves": {
+        "念咒": {
+          "name": "念咒",
+          "intent": "buff",
+          "effects": [{ "type": "applyStatus", "target": "self", "status": "ritual", "amount": 5 }],
+          "desc": "获得 5 层仪式"
+        },
+        "黑暗打击": {
+          "name": "黑暗打击",
+          "intent": "attack",
+          "damage": 1,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 1 }],
+          "desc": "造成 1 点伤害"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "living_fog",
+      "name": "活雾",
+      "hpMin": 80,
+      "hpMax": 80,
+      "category": "normal",
+      "abilities": ["smoggy"],
+      "ai": { "mode": "scripted", "sequence": ["先进毒气", "膨胀", "超级毒气爆炸", "膨胀"] },
+      "moves": {
+        "先进毒气": {
+          "name": "先进毒气",
+          "intent": "attack",
+          "damage": 8,
+          "effects": [
+            { "type": "damage", "target": "enemy", "amount": 8 },
+            { "type": "applyStatus", "target": "enemy", "status": "smoggy", "amount": 1 }
+          ],
+          "desc": "造成 8 点伤害，给予玩家烟雾弥漫"
+        },
+        "膨胀": {
+          "name": "膨胀",
+          "intent": "attack",
+          "damage": 5,
+          "effects": [
+            { "type": "damage", "target": "enemy", "amount": 5 },
+            { "type": "spawnEnemy", "enemyId": "gas_bomb", "count": 1 }
+          ],
+          "desc": "造成 5 点伤害，召唤 1 只气态炸弹"
+        },
+        "超级毒气爆炸": {
+          "name": "超级毒气爆炸",
+          "intent": "attack",
+          "damage": 8,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 8 }],
+          "desc": "造成 8 点伤害"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "gas_bomb",
+      "name": "气态炸弹",
+      "hpMin": 7,
+      "hpMax": 7,
+      "category": "minion",
+      "abilities": [],
+      "ai": { "mode": "loop", "sequence": ["爆炸"] },
+      "moves": {
+        "爆炸": {
+          "name": "爆炸",
+          "intent": "attack",
+          "damage": 8,
+          "effects": [
+            { "type": "damage", "target": "enemy", "amount": 8 },
+            { "type": "loseHp", "amount": 999 }
+          ],
+          "desc": "造成 8 点伤害，自身死亡"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "fossil_stalker",
+      "name": "化石追踪者",
+      "hpMin": 51,
+      "hpMax": 53,
+      "category": "normal",
+      "abilities": ["吮吸 3：每次造成未被格挡的伤害时获得 3 点力量"],
+      "initialStatuses": [{ "status": "suck", "amount": 3 }],
+      "ai": {
+        "mode": "weighted",
+        "sequence": [],
+        "weights": { "缠上": 1, "冲撞": 1, "甩动": 1 },
+        "cooldowns": { "缠上": 1, "冲撞": 1, "甩动": 1 }
+      },
+      "moves": {
+        "缠上": {
+          "name": "缠上",
+          "intent": "attack",
+          "damage": 12,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 12 }],
+          "desc": "造成 12 点伤害"
+        },
+        "冲撞": {
+          "name": "冲撞",
+          "intent": "attack",
+          "damage": 9,
+          "effects": [
+            { "type": "damage", "target": "enemy", "amount": 9 },
+            { "type": "applyStatus", "target": "enemy", "status": "vulnerable", "amount": 1 }
+          ],
+          "desc": "造成 9 点伤害，给予 1 层脆弱"
+        },
+        "甩动": {
+          "name": "甩动",
+          "intent": "attack",
+          "damage": 3,
+          "hits": 2,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 3, "hits": 2 }],
+          "desc": "造成 3 点伤害×2 段（共 6 点）"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "gremlin_mercenary",
+      "name": "地精佣兵",
+      "hpMin": 47,
+      "hpMax": 49,
+      "category": "normal",
+      "abilities": ["steal", "accident"],
+      "ai": { "mode": "loop", "sequence": ["拿来", "双重猛击", "嘿嘿"] },
+      "moves": {
+        "拿来": {
+          "name": "拿来",
+          "intent": "attack",
+          "damage": 7,
+          "hits": 2,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 7, "hits": 2 }],
+          "desc": "造成 7 点伤害×2 段（共 14 点）"
+        },
+        "双重猛击": {
+          "name": "双重猛击",
+          "intent": "attack",
+          "damage": 6,
+          "hits": 2,
+          "effects": [
+            { "type": "damage", "target": "enemy", "amount": 6, "hits": 2 },
+            { "type": "applyStatus", "target": "enemy", "status": "weak", "amount": 2 }
+          ],
+          "desc": "造成 6 点伤害×2 段（共 12 点），给予 2 层虚弱"
+        },
+        "嘿嘿": {
+          "name": "嘿嘿",
+          "intent": "attack",
+          "damage": 8,
+          "effects": [
+            { "type": "damage", "target": "enemy", "amount": 8 },
+            { "type": "applyStatus", "target": "self", "status": "strength", "amount": 2 }
+          ],
+          "desc": "造成 8 点伤害，获得 2 点力量"
+        }
+      },
+      "spawns": [
+        { "id": "fat_gremlin", "count": 1, "condition": "onDeath" },
+        { "id": "sneaky_gremlin", "count": 1, "condition": "onDeath" }
+      ]
+    },
+    {
+      "id": "fat_gremlin",
+      "name": "胖地精",
+      "hpMin": 13,
+      "hpMax": 17,
+      "category": "minion",
+      "abilities": [],
+      "ai": { "mode": "scripted", "sequence": ["醒来", "逃跑"] },
+      "moves": {
+        "醒来": {
+          "name": "醒来",
+          "intent": "special",
+          "effects": [],
+          "desc": "跳过回合（仅出场回合）"
+        },
+        "逃跑": {
+          "name": "逃跑",
+          "intent": "special",
+          "effects": [{ "type": "loseHp", "amount": 999 }],
+          "desc": "逃离战斗（若成功，被偷金币永久丢失）"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "sneaky_gremlin",
+      "name": "卑鄙地精",
+      "hpMin": 10,
+      "hpMax": 14,
+      "category": "minion",
+      "abilities": [],
+      "ai": { "mode": "scripted", "sequence": ["醒来", "冲撞"] },
+      "moves": {
+        "醒来": {
+          "name": "醒来",
+          "intent": "special",
+          "effects": [],
+          "desc": "跳过回合（仅出场回合）"
+        },
+        "冲撞": {
+          "name": "冲撞",
+          "intent": "attack",
+          "damage": 9,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 9 }],
+          "desc": "造成 9 点伤害"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "haunted_ship",
+      "name": "幽灵船",
+      "hpMin": 63,
+      "hpMax": 63,
+      "category": "normal",
+      "abilities": [],
+      "ai": { "mode": "loop", "sequence": ["纠缠", "扫击", "践踏"] },
+      "moves": {
+        "纠缠": {
+          "name": "纠缠",
+          "intent": "status",
+          "effects": [
+            { "type": "applyStatus", "target": "enemy", "status": "weak", "amount": 3 },
+            { "type": "addCard", "cardId": "dizzy", "to": "discard" },
+            { "type": "addCard", "cardId": "dizzy", "to": "discard" },
+            { "type": "addCard", "cardId": "dizzy", "to": "discard" },
+            { "type": "addCard", "cardId": "dizzy", "to": "discard" },
+            { "type": "addCard", "cardId": "dizzy", "to": "discard" }
+          ],
+          "desc": "给予 3 层虚弱，向弃牌堆洗入 5 张晕眩"
+        },
+        "扫击": {
+          "name": "扫击",
+          "intent": "attack",
+          "damage": 13,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 13 }],
+          "desc": "造成 13 点伤害"
+        },
+        "践踏": {
+          "name": "践踏",
+          "intent": "attack",
+          "damage": 4,
+          "hits": 3,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 4, "hits": 3 }],
+          "desc": "造成 4 点伤害×3 段（共 12 点）"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "sewer_clam",
+      "name": "下水道蚌",
+      "hpMin": 56,
+      "hpMax": 56,
+      "category": "normal",
+      "abilities": ["覆甲：回合结束时获得等量格挡，回合开始时层数减 1"],
+      "initialStatuses": [{ "status": "plating", "amount": 8 }],
+      "ai": { "mode": "loop", "sequence": ["喷射", "增压"] },
+      "moves": {
+        "喷射": {
+          "name": "喷射",
+          "intent": "attack",
+          "damage": 10,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 10 }],
+          "desc": "造成 10 点伤害"
+        },
+        "增压": {
+          "name": "增压",
+          "intent": "buff",
+          "effects": [
+            { "type": "applyStatus", "target": "self", "status": "strength", "amount": 4 }
+          ],
+          "desc": "获得 4 点力量"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "punch_construct",
+      "name": "拳击构装体",
+      "hpMin": 55,
+      "hpMax": 55,
+      "category": "normal",
+      "abilities": ["人工制品：抵消 1 次负面状态"],
+      "initialStatuses": [{ "status": "artifact", "amount": 1 }],
+      "ai": { "mode": "loop", "sequence": ["准备就绪", "快速拳", "强力拳"] },
+      "moves": {
+        "准备就绪": {
+          "name": "准备就绪",
+          "intent": "defend",
+          "block": 10,
+          "effects": [{ "type": "block", "amount": 10 }],
+          "desc": "获得 10 点格挡"
+        },
+        "快速拳": {
+          "name": "快速拳",
+          "intent": "attack",
+          "damage": 5,
+          "hits": 2,
+          "effects": [
+            { "type": "damage", "target": "enemy", "amount": 5, "hits": 2 },
+            { "type": "applyStatus", "target": "enemy", "status": "vulnerable", "amount": 1 }
+          ],
+          "desc": "造成 5 点伤害×2 段（共 10 点），给予 1 层脆弱"
+        },
+        "强力拳": {
+          "name": "强力拳",
+          "intent": "attack",
+          "damage": 14,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 14 }],
+          "desc": "造成 14 点伤害"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "two_tailed_rat",
+      "name": "双尾鼠",
+      "hpMin": 17,
+      "hpMax": 21,
+      "category": "normal",
+      "abilities": [],
+      "ai": {
+        "mode": "weighted",
+        "sequence": [],
+        "weights": { "抓挠": 1, "疾病啃咬": 1, "尖声嘶吼": 1, "呼唤后援": 0.75 },
+        "cooldowns": { "尖声嘶吼": 3 }
+      },
+      "moves": {
+        "抓挠": {
+          "name": "抓挠",
+          "intent": "attack",
+          "damage": 8,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 8 }],
+          "desc": "造成 8 点伤害"
+        },
+        "疾病啃咬": {
+          "name": "疾病啃咬",
+          "intent": "attack",
+          "damage": 6,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 6 }],
+          "desc": "造成 6 点伤害"
+        },
+        "尖声嘶吼": {
+          "name": "尖声嘶吼",
+          "intent": "status",
+          "effects": [
+            { "type": "applyStatus", "target": "enemy", "status": "vulnerable", "amount": 1 }
+          ],
+          "desc": "给予 1 层脆弱（冷却 3 回合）"
+        },
+        "呼唤后援": {
+          "name": "呼唤后援",
+          "intent": "special",
+          "effects": [{ "type": "spawnEnemy", "enemyId": "two_tailed_rat", "count": 1 }],
+          "desc": "召唤 1 只双尾鼠"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "phantasmal_gardener",
+      "name": "花园幽灵鳗",
+      "hpMin": 26,
+      "hpMax": 31,
+      "category": "elite",
+      "abilities": ["胆小：每回合开始时获得格挡"],
+      "initialStatuses": [{ "status": "timid", "amount": 5 }],
+      "ai": { "mode": "loop", "sequence": ["猛晃", "啃咬", "甩动", "变大"] },
+      "moves": {
+        "猛晃": {
+          "name": "猛晃",
+          "intent": "attack",
+          "damage": 1,
+          "hits": 3,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 1, "hits": 3 }],
+          "desc": "造成 1 点伤害×3 段（共 3 点）"
+        },
+        "啃咬": {
+          "name": "啃咬",
+          "intent": "attack",
+          "damage": 5,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 5 }],
+          "desc": "造成 5 点伤害"
+        },
+        "甩动": {
+          "name": "甩动",
+          "intent": "attack",
+          "damage": 7,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 7 }],
+          "desc": "造成 7 点伤害"
+        },
+        "变大": {
+          "name": "变大",
+          "intent": "buff",
+          "effects": [
+            { "type": "applyStatus", "target": "self", "status": "strength", "amount": 2 }
+          ],
+          "desc": "获得 2 点力量"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "skulking_colony",
+      "name": "鬼祟珊瑚群",
+      "hpMin": 75,
+      "hpMax": 75,
+      "category": "elite",
+      "abilities": ["硬化外壳：每回合失去的生命值不超过 20 点"],
+      "initialStatuses": [{ "status": "hard_shell", "amount": 20 }],
+      "ai": { "mode": "loop", "sequence": ["猛冲", "猛冲", "惯性", "穿刺戳击"] },
+      "moves": {
+        "猛冲": {
+          "name": "猛冲",
+          "intent": "attack",
+          "damage": 14,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 14 }],
+          "desc": "造成 14 点伤害"
+        },
+        "惯性": {
+          "name": "惯性",
+          "intent": "attack",
+          "damage": 9,
+          "effects": [
+            { "type": "damage", "target": "enemy", "amount": 9 },
+            { "type": "applyStatus", "target": "self", "status": "strength", "amount": 2 }
+          ],
+          "desc": "造成 9 点伤害，获得 2 点力量"
+        },
+        "穿刺戳击": {
+          "name": "穿刺戳击",
+          "intent": "attack",
+          "damage": 7,
+          "hits": 2,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 7, "hits": 2 }],
+          "desc": "造成 7 点伤害×2 段（共 14 点）"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "terror_eel",
+      "name": "骇鳗",
+      "hpMin": 140,
+      "hpMax": 140,
+      "category": "elite",
+      "abilities": ["尖叫：血量为最大生命一半时强制击晕一回合"],
+      "initialStatuses": [{ "status": "shriek", "amount": 70 }],
+      "ai": { "mode": "loop", "sequence": ["撞击", "撕扯"] },
+      "moves": {
+        "撞击": {
+          "name": "撞击",
+          "intent": "attack",
+          "damage": 16,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 16 }],
+          "desc": "造成 16 点伤害"
+        },
+        "撕扯": {
+          "name": "撕扯",
+          "intent": "attack",
+          "damage": 3,
+          "hits": 3,
+          "effects": [
+            { "type": "damage", "target": "enemy", "amount": 3, "hits": 3 },
+            { "type": "applyStatus", "target": "self", "status": "vigor", "amount": 6 }
+          ],
+          "desc": "造成 3 点伤害×3 段（共 9 点），获得 6 层活力"
+        },
+        "被击晕": {
+          "name": "被击晕",
+          "intent": "special",
+          "effects": [],
+          "desc": "跳过回合（血量降至一半时强制触发一次）"
+        },
+        "恐吓": {
+          "name": "恐吓",
+          "intent": "status",
+          "effects": [
+            { "type": "applyStatus", "target": "enemy", "status": "vulnerable", "amount": 99 }
+          ],
+          "desc": "给予 99 层易伤"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "lagavulin_matriarch",
+      "name": "乐加维林族母",
+      "hpMin": 222,
+      "hpMax": 222,
+      "category": "boss",
+      "abilities": ["开局自带 12 层覆甲（沉睡状态 MVP 简化：直接以苏醒循环开局）"],
+      "initialStatuses": [{ "status": "plating", "amount": 12 }],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["斩击", "开膛破肚", "斩击2", "灵魂汲取"]
+      },
+      "moves": {
+        "斩击": {
+          "name": "斩击",
+          "intent": "attack",
+          "damage": 19,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 19 }],
+          "desc": "造成 19 点伤害"
+        },
+        "开膛破肚": {
+          "name": "开膛破肚",
+          "intent": "attack",
+          "damage": 9,
+          "hits": 2,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 9, "hits": 2 }],
+          "desc": "造成 9 点伤害×2 段（共 18 点）"
+        },
+        "斩击2": {
+          "name": "斩击2",
+          "intent": "attack",
+          "damage": 12,
+          "effects": [
+            { "type": "damage", "target": "enemy", "amount": 12 },
+            { "type": "block", "amount": 12 }
+          ],
+          "desc": "造成 12 点伤害，获得 12 点格挡"
+        },
+        "灵魂汲取": {
+          "name": "灵魂汲取",
+          "intent": "status",
+          "effects": [
+            { "type": "applyStatus", "target": "enemy", "status": "strength", "amount": -2 },
+            { "type": "applyStatus", "target": "enemy", "status": "dexterity", "amount": -2 },
+            { "type": "applyStatus", "target": "self", "status": "strength", "amount": 2 }
+          ],
+          "desc": "玩家 -2 力量、-2 敏捷，自身 +2 力量"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "soul_fysh",
+      "name": "灵魂异鱼",
+      "hpMin": 211,
+      "hpMax": 211,
+      "category": "boss",
+      "abilities": [],
+      "ai": {
+        "mode": "loop",
+        "sequence": ["呼唤", "排气", "凝视", "消逝", "尖叫"]
+      },
+      "moves": {
+        "呼唤": {
+          "name": "呼唤",
+          "intent": "status",
+          "effects": [
+            { "type": "addCard", "cardId": "beckon", "to": "draw" },
+            { "type": "addCard", "cardId": "beckon", "to": "discard" }
+          ],
+          "desc": "向抽牌堆和弃牌堆各洗入 1 张呼唤"
+        },
+        "排气": {
+          "name": "排气",
+          "intent": "attack",
+          "damage": 16,
+          "effects": [{ "type": "damage", "target": "enemy", "amount": 16 }],
+          "desc": "造成 16 点伤害"
+        },
+        "凝视": {
+          "name": "凝视",
+          "intent": "attack",
+          "damage": 7,
+          "effects": [
+            { "type": "damage", "target": "enemy", "amount": 7 },
+            { "type": "addCard", "cardId": "beckon", "to": "discard" }
+          ],
+          "desc": "造成 7 点伤害，向弃牌堆洗入 1 张呼唤"
+        },
+        "消逝": {
+          "name": "消逝",
+          "intent": "buff",
+          "effects": [
+            { "type": "applyStatus", "target": "self", "status": "intangible", "amount": 1 }
+          ],
+          "desc": "获得 1 层无实体（实际生效 1 层）"
+        },
+        "尖叫": {
+          "name": "尖叫",
+          "intent": "attack",
+          "damage": 13,
+          "effects": [
+            { "type": "damage", "target": "enemy", "amount": 13 },
+            { "type": "applyStatus", "target": "enemy", "status": "vulnerable", "amount": 3 }
+          ],
+          "desc": "造成 13 点伤害，给予 3 层易伤"
+        }
+      },
+      "spawns": []
+    },
+    {
+      "id": "waterfall_giant",
+      "name": "瀑布巨兽",
+      "hpMin": 240,
+      "hpMax": 240,
+      "category": "boss",
+      "abilities": ["蒸汽喷发：生命归零时首次不死，下回合自爆造成等量伤害"],
+      "ai": { "mode": "loop", "sequence": ["增压", "践踏", "撞击", "虹吸", "压力炮"] },
+      "moves": {
+        "增压": {
+          "name": "增压",
+          "intent": "buff",
+          "effects": [{ "type": "applyStatus", "target": "self", "status": "steam", "amount": 15 }],
+          "desc": "获得 15 层蒸汽喷发"
+        },
+        "践踏": {
+          "name": "践踏",
+          "intent": "attack",
+          "damage": 15,
+          "effects": [
+            { "type": "damage", "target": "enemy", "amount": 15 },
+            { "type": "applyStatus", "target": "enemy", "status": "weak", "amount": 1 },
+            { "type": "applyStatus", "target": "self", "status": "steam", "amount": 3 }
+          ],
+          "desc": "造成 15 点伤害，给予 1 层虚弱，获得 3 层蒸汽喷发"
+        },
+        "撞击": {
+          "name": "撞击",
+          "intent": "attack",
+          "damage": 10,
+          "effects": [
+            { "type": "damage", "target": "enemy", "amount": 10 },
+            { "type": "applyStatus", "target": "self", "status": "steam", "amount": 3 }
+          ],
+          "desc": "造成 10 点伤害，获得 3 层蒸汽喷发"
+        },
+        "虹吸": {
+          "name": "虹吸",
+          "intent": "buff",
+          "effects": [
+            { "type": "heal", "amount": 10 },
+            { "type": "applyStatus", "target": "self", "status": "steam", "amount": 3 }
+          ],
+          "desc": "回复 10 点生命，获得 3 层蒸汽喷发"
+        },
+        "压力炮": {
+          "name": "压力炮",
+          "intent": "attack",
+          "damage": 20,
+          "effects": [
+            { "type": "damage", "target": "enemy", "amount": 20 },
+            { "type": "applyStatus", "target": "self", "status": "steam", "amount": 3 }
+          ],
+          "desc": "造成 20 点伤害（每次使用 +1），获得 3 层蒸汽喷发"
+        }
+      },
+      "spawns": []
+    }
+  ],
+  "encounters": {
+    "weak": [
+      ["toadpole", "toadpole"],
+      ["seapunk"],
+      ["corpse_slug", "corpse_slug"],
+      ["sludge_spinner"]
+    ],
+    "strong": [
+      ["corpse_slug", "corpse_slug", "corpse_slug"],
+      ["calcified_cultist", "damp_cultist"],
+      ["living_fog"],
+      ["fossil_stalker"],
+      ["gremlin_mercenary"],
+      ["haunted_ship"],
+      ["sewer_clam"],
+      ["punch_construct"],
+      ["calcified_cultist", "toadpole"],
+      ["two_tailed_rat", "two_tailed_rat", "two_tailed_rat"]
+    ],
+    "eliteLoop": ["phantasmal_gardener", "skulking_colony", "terror_eel"],
+    "boss": ["lagavulin_matriarch", "soul_fysh", "waterfall_giant"]
+  }
+}

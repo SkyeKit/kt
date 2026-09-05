@@ -14,6 +14,7 @@ import {
   checkResult,
 } from '@/engine/combatEngine'
 import type { CombatContext } from '@/engine/combatEngine'
+import type { DeckCard } from '@/types'
 
 const router = useRouter()
 const store = useGameStore()
@@ -23,7 +24,7 @@ const log2 = ref<string[]>([])
 
 // 初始化木桩战斗（默认牌组：打击×5 防御×4 痛击×1；可带入当前局牌组）
 function startTest(withRunDeck = false): void {
-  const deck =
+  const deck: DeckCard[] =
     withRunDeck && store.run
       ? store.run.deck
       : [
@@ -37,7 +38,7 @@ function startTest(withRunDeck = false): void {
           'defend_ironclad',
           'defend_ironclad',
           'bash',
-        ]
+        ].map((id) => ({ id, upgrade: false }))
   ctx.value = createCombatContext({ id: 'test', name: '铁甲战士', hp: 80, maxHp: 80, deck }, [
     { id: 'dummy', name: '木桩', hp: 300, maxHp: 300 },
   ])
@@ -52,7 +53,9 @@ function play(cardId: string): void {
   if (!c) return
   const card = getCard(cardId)
   if (!card) return
-  const ok = enginePlay(c, card)
+  // 取手牌中该 id 的实例作为打出目标（决定升级状态）
+  const entry = c.hand.find((en) => en.id === cardId) ?? { id: cardId, upgrade: false }
+  const ok = enginePlay(c, entry)
   if (ok) log.value.push(...c.log.slice(-8))
   const r = checkResult(c)
   if (r.status === 'victory') log.value.push('木桩被击倒了！重置 HP 继续测试')
@@ -83,12 +86,14 @@ function back(): void {
         }}｜格挡 {{ ctx.player.block }}
       </div>
       <div class="test-hand">
+        <!-- 手牌为卡实例(DeckCard[])：展示升级态，用下标作 key（重复 id 也可稳定渲染复现） -->
         <CardView
-          v-for="h in ctx.hand"
-          :key="h"
-          :card="getCard(h)"
+          v-for="(h, i) in ctx.hand"
+          :key="i"
+          :card="getCard(h.id)"
+          :upgraded="h.upgrade"
           :playable="true"
-          @select="play(h)"
+          @select="play(h.id)"
         />
       </div>
       <div class="test-log">

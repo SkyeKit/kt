@@ -25,6 +25,9 @@ export function loadRun(): RunState | null {
     const parsed = JSON.parse(raw) as { version?: number; state?: RunState }
     if (parsed.version !== SAVE.version || !parsed.state) return null
     if (!isValidRun(parsed.state)) return null
+    // 幕字段缺省兼容：旧档无 act 时默认为密林丘（overgrowth），避免按幕查询越界
+    if (parsed.state.act !== 'overgrowth' && parsed.state.act !== 'underdocks')
+      parsed.state.act = 'overgrowth'
     return parsed.state
   } catch {
     return null

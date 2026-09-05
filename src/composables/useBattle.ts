@@ -12,9 +12,9 @@ export function useBattle() {
   const store = useGameStore()
   const ctx = computed(() => store.battle)
 
-  // 当前手牌（含卡牌数据）
-  const hand = computed<Array<{ id: string; card: Card | undefined }>>(() =>
-    (ctx.value?.hand ?? []).map((id) => ({ id, card: getCard(id) })),
+  // 当前手牌（含卡牌数据与升级状态）
+  const hand = computed<Array<{ id: string; card: Card | undefined; upgrade: boolean }>>(() =>
+    (ctx.value?.hand ?? []).map((en) => ({ id: en.id, card: getCard(en.id), upgrade: en.upgrade })),
   )
 
   // 存活敌人（含意图显示）

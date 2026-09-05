@@ -38,6 +38,7 @@ export interface Card {
   upgradeEffects: EffectChain // 升级后效果链
   keywords: CardKeyword[] // 关键词标记（供 UI/引擎快速判断）
   upgrade?: boolean // 是否已升级（运行时状态，不存于数据文件）
+  enchantments?: string[] // 运行时附魔 id 数组（不存于数据文件，由事件/遗物拾起时挂载）
 }
 
 // 卡牌奖励/商店抽卡用的"卡池引用"：只记录 id，具体卡从 cards.json 查找

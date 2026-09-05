@@ -34,7 +34,7 @@ function makeCtx(): ReturnType<typeof createCombatContext> {
         'defend_ironclad',
         'defend_ironclad',
         'bash',
-      ],
+      ].map((id) => ({ id, upgrade: false })), // 牌组实例：默认未升级
     },
     [{ id: unit.id, name: unit.name, hp: 55, maxHp: 55 }],
     () => 0.5,
@@ -88,7 +88,43 @@ describe('敌人回合：意图必须生效', () => {
     }
     const e = ctx.enemies[0]!
     const hpBefore = e.hp
-    playCard(ctx, strike, e.id)
+    playCard(ctx, { id: strike.id, upgrade: false }, e.id)
     expect(e.hp).toBe(hpBefore - 6)
+  })
+
+  it('招式冷却：出招后置冷却，下一回合该招不可选（防连发）', () => {
+    const ctx = makeCtx()
+    const e = ctx.enemies[0]!
+    e.ai = {
+      mode: 'weighted',
+      sequence: ['拍击', '啃咬'],
+      weights: { 拍击: 1, 啃咬: 1 },
+      cooldowns: { 拍击: 1 }, // 拍击使用后冷却 1 回合
+    }
+    e.moves = {
+      拍击: {
+        name: '拍击',
+        intent: 'attack',
+        damage: 5,
+        effects: [{ type: 'damage', target: 'enemy', amount: 5 }],
+        desc: '造成 5 点伤害',
+      },
+      啃咬: {
+        name: '啃咬',
+        intent: 'attack',
+        damage: 3,
+        effects: [{ type: 'damage', target: 'enemy', amount: 3 }],
+        desc: '造成 3 点伤害',
+      },
+    }
+    // 第一回合：两招均可用，rng 固定 0.5 → 选到"拍击"
+    setEnemyIntents(ctx)
+    expect(e.intentName).toBe('拍击')
+    // 出招：拍击进入冷却（cd=1）
+    enemyTurn(ctx)
+    expect(e.cooldowns?.['拍击']).toBe(1)
+    // 第二回合意图：拍击冷却中，只能选"啃咬"
+    setEnemyIntents(ctx)
+    expect(e.intentName).toBe('啃咬')
   })
 })

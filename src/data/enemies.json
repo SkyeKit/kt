@@ -9,7 +9,7 @@
       "abilities": [],
       "ai": {
         "mode": "loop",
-        "sequence": ["酸液黏球"]
+        "sequence": ["酸液黏球", "吸入"]
       },
       "moves": {
         "酸液黏球": {
@@ -112,7 +112,7 @@
       "category": "normal",
       "abilities": [],
       "ai": {
-        "mode": "loop",
+        "mode": "scripted",
         "sequence": ["缩小", "大啃", "践踏"]
       },
       "moves": {
@@ -486,7 +486,7 @@
       "category": "minion",
       "abilities": ["始终持有**幻象**状态（死亡后的下一回合以满血复活）、**爪牙**"],
       "ai": {
-        "mode": "weighted",
+        "mode": "scripted",
         "sequence": ["虚幻孢子", "重击", "头槌"]
       },
       "moves": {
@@ -494,7 +494,13 @@
           "name": "虚幻孢子",
           "intent": "status",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "spawnEnemy",
+              "enemyId": "eye_with_teeth",
+              "count": 1
+            }
+          ],
           "desc": "召唤 1 只利齿之眼"
         },
         "重击": {
@@ -687,7 +693,14 @@
           "name": "缠身",
           "intent": "status",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "enemy",
+              "status": "constricted",
+              "amount": 3
+            }
+          ],
           "desc": "给予 3 层\"紧缠\""
         },
         "重击": {
@@ -762,6 +775,12 @@
               "type": "damage",
               "target": "enemy",
               "amount": 8
+            },
+            {
+              "type": "applyStatus",
+              "target": "enemy",
+              "status": "tangled",
+              "amount": 1
             }
           ],
           "desc": "造成 8 点伤害，给予 1 层\"缠结\""
@@ -1245,15 +1264,22 @@
       "category": "boss",
       "abilities": ["无（通过\"横冲直撞\"机制运作，见下）"],
       "ai": {
-        "mode": "loop",
-        "sequence": ["跺地", "横冲直撞", "野兽咆哮", "踩踏", "碾碎"]
+        "mode": "scripted",
+        "sequence": ["跺地", "横冲直撞"]
       },
       "moves": {
         "跺地": {
           "name": "跺地",
           "intent": "special",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "self",
+              "status": "rampage",
+              "amount": 150
+            }
+          ],
           "desc": "获得 150 层横冲直撞"
         },
         "横冲直撞": {
@@ -1280,7 +1306,14 @@
           "name": "野兽咆哮",
           "intent": "status",
           "hits": 1,
-          "effects": [],
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "enemy",
+              "status": "ringing",
+              "amount": 1
+            }
+          ],
           "desc": "给予玩家**昏眩**（本回合只能打出 1 张牌）"
         },
         "踩踏": {
@@ -1544,7 +1577,7 @@
       ["fuzzy_wurm_crawler"],
       ["nibbit"],
       ["shrinker_beetle"],
-      ["leaf_slime_s", "leaf_slime_m", "twig_slime_m", "twig_slime_s"]
+      ["leaf_slime_s", "leaf_slime_m", "twig_slime_s"]
     ],
     "strong": [
       ["cubex_construct"],
@@ -1557,7 +1590,8 @@
       ["shrinker_beetle", "fuzzy_wurm_crawler"],
       ["raider_brute", "raider_assassin", "raider_axe"],
       ["twig_slime_m", "leaf_slime_m", "leaf_slime_s", "twig_slime_s"],
-      ["snapping_jaxfruit", "leaf_slime_m", "twig_slime_m", "leaf_slime_s", "twig_slime_s"],
+      ["snapping_jaxfruit", "leaf_slime_m", "twig_slime_m"],
+      ["snapping_jaxfruit", "leaf_slime_s", "twig_slime_s"],
       ["vine_shambler"]
     ],
     "elites": ["byrdonis", "bygone_effigy", "phrog_parasite"],

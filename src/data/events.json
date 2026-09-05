@@ -80,6 +80,24 @@
       "excluded": false
     },
     {
+      "id": "abyssal_baths",
+      "name": "深渊浴场",
+      "stage": "harbor",
+      "options": [
+        {
+          "text": "敬而远之",
+          "effect": "回复**10**点生命。",
+          "excluded": false
+        },
+        {
+          "text": "投身其中",
+          "effect": "获得**2**点最大生命值。受到**3**点伤害。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
       "id": "aroma_of_chaos",
       "name": "混沌芳香",
       "stage": "overgrowth",
@@ -92,6 +110,24 @@
         {
           "text": "维持理智",
           "effect": "**升级**你**牌组**中的一张牌。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "brain_leech",
+      "name": "脑蛭",
+      "stage": "phase1",
+      "options": [
+        {
+          "text": "把它扯下来",
+          "effect": "失去**5**点生命值。获得一次无色卡牌奖励。",
+          "excluded": false
+        },
+        {
+          "text": "分享知识",
+          "effect": "从**5**张随机牌中选择**1**张加入你的**牌组**。",
           "excluded": false
         }
       ],
@@ -123,8 +159,69 @@
       "trigger": "多人模式下所有玩家血量高于本事件失去生命值（8）",
       "options": [
         {
+          "text": "休息",
+          "effect": "回复**30%最大生命值**点生命。**进入战斗**。",
+          "battle": true,
+          "excluded": false
+        },
+        {
           "text": "坚持跋涉",
           "effect": "获得**61-99****金币**。失去**8**点生命。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "doors_of_light_and_dark",
+      "name": "光与暗的门扉",
+      "stage": "harbor",
+      "options": [
+        {
+          "text": "暗之门",
+          "effect": "从你的**牌组**中选择**1**张牌移除。",
+          "excluded": false
+        },
+        {
+          "text": "光之门",
+          "effect": "随机**升级****2**张牌。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "drowning_beacon",
+      "name": "淹水灯塔",
+      "stage": "harbor",
+      "options": [
+        {
+          "text": "装瓶",
+          "effect": "获得一瓶**发光水**。",
+          "excluded": false
+        },
+        {
+          "text": "攀爬",
+          "effect": "获得**菲涅耳透镜**。失去**13**点最大生命。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "endless_conveyor",
+      "name": "无尽传送带",
+      "stage": "harbor",
+      "trigger": "所有玩家至少拥有120金币",
+      "options": [
+        {
+          "text": "从传送带上拿份(料理)",
+          "effect": "支付**40****金币**（料理效果），接着吃。",
+          "excluded": false
+        },
+        {
+          "text": "观察主厨",
+          "effect": "从**牌组**中随机**升级**一张牌。",
           "excluded": false
         }
       ],
@@ -187,6 +284,44 @@
       "excluded": false
     },
     {
+      "id": "punch_off",
+      "name": "重拳出击",
+      "stage": "harbor",
+      "trigger": "当前楼层数不小于6",
+      "options": [
+        {
+          "text": "我能打两个",
+          "effect": "和它们战斗以得到**更好的奖励**。",
+          "battle": true,
+          "excluded": false
+        },
+        {
+          "text": "顺走",
+          "effect": "将一张**受伤**加入到你的**牌组**。获得一件随机**遗物**。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "room_full_of_cheese",
+      "name": "满屋芝士",
+      "stage": "phase1",
+      "options": [
+        {
+          "text": "大快朵颐",
+          "effect": "从**8**张随机**普通**牌中选择**2**张加入到你的**牌组**。",
+          "excluded": false
+        },
+        {
+          "text": "仔细翻找",
+          "effect": "失去**14**点生命，获得**天选芝士**。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
       "id": "sapphire_seed",
       "name": "蓝宝石种子",
       "stage": "overgrowth",
@@ -199,6 +334,66 @@
         {
           "text": "种植培育",
           "effect": "给一张牌**附魔**：**播种**。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "spiraling_whirlpool",
+      "name": "螺旋漩涡",
+      "stage": "harbor",
+      "trigger": "所有玩家牌组中都有至少1张可被涡旋附魔的基础打击或基础防御",
+      "options": [
+        {
+          "text": "饮用",
+          "effect": "回复**33%最大生命值**点生命。",
+          "excluded": false
+        },
+        {
+          "text": "观察",
+          "effect": "为一张基础“**打击**”或“**防御**”**附魔**：**涡旋**。",
+          "excluded": false
+        },
+        {
+          "text": "Reach In",
+          "effect": "获得一件随机**遗物**。 将一张**苦恼**添加到你的**牌组**。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "sunken_statue",
+      "name": "沉没雕像",
+      "stage": "phase1",
+      "options": [
+        {
+          "text": "潜水",
+          "effect": "获得**101-121****金币**。失去**7**点生命.",
+          "excluded": false
+        },
+        {
+          "text": "拿起石剑",
+          "effect": "获得**石之剑**。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "sunken_treasury",
+      "name": "淹水金库",
+      "stage": "harbor",
+      "options": [
+        {
+          "text": "第一个箱子",
+          "effect": "获得**52-67****金币**。",
+          "excluded": false
+        },
+        {
+          "text": "第二个箱子",
+          "effect": "获得**303-363****金币**。得到**贪婪**。",
           "excluded": false
         }
       ],
@@ -223,6 +418,71 @@
       "excluded": false
     },
     {
+      "id": "tea_master",
+      "name": "茶艺大师",
+      "stage": "phase1",
+      "trigger": "所有玩家至少拥有 150 金币",
+      "options": [
+        {
+          "text": "骨茶",
+          "effect": "支付**50****金币**。在你接下来的**1**场战斗开始时，**升级**你的初始手牌。",
+          "battle": true,
+          "excluded": false
+        },
+        {
+          "text": "余烬茶",
+          "effect": "支付**150****金币**。在接下来的**5**场战斗开始时，获得**2**点**力量**。",
+          "battle": true,
+          "excluded": false
+        },
+        {
+          "text": "无礼之茶",
+          "effect": "在下一场战斗开始时，将**2**张**眩晕**放入你的**抽牌堆**。",
+          "battle": true,
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "the_legends_were_true",
+      "name": "传说是真的",
+      "stage": "phase1",
+      "trigger": "所有玩家牌库都有卡牌，且当前生命值至少为10",
+      "options": [
+        {
+          "text": "顺走地图",
+          "effect": "获得**藏宝图**。",
+          "excluded": false
+        },
+        {
+          "text": "耐心寻找出口",
+          "effect": "失去**8**点生命。获得**1**瓶随机**药水**。",
+          "excluded": true
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "trash_heap",
+      "name": "垃圾堆",
+      "stage": "harbor",
+      "trigger": "需要解锁对应时间线（揭示高塔故事-第3章-邪教徒们），且所有玩家当前生命值大于5",
+      "options": [
+        {
+          "text": "扎进垃圾堆",
+          "effect": "失去**8**点生命。获得一件被遗忘的旧日**遗物**。",
+          "excluded": false
+        },
+        {
+          "text": "随便拿点垃圾",
+          "effect": "获得**100****金币**。获得一张被遗忘的旧日卡牌。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
       "id": "unrest_site",
       "name": "无休之处",
       "stage": "overgrowth",
@@ -236,6 +496,30 @@
         {
           "text": "就这样休息",
           "effect": "**回复全部生命值。**获得**睡眠不佳**。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "waterlogged_scriptorium",
+      "name": "水漫缮写室",
+      "stage": "harbor",
+      "trigger": "所有玩家至少拥有55金币",
+      "options": [
+        {
+          "text": "血液墨水",
+          "effect": "获得**6**点最大生命。",
+          "excluded": false
+        },
+        {
+          "text": "扎手海绵",
+          "effect": "支付**99****金币**。给**2**张牌**附魔**：**稳定**。",
+          "excluded": false
+        },
+        {
+          "text": "触手羽毛笔",
+          "effect": "支付**55****金币**。给一张牌**附魔**：**稳定**。",
           "excluded": false
         }
       ],
@@ -298,6 +582,567 @@
           "text": "圆环",
           "effect": "选择**1**张初始牌**变化**为**坚韧之环**。",
           "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "amalgamator",
+      "name": "熔合者",
+      "stage": "nest",
+      "trigger": "所有玩家牌库里都要至少有 2 张可移除的基础打击牌，且至少 2 张可移除的基础防御牌",
+      "options": [
+        {
+          "text": "融合防御",
+          "effect": "移除**2**张**防御**。并将一张**究极防御**添加至你的**牌组**。",
+          "excluded": false
+        },
+        {
+          "text": "融合打击",
+          "effect": "移除**2**张**打击**。并将一张**究极打击**添加至你的**牌组**。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "bugslayer",
+      "name": "害虫杀手",
+      "stage": "nest",
+      "options": [
+        {
+          "text": "学习杀灭的技巧",
+          "effect": "将一张**杀灭**添加至你的**牌组**。",
+          "excluded": false
+        },
+        {
+          "text": "学习压扁的技巧",
+          "effect": "将一张**压扁**添加至你的**牌组**",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "colorful_philosophers",
+      "name": "色彩哲学家",
+      "stage": "nest",
+      "trigger": "需要解锁对应时间线且只有当本局里每一个玩家都至少解锁了 1 个角色（即2个角色可游玩）",
+      "options": [
+        {
+          "text": "红色",
+          "effect": "获得铁甲战士的**3**次卡牌奖励。",
+          "excluded": false
+        },
+        {
+          "text": "绿色",
+          "effect": "获得静默猎手的**3**次卡牌奖励。",
+          "excluded": false
+        },
+        {
+          "text": "橙色",
+          "effect": "获得储君的**3**次卡牌奖励。",
+          "excluded": false
+        },
+        {
+          "text": "粉色",
+          "effect": "获得亡灵契约师的**3**次卡牌奖励。",
+          "excluded": false
+        },
+        {
+          "text": "蓝色",
+          "effect": "获得故障机器人的**3**次卡牌奖励。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "colossal_flower",
+      "name": "巨大花卉",
+      "stage": "nest",
+      "trigger": "所有玩家当前血量至少为 19",
+      "options": [
+        {
+          "text": "采集花蜜",
+          "effect": "获得**35****金币**。",
+          "excluded": false
+        },
+        {
+          "text": "深入探索",
+          "effect": "深入。失去**5**点生命值",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "crystal_sphere",
+      "name": "水晶球",
+      "stage": "phase2",
+      "trigger": "所有玩家至少拥有100金币",
+      "options": [
+        {
+          "text": "分期付款",
+          "effect": "获得一张**债务**。**占卜****6**次。",
+          "excluded": false
+        },
+        {
+          "text": "揭幕未来",
+          "effect": "支付**51-99****金币**。**占卜****3**次。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "doll_room",
+      "name": "玩偶室",
+      "stage": "phase2",
+      "options": [
+        {
+          "text": "仔细检查然后挑选最好的那个",
+          "effect": "失去**15**点生命。从**3**尊**玩偶遗物**中选择**1**尊带走。",
+          "excluded": false
+        },
+        {
+          "text": "随机拿走一尊",
+          "effect": "获取一尊**玩偶遗物**。",
+          "excluded": false
+        },
+        {
+          "text": "花点时间慢慢来",
+          "effect": "失去**5**点生命。从**2**尊**玩偶遗物**中选择**1**尊带走。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "fake_merchant",
+      "name": "商人？？？",
+      "stage": "phase2",
+      "trigger": "单人游玩，且玩家至少拥有100金币或拥有污浊药水",
+      "options": [],
+      "excluded": false
+    },
+    {
+      "id": "field_of_man_sized_holes",
+      "name": "人形洞穴之地",
+      "stage": "nest",
+      "trigger": "所有玩家牌库里都要有至少 1 张能被完美契合附魔的牌。",
+      "options": [
+        {
+          "text": "进入你的洞",
+          "effect": "为一张牌**附魔**：**完美契合**。",
+          "excluded": false
+        },
+        {
+          "text": "抵抗诱惑",
+          "effect": "从你的**牌组**中移除**2**张牌。将一张**凡庸**添加到你的**牌组**中。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "infested_automaton",
+      "name": "被寄生的自动机械",
+      "stage": "nest",
+      "options": [
+        {
+          "text": "学习",
+          "effect": "随机获得一张**能力牌**。",
+          "excluded": false
+        },
+        {
+          "text": "触碰核心",
+          "effect": "随机获得一张**耗能为0的牌**。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "lost_wisp",
+      "name": "迷失鬼火",
+      "stage": "nest",
+      "options": [
+        {
+          "text": "抓住这团鬼火",
+          "effect": "将一张**腐朽**添加到你的**牌组**。获得**迷失鬼火**。",
+          "excluded": false
+        },
+        {
+          "text": "搜索附近的区域",
+          "effect": "获得**45-75****金币**。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "potion_courier",
+      "name": "药水快递员",
+      "stage": "phase2",
+      "options": [
+        {
+          "text": "拿走这批药水",
+          "effect": "获得**3**瓶**污浊药水**。",
+          "excluded": true
+        },
+        {
+          "text": "洗劫",
+          "effect": "获得**1**瓶随机**罕见药水**。",
+          "excluded": true
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "ranwid_the_elder",
+      "name": "长者兰伟德",
+      "stage": "phase2",
+      "trigger": "每个玩家都要有：至少 1 件可交易遗物、至少 100 金币、至少 1 瓶药水。",
+      "options": [
+        {
+          "text": "给他100金币",
+          "effect": "获得一件随机**遗物**。",
+          "excluded": false
+        },
+        {
+          "text": "给他药水",
+          "effect": "获得一件随机**遗物**。",
+          "excluded": false
+        },
+        {
+          "text": "给他遗物",
+          "effect": "获得**2**件随机**遗物**。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "relic_trader",
+      "name": "遗物交换商",
+      "stage": "phase2",
+      "trigger": "所有玩家至少有 5 件可交易遗物。",
+      "options": [
+        {
+          "text": "拿下面那件",
+          "effect": "用**你的1件随机遗物**换**1件随机遗物**。",
+          "excluded": false
+        },
+        {
+          "text": "拿中间这件",
+          "effect": "用**你的1件随机遗物**换**1件随机遗物**。",
+          "excluded": false
+        },
+        {
+          "text": "拿上面那件",
+          "effect": "用**你的1件随机遗物**换**1件随机遗物**。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "spirit_grafter",
+      "name": "灵魂嫁接者",
+      "stage": "nest",
+      "options": [
+        {
+          "text": "接纳",
+          "effect": "回复**25**点生命。将一张**羽化**添加到你的**牌组**。",
+          "excluded": false
+        },
+        {
+          "text": "拒绝",
+          "effect": "失去**10**点生命。**升级**一张牌。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "stone_of_all_time",
+      "name": "永恒之石",
+      "stage": "phase2",
+      "trigger": "所有玩家至少有 1 瓶药水",
+      "options": [
+        {
+          "text": "喝药抬起",
+          "effect": "失去**1瓶随机药水**。获得**10**最大生命。",
+          "excluded": true
+        },
+        {
+          "text": "用力去推",
+          "effect": "失去**6**点生命。**附魔**一张攻击牌：**活力****8**。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "symbiote",
+      "name": "共生体",
+      "stage": "phase2",
+      "options": [
+        {
+          "text": "靠近",
+          "effect": "将一张攻击牌**附魔**：**腐化**。",
+          "excluded": false
+        },
+        {
+          "text": "用火烧杀",
+          "effect": "选择一张牌**变化**。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "the_lantern_key",
+      "name": "灯火钥匙",
+      "stage": "nest",
+      "options": [
+        {
+          "text": "留下钥匙",
+          "effect": "战斗来取得钥匙。",
+          "battle": true,
+          "excluded": false
+        },
+        {
+          "text": "交还钥匙",
+          "effect": "获得**100****金币**。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "welcome_to_wongos",
+      "name": "欢迎来到旺购百货",
+      "stage": "phase2",
+      "trigger": "所有玩家至少拥有100金币",
+      "options": [
+        {
+          "text": "旺购的打折货物",
+          "effect": "支付**100****金币**。获得**1**件随机**普通遗物**。",
+          "excluded": false
+        },
+        {
+          "text": "旺购的特选商品",
+          "effect": "支付**200****金币**。获得**1**件**稀有遗物**。",
+          "excluded": false
+        },
+        {
+          "text": "离开",
+          "effect": "随机**降级**一张牌。",
+          "excluded": false
+        },
+        {
+          "text": "旺购的神秘盲盒",
+          "effect": "支付**300****金币**。在**5**场战斗后获得**3**个随机**遗物**。",
+          "battle": true,
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "zen_weaver",
+      "name": "修禅织网者",
+      "stage": "nest",
+      "trigger": "所有玩家至少拥有 125 金币",
+      "options": [
+        {
+          "text": "蜘蛛针灸",
+          "effect": "支付**250****金币**。从你的**牌组**中移除**2**张牌。",
+          "excluded": false
+        },
+        {
+          "text": "呼吸技法",
+          "effect": "支付**50****金币**。将**2**张**开悟**加入到你的**牌组**。",
+          "excluded": false
+        },
+        {
+          "text": "情绪觉察",
+          "effect": "支付**125****金币**。从你的**牌组**中移除**1**张牌。",
+          "excluded": false
+        },
+        {
+          "text": "锁定",
+          "effect": "**金币**不足。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "battleworn_dummy",
+      "name": "战痕累累的训练假人",
+      "stage": "glory",
+      "options": [
+        {
+          "text": "第1档",
+          "effect": "与一个**75**点生命值的假人战斗。随机获取**1**瓶**药水**。",
+          "battle": true,
+          "excluded": true
+        },
+        {
+          "text": "第2档",
+          "effect": "与一个**150**点生命值的假人战斗。随机**升级****2**张牌。",
+          "battle": true,
+          "excluded": false
+        },
+        {
+          "text": "第3档",
+          "effect": "与一个**300**点生命值的假人战斗。获取一件随机**遗物**。",
+          "battle": true,
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "grave_of_the_forgotten",
+      "name": "遗忘之墓",
+      "stage": "glory",
+      "trigger": "每个玩家的牌组中都有至少1张可被灵魂之力附魔的牌",
+      "options": [
+        {
+          "text": "接受这颗遗忘之魂",
+          "effect": "获得**遗忘之魂**。",
+          "excluded": false
+        },
+        {
+          "text": "让它直面真相",
+          "effect": "将一张**腐朽**到你的**牌组**。 为一张带有**消耗**的牌**附魔**：**灵魂之力**。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "hungry_for_mushrooms",
+      "name": "蘑菇饥渴",
+      "stage": "glory",
+      "options": [
+        {
+          "text": "大蘑菇",
+          "effect": "获得**大蘑菇**。拾起时，将你的最大生命值提升**20**。在每场战斗开始时，少抽**2**张牌。",
+          "battle": true,
+          "excluded": false
+        },
+        {
+          "text": "芳香蘑菇",
+          "effect": "获得**芳香蘑菇**。拾起时，失去**15**点生命，然后随机**升级****2**张牌。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "reflections",
+      "name": "镜中倒影 影倒中镜",
+      "stage": "glory",
+      "trigger": "需要解锁对应时间线（揭示重新开放-第6章-他们回来了）",
+      "options": [
+        {
+          "text": "打碎",
+          "effect": "复制你的整个**牌组**。获得**霉运**。",
+          "excluded": false
+        },
+        {
+          "text": "触碰镜子",
+          "effect": "**降级****2**张随机卡牌。**升级****4**张随机卡牌。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "round_tea_party",
+      "name": "圆桌茶会",
+      "stage": "glory",
+      "trigger": "所有玩家当前生命至少为 12",
+      "options": [
+        {
+          "text": "喝杯好茶",
+          "effect": "获得**王室猛毒**。**回复全部生命。**",
+          "excluded": false
+        },
+        {
+          "text": "挑事斗殴",
+          "effect": "失去**11**点生命。获得一件随机**遗物**。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "tinker_time",
+      "name": "打造时间",
+      "stage": "glory",
+      "options": [
+        {
+          "text": "接受",
+          "effect": "制作一张定制卡牌加入你的**牌组**。",
+          "excluded": false
+        },
+        {
+          "text": "武器",
+          "effect": "制作一张攻击牌。",
+          "excluded": false
+        },
+        {
+          "text": "装置",
+          "effect": "制作一张能力牌。",
+          "excluded": false
+        },
+        {
+          "text": "护具",
+          "effect": "制作一张技能牌。",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "trial",
+      "name": "审判",
+      "stage": "glory",
+      "options": [
+        {
+          "text": "接受",
+          "effect": "担当今天的判决者",
+          "excluded": false
+        },
+        {
+          "text": "拒绝",
+          "effect": "**拒绝是不被允许的。**",
+          "excluded": false
+        }
+      ],
+      "excluded": false
+    },
+    {
+      "id": "war_historian_repy",
+      "name": "战史学家 付袭",
+      "stage": "glory",
+      "trigger": "只有在拥有灯火钥匙的情况下触发",
+      "options": [
+        {
+          "text": "打开笼子",
+          "effect": "失去**灯火钥匙**。获得**历史课**。",
+          "excluded": false
+        },
+        {
+          "text": "打开宝箱",
+          "effect": "失去**灯火钥匙**。获得**2**瓶随机**药水**和**2**件随机**遗物**。",
+          "excluded": true
         }
       ],
       "excluded": false

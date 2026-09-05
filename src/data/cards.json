@@ -120,8 +120,22 @@
       "rarity": "common",
       "desc": "造成你当前格挡值的伤害。",
       "upgradeDesc": "费用变为0。 造成你当前格挡值的伤害。",
-      "effects": [],
-      "upgradeEffects": [],
+      "effects": [
+        {
+          "type": "damageScaling",
+          "target": "enemy",
+          "base": 0,
+          "scaling": "block"
+        }
+      ],
+      "upgradeEffects": [
+        {
+          "type": "damageScaling",
+          "target": "enemy",
+          "base": 0,
+          "scaling": "block"
+        }
+      ],
       "keywords": []
     },
     {
@@ -168,14 +182,16 @@
         {
           "type": "damage",
           "target": "enemy",
-          "amount": 5
+          "amount": 5,
+          "hits": 2
         }
       ],
       "upgradeEffects": [
         {
           "type": "damage",
           "target": "enemy",
-          "amount": 7
+          "amount": 7,
+          "hits": 2
         }
       ],
       "keywords": []
@@ -193,6 +209,9 @@
           "type": "damage",
           "target": "enemy",
           "amount": 9
+        },
+        {
+          "type": "moveDiscardToTop"
         }
       ],
       "upgradeEffects": [
@@ -200,6 +219,9 @@
           "type": "damage",
           "target": "enemy",
           "amount": 12
+        },
+        {
+          "type": "moveDiscardToTop"
         }
       ],
       "keywords": []
@@ -214,16 +236,18 @@
       "upgradeDesc": "造成6点伤害。 你每有一张名字中含有\"打击\"的牌，伤害+3。",
       "effects": [
         {
-          "type": "damage",
+          "type": "damageScaling",
           "target": "enemy",
-          "amount": 6
+          "base": 6,
+          "scaling": "strikeCount"
         }
       ],
       "upgradeEffects": [
         {
-          "type": "damage",
+          "type": "damageScaling",
           "target": "enemy",
-          "amount": 6
+          "base": 6,
+          "scaling": "strikeCount"
         }
       ],
       "keywords": []
@@ -241,6 +265,11 @@
           "type": "damage",
           "target": "enemy",
           "amount": 6
+        },
+        {
+          "type": "addCard",
+          "cardId": "anger",
+          "to": "discard"
         }
       ],
       "upgradeEffects": [
@@ -248,6 +277,11 @@
           "type": "damage",
           "target": "enemy",
           "amount": 8
+        },
+        {
+          "type": "addCard",
+          "cardId": "anger",
+          "to": "discard"
         }
       ],
       "keywords": []
@@ -267,6 +301,11 @@
           "amount": 10
         },
         {
+          "type": "doubleStatus",
+          "target": "enemy",
+          "status": "vulnerable"
+        },
+        {
           "type": "exhaust"
         }
       ],
@@ -275,6 +314,11 @@
           "type": "damage",
           "target": "enemy",
           "amount": 14
+        },
+        {
+          "type": "doubleStatus",
+          "target": "enemy",
+          "status": "vulnerable"
         },
         {
           "type": "exhaust"
@@ -293,11 +337,6 @@
       "effects": [
         {
           "type": "damage",
-          "target": "enemy",
-          "amount": 9
-        },
-        {
-          "type": "damage",
           "target": "allEnemies",
           "amount": 9
         },
@@ -307,11 +346,6 @@
         }
       ],
       "upgradeEffects": [
-        {
-          "type": "damage",
-          "target": "enemy",
-          "amount": 13
-        },
         {
           "type": "damage",
           "target": "allEnemies",
@@ -367,17 +401,12 @@
       "effects": [
         {
           "type": "damage",
-          "target": "enemy",
-          "amount": 4
-        },
-        {
-          "type": "damage",
           "target": "allEnemies",
           "amount": 4
         },
         {
           "type": "applyStatus",
-          "target": "enemy",
+          "target": "allEnemies",
           "status": "vulnerable",
           "amount": 1
         }
@@ -385,17 +414,12 @@
       "upgradeEffects": [
         {
           "type": "damage",
-          "target": "enemy",
-          "amount": 7
-        },
-        {
-          "type": "damage",
           "target": "allEnemies",
           "amount": 7
         },
         {
           "type": "applyStatus",
-          "target": "enemy",
+          "target": "allEnemies",
           "status": "vulnerable",
           "amount": 1
         }
@@ -449,27 +473,17 @@
       "effects": [
         {
           "type": "damage",
-          "target": "enemy",
+          "target": "randomEnemy",
           "amount": 3,
           "hits": 3
-        },
-        {
-          "type": "damage",
-          "target": "randomEnemy",
-          "amount": 3
         }
       ],
       "upgradeEffects": [
         {
           "type": "damage",
-          "target": "enemy",
+          "target": "randomEnemy",
           "amount": 3,
           "hits": 4
-        },
-        {
-          "type": "damage",
-          "target": "randomEnemy",
-          "amount": 3
         }
       ],
       "keywords": []
@@ -570,12 +584,21 @@
         {
           "type": "block",
           "amount": 5
+        },
+        {
+          "type": "upgradeHand",
+          "count": 1
         }
       ],
       "upgradeEffects": [
         {
           "type": "block",
           "amount": 5
+        },
+        {
+          "type": "upgradeHand",
+          "count": 1,
+          "all": true
         }
       ],
       "keywords": []
@@ -720,26 +743,40 @@
         {
           "type": "damage",
           "target": "enemy",
-          "amount": 5
+          "amount": 5,
+          "hits": 2
         },
         {
           "type": "applyStatus",
           "target": "self",
           "status": "strength",
           "amount": 3
+        },
+        {
+          "type": "applyStatus",
+          "target": "enemy",
+          "status": "strength",
+          "amount": 1
         }
       ],
       "upgradeEffects": [
         {
           "type": "damage",
           "target": "enemy",
-          "amount": 5
+          "amount": 5,
+          "hits": 2
         },
         {
           "type": "applyStatus",
           "target": "self",
           "status": "strength",
           "amount": 4
+        },
+        {
+          "type": "applyStatus",
+          "target": "enemy",
+          "status": "strength",
+          "amount": 1
         }
       ],
       "keywords": []
@@ -757,6 +794,9 @@
           "type": "damage",
           "target": "enemy",
           "amount": 6
+        },
+        {
+          "type": "drawUntilNonAttack"
         }
       ],
       "upgradeEffects": [
@@ -764,6 +804,9 @@
           "type": "damage",
           "target": "enemy",
           "amount": 9
+        },
+        {
+          "type": "drawUntilNonAttack"
         }
       ],
       "keywords": []
@@ -779,11 +822,6 @@
       "effects": [
         {
           "type": "damage",
-          "target": "enemy",
-          "amount": 16
-        },
-        {
-          "type": "damage",
           "target": "allEnemies",
           "amount": 16
         },
@@ -792,11 +830,6 @@
         }
       ],
       "upgradeEffects": [
-        {
-          "type": "damage",
-          "target": "enemy",
-          "amount": 21
-        },
         {
           "type": "damage",
           "target": "allEnemies",
@@ -923,25 +956,17 @@
       "effects": [
         {
           "type": "damage",
-          "target": "enemy",
-          "amount": 5
-        },
-        {
-          "type": "damage",
           "target": "allEnemies",
-          "amount": 5
+          "amount": 5,
+          "hitsFromX": true
         }
       ],
       "upgradeEffects": [
         {
           "type": "damage",
-          "target": "enemy",
-          "amount": 8
-        },
-        {
-          "type": "damage",
           "target": "allEnemies",
-          "amount": 8
+          "amount": 8,
+          "hitsFromX": true
         }
       ],
       "keywords": []
@@ -959,6 +984,10 @@
           "type": "damage",
           "target": "enemy",
           "amount": 14
+        },
+        {
+          "type": "nextAttackFree",
+          "count": 1
         }
       ],
       "upgradeEffects": [
@@ -966,6 +995,10 @@
           "type": "damage",
           "target": "enemy",
           "amount": 20
+        },
+        {
+          "type": "nextAttackFree",
+          "count": 1
         }
       ],
       "keywords": []
@@ -1004,16 +1037,18 @@
       "upgradeDesc": "造成4点伤害。 该敌人身上每有一层易伤就额外造成3点伤害。",
       "effects": [
         {
-          "type": "damage",
+          "type": "damageScaling",
           "target": "enemy",
-          "amount": 4
+          "base": 4,
+          "scaling": "statusOnTarget"
         }
       ],
       "upgradeEffects": [
         {
-          "type": "damage",
+          "type": "damageScaling",
           "target": "enemy",
-          "amount": 4
+          "base": 4,
+          "scaling": "statusOnTarget"
         }
       ],
       "keywords": []
@@ -1028,9 +1063,10 @@
       "upgradeDesc": "造成6点伤害。 你的消耗牌堆中每有一张牌，伤害增加4。",
       "effects": [
         {
-          "type": "damage",
+          "type": "damageScaling",
           "target": "enemy",
-          "amount": 6
+          "base": 6,
+          "scaling": "exhaustPile"
         },
         {
           "type": "exhaust"
@@ -1038,9 +1074,10 @@
       ],
       "upgradeEffects": [
         {
-          "type": "damage",
+          "type": "damageScaling",
           "target": "enemy",
-          "amount": 6
+          "base": 6,
+          "scaling": "exhaustPile"
         },
         {
           "type": "exhaust"
@@ -1059,21 +1096,11 @@
       "effects": [
         {
           "type": "damage",
-          "target": "enemy",
-          "amount": 12
-        },
-        {
-          "type": "damage",
           "target": "allEnemies",
           "amount": 12
         }
       ],
       "upgradeEffects": [
-        {
-          "type": "damage",
-          "target": "enemy",
-          "amount": 15
-        },
         {
           "type": "damage",
           "target": "allEnemies",
@@ -1117,15 +1144,13 @@
       "effects": [
         {
           "type": "applyStatus",
-          "target": "self",
-          "status": "strength",
-          "amount": 1
-        },
-        {
-          "type": "applyStatus",
           "target": "enemy",
           "status": "vulnerable",
           "amount": 1
+        },
+        {
+          "type": "strengthFromTargetVulnerable",
+          "target": "enemy"
         },
         {
           "type": "exhaust"
@@ -1134,15 +1159,13 @@
       "upgradeEffects": [
         {
           "type": "applyStatus",
-          "target": "self",
-          "status": "strength",
-          "amount": 1
-        },
-        {
-          "type": "applyStatus",
           "target": "enemy",
           "status": "vulnerable",
           "amount": 2
+        },
+        {
+          "type": "strengthFromTargetVulnerable",
+          "target": "enemy"
         },
         {
           "type": "exhaust"
@@ -1182,12 +1205,18 @@
         {
           "type": "draw",
           "count": 3
+        },
+        {
+          "type": "noDraw"
         }
       ],
       "upgradeEffects": [
         {
           "type": "draw",
           "count": 4
+        },
+        {
+          "type": "noDraw"
         }
       ],
       "keywords": []
@@ -1236,24 +1265,26 @@
       "upgradeDesc": "获得16点格挡。 你在这个回合每受到一次攻击，都会对攻击者造成6点伤害。",
       "effects": [
         {
-          "type": "damage",
-          "target": "enemy",
-          "amount": 4
-        },
-        {
           "type": "block",
           "amount": 12
+        },
+        {
+          "type": "applyStatus",
+          "target": "self",
+          "status": "thorns",
+          "amount": 4
         }
       ],
       "upgradeEffects": [
         {
-          "type": "damage",
-          "target": "enemy",
-          "amount": 6
-        },
-        {
           "type": "block",
           "amount": 16
+        },
+        {
+          "type": "applyStatus",
+          "target": "self",
+          "status": "thorns",
+          "amount": 6
         }
       ],
       "keywords": []
@@ -1318,7 +1349,8 @@
       "upgradeDesc": "如果你在本回合消耗过卡牌，则获得4点能量。消耗。",
       "effects": [
         {
-          "type": "gainEnergy",
+          "type": "gainIfExhausted",
+          "gain": "energy",
           "amount": 3
         },
         {
@@ -1327,7 +1359,8 @@
       ],
       "upgradeEffects": [
         {
-          "type": "gainEnergy",
+          "type": "gainIfExhausted",
+          "gain": "energy",
           "amount": 4
         },
         {
@@ -1346,14 +1379,16 @@
       "upgradeDesc": "费用变为1。 你的手牌中每有一张攻击牌，就会获得1点能量。本回合不再获得额外能量。",
       "effects": [
         {
-          "type": "gainEnergy",
-          "amount": 1
+          "type": "gainEnergyPerHandAttack",
+          "amount": 1,
+          "blockFurther": true
         }
       ],
       "upgradeEffects": [
         {
-          "type": "gainEnergy",
-          "amount": 1
+          "type": "gainEnergyPerHandAttack",
+          "amount": 1,
+          "blockFurther": true
         }
       ],
       "keywords": []
@@ -1372,12 +1407,22 @@
           "amount": 8
         },
         {
+          "type": "gainIfExhausted",
+          "gain": "block",
+          "amount": 8
+        },
+        {
           "type": "exhaust"
         }
       ],
       "upgradeEffects": [
         {
           "type": "block",
+          "amount": 11
+        },
+        {
+          "type": "gainIfExhausted",
+          "gain": "block",
           "amount": 11
         },
         {
@@ -1396,7 +1441,7 @@
       "upgradeDesc": "消耗手牌中所有非攻击牌，每张获得7点格挡。",
       "effects": [
         {
-          "type": "block",
+          "type": "blockPerNonAttackExhausted",
           "amount": 5
         },
         {
@@ -1405,7 +1450,7 @@
       ],
       "upgradeEffects": [
         {
-          "type": "block",
+          "type": "blockPerNonAttackExhausted",
           "amount": 7
         },
         {
@@ -1422,18 +1467,8 @@
       "rarity": "uncommon",
       "desc": "每当你给予易伤时，抽1张牌。",
       "upgradeDesc": "每当你给予易伤时，抽2张牌。",
-      "effects": [
-        {
-          "type": "draw",
-          "count": 1
-        }
-      ],
-      "upgradeEffects": [
-        {
-          "type": "draw",
-          "count": 2
-        }
-      ],
+      "effects": [],
+      "upgradeEffects": [],
       "keywords": []
     },
     {
@@ -1486,29 +1521,15 @@
         {
           "type": "draw",
           "count": 2
-        },
-        {
-          "type": "gainEnergy",
-          "amount": 2
-        },
-        {
-          "type": "exhaust"
         }
       ],
       "upgradeEffects": [
         {
           "type": "draw",
-          "count": 2
-        },
-        {
-          "type": "gainEnergy",
-          "amount": 3
-        },
-        {
-          "type": "exhaust"
+          "count": 3
         }
       ],
-      "keywords": ["exhaust"]
+      "keywords": []
     },
     {
       "id": "rend",
@@ -1518,22 +1539,8 @@
       "rarity": "uncommon",
       "desc": "每当你在你的回合失去生命值时, 获得1点力量。",
       "upgradeDesc": "每当你在你的回合失去生命值时, 获得2点力量。",
-      "effects": [
-        {
-          "type": "applyStatus",
-          "target": "self",
-          "status": "strength",
-          "amount": 1
-        }
-      ],
-      "upgradeEffects": [
-        {
-          "type": "applyStatus",
-          "target": "self",
-          "status": "strength",
-          "amount": 2
-        }
-      ],
+      "effects": [],
+      "upgradeEffects": [],
       "keywords": []
     },
     {
@@ -1544,24 +1551,8 @@
       "rarity": "uncommon",
       "desc": "每当有一张牌被消耗时，获得3点格挡。",
       "upgradeDesc": "每当有一张牌被消耗时，获得4点格挡。",
-      "effects": [
-        {
-          "type": "block",
-          "amount": 3
-        },
-        {
-          "type": "exhaust"
-        }
-      ],
-      "upgradeEffects": [
-        {
-          "type": "block",
-          "amount": 4
-        },
-        {
-          "type": "exhaust"
-        }
-      ],
+      "effects": [],
+      "upgradeEffects": [],
       "keywords": ["exhaust"]
     },
     {
@@ -1610,38 +1601,8 @@
       "rarity": "uncommon",
       "desc": "在你的回合开始时，失去1点生命。 每当你在你的回合内失去生命时，对所有敌人造成6点伤害。",
       "upgradeDesc": "在你的回合开始时，失去1点生命。 每当你在你的回合内失去生命时，对所有敌人造成9点伤害。",
-      "effects": [
-        {
-          "type": "damage",
-          "target": "enemy",
-          "amount": 6
-        },
-        {
-          "type": "damage",
-          "target": "allEnemies",
-          "amount": 6
-        },
-        {
-          "type": "loseHp",
-          "amount": 1
-        }
-      ],
-      "upgradeEffects": [
-        {
-          "type": "damage",
-          "target": "enemy",
-          "amount": 9
-        },
-        {
-          "type": "damage",
-          "target": "allEnemies",
-          "amount": 9
-        },
-        {
-          "type": "loseHp",
-          "amount": 1
-        }
-      ],
+      "effects": [],
+      "upgradeEffects": [],
       "keywords": []
     },
     {
@@ -1679,11 +1640,6 @@
       "effects": [
         {
           "type": "damage",
-          "target": "enemy",
-          "amount": 17
-        },
-        {
-          "type": "damage",
           "target": "allEnemies",
           "amount": 17
         },
@@ -1692,11 +1648,6 @@
         }
       ],
       "upgradeEffects": [
-        {
-          "type": "damage",
-          "target": "enemy",
-          "amount": 23
-        },
         {
           "type": "damage",
           "target": "allEnemies",
@@ -1773,7 +1724,7 @@
       "effects": [
         {
           "type": "damage",
-          "target": "enemy",
+          "target": "allEnemies",
           "amount": 2,
           "hits": 4
         }
@@ -1781,7 +1732,7 @@
       "upgradeEffects": [
         {
           "type": "damage",
-          "target": "enemy",
+          "target": "allEnemies",
           "amount": 2,
           "hits": 5
         }
@@ -1838,7 +1789,8 @@
         {
           "type": "damage",
           "target": "enemy",
-          "amount": 4
+          "amount": 4,
+          "hits": 2
         },
         {
           "type": "exhaust"
@@ -1848,7 +1800,8 @@
         {
           "type": "damage",
           "target": "enemy",
-          "amount": 6
+          "amount": 6,
+          "hits": 2
         },
         {
           "type": "exhaust"
@@ -1864,8 +1817,17 @@
       "rarity": "rare",
       "desc": "打出你抽牌堆顶部的X张牌。",
       "upgradeDesc": "打出你抽牌堆顶部的X+1张牌。",
-      "effects": [],
-      "upgradeEffects": [],
+      "effects": [
+        {
+          "type": "playTopXCards"
+        }
+      ],
+      "upgradeEffects": [
+        {
+          "type": "playTopXCards",
+          "plus": 1
+        }
+      ],
       "keywords": []
     },
     {
@@ -1876,8 +1838,16 @@
       "rarity": "rare",
       "desc": "将手牌中的所有攻击牌变化为巨石。",
       "upgradeDesc": "将手牌中的所有攻击牌变化为巨石+。",
-      "effects": [],
-      "upgradeEffects": [],
+      "effects": [
+        {
+          "type": "transformHandAttacks"
+        }
+      ],
+      "upgradeEffects": [
+        {
+          "type": "transformHandAttacks"
+        }
+      ],
       "keywords": []
     },
     {
@@ -2020,8 +1990,18 @@
       "rarity": "rare",
       "desc": "本回合，你接下来打出的攻击牌会额外生效一次。",
       "upgradeDesc": "本回合，你接下来打出的2张攻击牌会额外生效一次。",
-      "effects": [],
-      "upgradeEffects": [],
+      "effects": [
+        {
+          "type": "nextAttacksExtra",
+          "count": 1
+        }
+      ],
+      "upgradeEffects": [
+        {
+          "type": "nextAttacksExtra",
+          "count": 2
+        }
+      ],
       "keywords": []
     },
     {
@@ -2032,20 +2012,8 @@
       "rarity": "rare",
       "desc": "每当你获得格挡时，对随机敌人造成6点伤害。",
       "upgradeDesc": "每当你获得格挡时，对随机敌人造成8点伤害。",
-      "effects": [
-        {
-          "type": "damage",
-          "target": "enemy",
-          "amount": 6
-        }
-      ],
-      "upgradeEffects": [
-        {
-          "type": "damage",
-          "target": "enemy",
-          "amount": 8
-        }
-      ],
+      "effects": [],
+      "upgradeEffects": [],
       "keywords": []
     },
     {
@@ -2104,22 +2072,8 @@
       "rarity": "rare",
       "desc": "在你的回合开始时，获得2点力量。",
       "upgradeDesc": "在你的回合开始时，获得3点力量。",
-      "effects": [
-        {
-          "type": "applyStatus",
-          "target": "self",
-          "status": "strength",
-          "amount": 2
-        }
-      ],
-      "upgradeEffects": [
-        {
-          "type": "applyStatus",
-          "target": "self",
-          "status": "strength",
-          "amount": 3
-        }
-      ],
+      "effects": [],
+      "upgradeEffects": [],
       "keywords": []
     },
     {
@@ -2142,26 +2096,8 @@
       "rarity": "rare",
       "desc": "在你的回合开始时，失去1点生命并获得8点格挡。",
       "upgradeDesc": "在你的回合开始时，失去1点生命并获得10点格挡。",
-      "effects": [
-        {
-          "type": "block",
-          "amount": 8
-        },
-        {
-          "type": "loseHp",
-          "amount": 1
-        }
-      ],
-      "upgradeEffects": [
-        {
-          "type": "block",
-          "amount": 10
-        },
-        {
-          "type": "loseHp",
-          "amount": 1
-        }
-      ],
+      "effects": [],
+      "upgradeEffects": [],
       "keywords": []
     },
     {
@@ -2172,18 +2108,8 @@
       "rarity": "rare",
       "desc": "在回合开始时，获得1点能量。",
       "upgradeDesc": "在回合开始时，获得2点能量。",
-      "effects": [
-        {
-          "type": "gainEnergy",
-          "amount": 1
-        }
-      ],
-      "upgradeEffects": [
-        {
-          "type": "gainEnergy",
-          "amount": 2
-        }
-      ],
+      "effects": [],
+      "upgradeEffects": [],
       "keywords": []
     },
     {
@@ -2194,24 +2120,8 @@
       "rarity": "rare",
       "desc": "每当有一张牌被消耗时， 抽1张牌。",
       "upgradeDesc": "费用变为1。 每当有一张牌被消耗时， 抽1张牌。",
-      "effects": [
-        {
-          "type": "draw",
-          "count": 1
-        },
-        {
-          "type": "exhaust"
-        }
-      ],
-      "upgradeEffects": [
-        {
-          "type": "draw",
-          "count": 1
-        },
-        {
-          "type": "exhaust"
-        }
-      ],
+      "effects": [],
+      "upgradeEffects": [],
       "keywords": ["exhaust"]
     },
     {
@@ -2258,16 +2168,8 @@
       "rarity": "ancient",
       "desc": "技能牌消耗变为0费。 每当你打出一张技能牌时，将其消耗。",
       "upgradeDesc": "费用变为2。 技能牌消耗变为0费。 每当你打出一张技能牌时，将其消耗。",
-      "effects": [
-        {
-          "type": "exhaust"
-        }
-      ],
-      "upgradeEffects": [
-        {
-          "type": "exhaust"
-        }
-      ],
+      "effects": [],
+      "upgradeEffects": [],
       "keywords": ["exhaust"]
     }
   ],
@@ -2463,6 +2365,11 @@
           "type": "damage",
           "target": "enemy",
           "amount": 9
+        },
+        {
+          "type": "chooseAdd",
+          "filter": "seek",
+          "count": 3
         }
       ],
       "upgradeEffects": [
@@ -2470,6 +2377,11 @@
           "type": "damage",
           "target": "enemy",
           "amount": 12
+        },
+        {
+          "type": "chooseAdd",
+          "filter": "seek",
+          "count": 3
         }
       ],
       "keywords": []
@@ -2506,8 +2418,22 @@
       "rarity": "colorless",
       "desc": "固有。造成你抽牌堆中剩余牌数的伤害。",
       "upgradeDesc": "费用变为0。固有。造成你抽牌堆中剩余牌数的伤害。",
-      "effects": [],
-      "upgradeEffects": [],
+      "effects": [
+        {
+          "type": "damageScaling",
+          "target": "enemy",
+          "base": 0,
+          "scaling": "deckSize"
+        }
+      ],
+      "upgradeEffects": [
+        {
+          "type": "damageScaling",
+          "target": "enemy",
+          "base": 0,
+          "scaling": "deckSize"
+        }
+      ],
       "keywords": ["innate"]
     },
     {
@@ -2759,10 +2685,23 @@
       "upgradeDesc": "从3张随机牌中选择1张加入你的手牌。这张牌在本回合可以免费打出。",
       "effects": [
         {
+          "type": "chooseAdd",
+          "filter": "random",
+          "count": 3,
+          "free": true
+        },
+        {
           "type": "exhaust"
         }
       ],
-      "upgradeEffects": [],
+      "upgradeEffects": [
+        {
+          "type": "chooseAdd",
+          "filter": "random",
+          "count": 3,
+          "free": true
+        }
+      ],
       "keywords": ["exhaust"]
     },
     {
@@ -2773,7 +2712,14 @@
       "rarity": "colorless",
       "desc": "从3张其他角色的攻击牌中选择1张加入你的手牌。这张牌在本回合免费打出。",
       "upgradeDesc": "从3张其他角色的升级过的攻击牌中选择1张加入你的手牌。这张牌在本回合免费打出。",
-      "effects": [],
+      "effects": [
+        {
+          "type": "chooseAdd",
+          "filter": "attack",
+          "count": 3,
+          "free": true
+        }
+      ],
       "upgradeEffects": [],
       "keywords": []
     },
@@ -2807,8 +2753,18 @@
       "rarity": "colorless",
       "desc": "从你的抽牌堆中随机打出2张牌。",
       "upgradeDesc": "从你的抽牌堆中随机打出3张牌。",
-      "effects": [],
-      "upgradeEffects": [],
+      "effects": [
+        {
+          "type": "playRandomFromDraw",
+          "count": 2
+        }
+      ],
+      "upgradeEffects": [
+        {
+          "type": "playRandomFromDraw",
+          "count": 3
+        }
+      ],
       "keywords": []
     },
     {
@@ -2823,12 +2779,18 @@
         {
           "type": "block",
           "amount": 13
+        },
+        {
+          "type": "retainHandThisTurn"
         }
       ],
       "upgradeEffects": [
         {
           "type": "block",
           "amount": 16
+        },
+        {
+          "type": "retainHandThisTurn"
         }
       ],
       "keywords": ["retain"]
@@ -3084,6 +3046,9 @@
           "type": "damage",
           "target": "enemy",
           "amount": 12
+        },
+        {
+          "type": "retainHandThisTurn"
         }
       ],
       "upgradeEffects": [
@@ -3091,6 +3056,9 @@
           "type": "damage",
           "target": "enemy",
           "amount": 16
+        },
+        {
+          "type": "retainHandThisTurn"
         }
       ],
       "keywords": ["retain"]
@@ -3103,8 +3071,22 @@
       "rarity": "colorless",
       "desc": "造成本场战斗中所打出牌数的伤害。",
       "upgradeDesc": "保留。造成本场战斗中所打出牌数的伤害。",
-      "effects": [],
-      "upgradeEffects": [],
+      "effects": [
+        {
+          "type": "damageScaling",
+          "target": "enemy",
+          "base": 0,
+          "scaling": "cardsPlayed"
+        }
+      ],
+      "upgradeEffects": [
+        {
+          "type": "damageScaling",
+          "target": "enemy",
+          "base": 0,
+          "scaling": "cardsPlayed"
+        }
+      ],
       "keywords": ["retain"]
     },
     {
@@ -3211,10 +3193,19 @@
       "upgradeDesc": "从抽牌堆中选择一张技能牌放入你的手牌。",
       "effects": [
         {
+          "type": "chooseAdd",
+          "filter": "skillInDraw"
+        },
+        {
           "type": "exhaust"
         }
       ],
-      "upgradeEffects": [],
+      "upgradeEffects": [
+        {
+          "type": "chooseAdd",
+          "filter": "skillInDraw"
+        }
+      ],
       "keywords": ["exhaust"]
     },
     {
@@ -3227,10 +3218,19 @@
       "upgradeDesc": "从抽牌堆中选择一张攻击牌放入你的手牌。",
       "effects": [
         {
+          "type": "chooseAdd",
+          "filter": "attackInDraw"
+        },
+        {
           "type": "exhaust"
         }
       ],
-      "upgradeEffects": [],
+      "upgradeEffects": [
+        {
+          "type": "chooseAdd",
+          "filter": "attackInDraw"
+        }
+      ],
       "keywords": ["exhaust"]
     },
     {
@@ -3329,8 +3329,18 @@
       "rarity": "colorless",
       "desc": "你抽牌堆中的一张没有重放的随机牌获得2层重放。",
       "upgradeDesc": "你抽牌堆中的一张没有重放的随机牌获得3层重放。",
-      "effects": [],
-      "upgradeEffects": [],
+      "effects": [
+        {
+          "type": "grantReplay",
+          "count": 2
+        }
+      ],
+      "upgradeEffects": [
+        {
+          "type": "grantReplay",
+          "count": 3
+        }
+      ],
       "keywords": []
     },
     {
@@ -3341,8 +3351,18 @@
       "rarity": "colorless",
       "desc": "打出你弃牌堆中的3张随机攻击牌。",
       "upgradeDesc": "打出你弃牌堆中的4张随机攻击牌。",
-      "effects": [],
-      "upgradeEffects": [],
+      "effects": [
+        {
+          "type": "playRandomAttacksFromDiscard",
+          "count": 3
+        }
+      ],
+      "upgradeEffects": [
+        {
+          "type": "playRandomAttacksFromDiscard",
+          "count": 4
+        }
+      ],
       "keywords": []
     },
     {
@@ -3465,12 +3485,14 @@
       "upgradeDesc": "",
       "effects": [
         {
-          "type": "damage",
-          "target": "enemy",
-          "amount": 5
-        },
-        {
-          "type": "exhaust"
+          "type": "intrinsic",
+          "trigger": "endOfTurn",
+          "effects": [
+            {
+              "type": "loseHp",
+              "amount": 5
+            }
+          ]
         }
       ],
       "upgradeEffects": [],
@@ -3486,8 +3508,14 @@
       "upgradeDesc": "",
       "effects": [
         {
-          "type": "loseHp",
-          "amount": 6
+          "type": "intrinsic",
+          "trigger": "endOfTurn",
+          "effects": [
+            {
+              "type": "loseHp",
+              "amount": 6
+            }
+          ]
         }
       ],
       "upgradeEffects": [],
@@ -3551,9 +3579,14 @@
       "upgradeDesc": "",
       "effects": [
         {
-          "type": "damage",
-          "target": "enemy",
-          "amount": 3
+          "type": "intrinsic",
+          "trigger": "endOfTurn",
+          "effects": [
+            {
+              "type": "loseHp",
+              "amount": 3
+            }
+          ]
         }
       ],
       "upgradeEffects": [],
@@ -3569,9 +3602,14 @@
       "upgradeDesc": "",
       "effects": [
         {
-          "type": "damage",
-          "target": "enemy",
-          "amount": 3
+          "type": "intrinsic",
+          "trigger": "endOfTurn",
+          "effects": [
+            {
+              "type": "loseHp",
+              "amount": 3
+            }
+          ]
         }
       ],
       "upgradeEffects": [],
@@ -3609,7 +3647,18 @@
       "rarity": "status",
       "desc": "不能被打出。虚无。每当你抽到这张牌时，失去1点能量。",
       "upgradeDesc": "",
-      "effects": [],
+      "effects": [
+        {
+          "type": "intrinsic",
+          "trigger": "onDraw",
+          "effects": [
+            {
+              "type": "loseEnergy",
+              "amount": 1
+            }
+          ]
+        }
+      ],
       "upgradeEffects": [],
       "keywords": ["ethereal", "unplayable"]
     },
@@ -3626,6 +3675,29 @@
       "keywords": ["ethereal", "unplayable"]
     },
     {
+      "id": "beckon",
+      "name": "呼唤",
+      "cost": null,
+      "type": "power",
+      "rarity": "status",
+      "desc": "不能被打出。在你的回合结束时，如果这张牌在你的手牌中，你失去6点生命。",
+      "upgradeDesc": "",
+      "effects": [
+        {
+          "type": "intrinsic",
+          "trigger": "endOfTurn",
+          "effects": [
+            {
+              "type": "loseHp",
+              "amount": 6
+            }
+          ]
+        }
+      ],
+      "upgradeEffects": [],
+      "keywords": ["unplayable"]
+    },
+    {
       "id": "burn",
       "name": "灼伤",
       "cost": null,
@@ -3635,9 +3707,14 @@
       "upgradeDesc": "",
       "effects": [
         {
-          "type": "damage",
-          "target": "enemy",
-          "amount": 2
+          "type": "intrinsic",
+          "trigger": "endOfTurn",
+          "effects": [
+            {
+              "type": "loseHp",
+              "amount": 2
+            }
+          ]
         }
       ],
       "upgradeEffects": [],
@@ -3671,7 +3748,7 @@
       "upgradeDesc": "",
       "effects": [],
       "upgradeEffects": [],
-      "keywords": []
+      "keywords": ["unique"]
     },
     {
       "id": "clumsy",
@@ -3723,7 +3800,17 @@
       "rarity": "curse",
       "desc": "不能被打出。在你的回合结束时，如果这张牌在你的手牌中，失去相当于手牌数量的生命。",
       "upgradeDesc": "",
-      "effects": [],
+      "effects": [
+        {
+          "type": "intrinsic",
+          "trigger": "endOfTurn",
+          "effects": [
+            {
+              "type": "loseHpHandSize"
+            }
+          ]
+        }
+      ],
       "upgradeEffects": [],
       "keywords": ["unplayable"]
     },
@@ -3737,7 +3824,7 @@
       "upgradeDesc": "",
       "effects": [],
       "upgradeEffects": [],
-      "keywords": ["ethereal", "unplayable"]
+      "keywords": ["ethereal", "unplayable", "unique"]
     },
     {
       "id": "anguish",
@@ -3773,7 +3860,7 @@
       "upgradeDesc": "",
       "effects": [],
       "upgradeEffects": [],
-      "keywords": ["unplayable"]
+      "keywords": ["unplayable", "unique"]
     },
     {
       "id": "misfortune",
@@ -3785,12 +3872,18 @@
       "upgradeDesc": "",
       "effects": [
         {
-          "type": "loseHp",
-          "amount": 13
+          "type": "intrinsic",
+          "trigger": "endOfTurn",
+          "effects": [
+            {
+              "type": "loseHp",
+              "amount": 13
+            }
+          ]
         }
       ],
       "upgradeEffects": [],
-      "keywords": ["unplayable"]
+      "keywords": ["unplayable", "unique"]
     },
     {
       "id": "injured",
@@ -3826,7 +3919,7 @@
       "upgradeDesc": "",
       "effects": [],
       "upgradeEffects": [],
-      "keywords": ["unplayable"]
+      "keywords": ["unplayable", "unique"]
     },
     {
       "id": "shame",
@@ -3838,10 +3931,16 @@
       "upgradeDesc": "",
       "effects": [
         {
-          "type": "applyStatus",
-          "target": "enemy",
-          "status": "frail",
-          "amount": 1
+          "type": "intrinsic",
+          "trigger": "endOfTurn",
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "self",
+              "status": "frail",
+              "amount": 1
+            }
+          ]
         }
       ],
       "upgradeEffects": [],
@@ -3857,10 +3956,16 @@
       "upgradeDesc": "",
       "effects": [
         {
-          "type": "applyStatus",
-          "target": "enemy",
-          "status": "weak",
-          "amount": 1
+          "type": "intrinsic",
+          "trigger": "endOfTurn",
+          "effects": [
+            {
+              "type": "applyStatus",
+              "target": "self",
+              "status": "weak",
+              "amount": 1
+            }
+          ]
         }
       ],
       "upgradeEffects": [],
@@ -3876,7 +3981,7 @@
       "upgradeDesc": "",
       "effects": [],
       "upgradeEffects": [],
-      "keywords": ["innate", "ethereal", "unplayable"]
+      "keywords": ["innate", "ethereal", "unplayable", "unique"]
     },
     {
       "id": "debt",
@@ -3886,7 +3991,18 @@
       "rarity": "curse",
       "desc": "不能被打出。在你的回合结束时，如果这张牌在你的手牌中，你失去10金币。",
       "upgradeDesc": "",
-      "effects": [],
+      "effects": [
+        {
+          "type": "intrinsic",
+          "trigger": "endOfTurn",
+          "effects": [
+            {
+              "type": "loseGold",
+              "amount": 10
+            }
+          ]
+        }
+      ],
       "upgradeEffects": [],
       "keywords": ["unplayable"]
     }
@@ -4384,14 +4500,16 @@
         {
           "type": "damage",
           "target": "enemy",
-          "amount": 5
+          "amount": 5,
+          "hits": 2
         }
       ],
       "upgradeEffects": [
         {
           "type": "damage",
           "target": "enemy",
-          "amount": 6
+          "amount": 6,
+          "hits": 2
         }
       ],
       "keywords": []
@@ -4436,10 +4554,18 @@
       "upgradeDesc": "保留。将你抽牌堆中的一张牌放入你的手牌。消耗。",
       "effects": [
         {
+          "type": "chooseAdd",
+          "filter": "anyInDraw"
+        },
+        {
           "type": "exhaust"
         }
       ],
       "upgradeEffects": [
+        {
+          "type": "chooseAdd",
+          "filter": "anyInDraw"
+        },
         {
           "type": "exhaust"
         }

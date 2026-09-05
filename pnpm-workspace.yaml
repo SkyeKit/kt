@@ -3,8 +3,8 @@ packages:
   - .
 
 allowBuilds:
-  '@parcel/watcher': set this to true or false
-  esbuild: set this to true or false
+  '@parcel/watcher': true
+  esbuild: true
 
 # 允许执行安装脚本的依赖（esbuild 需要其平台二进制校验；@parcel/watcher 为 sass 原生监听）
 onlyBuiltDependencies:

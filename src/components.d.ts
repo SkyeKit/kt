@@ -8,14 +8,20 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     CampfirePanel: typeof import('./components/campfire/CampfirePanel.vue')['default']
+    CardReveal: typeof import('./components/common/CardReveal.vue')['default']
     CardView: typeof import('./components/common/CardView.vue')['default']
     ConsolePanel: typeof import('./components/console/ConsolePanel.vue')['default']
+    DataBrowser: typeof import('./components/menu/DataBrowser.vue')['default']
+    DeckChooseOverlay: typeof import('./components/common/DeckChooseOverlay.vue')['default']
     EnemyView: typeof import('./components/common/EnemyView.vue')['default']
     EventPanel: typeof import('./components/event/EventPanel.vue')['default']
+    PauseMenu: typeof import('./components/common/PauseMenu.vue')['default']
+    PickCardsModal: typeof import('./components/reward/PickCardsModal.vue')['default']
     RewardPanel: typeof import('./components/reward/RewardPanel.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ShopPanel: typeof import('./components/shop/ShopPanel.vue')['default']
     SingleRunStatusBar: typeof import('./components/common/SingleRunStatusBar.vue')['default']
+    UnitStatusChips: typeof import('./components/common/UnitStatusChips.vue')['default']
   }
 }

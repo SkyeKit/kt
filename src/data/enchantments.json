@@ -1,0 +1,163 @@
+{
+  "enchantments": [
+    {
+      "id": "adroit",
+      "name": "伶俐",
+      "desc": "获得3点格挡。",
+      "source": "遗物：木札",
+      "blockBonus": 3
+    },
+    {
+      "id": "clone",
+      "name": "克隆",
+      "desc": "这张牌能在休息处被复制。",
+      "source": "—",
+      "cloneAtRest": true
+    },
+    {
+      "id": "corrupted",
+      "name": "腐化",
+      "desc": "造成的伤害增加50%，但会失去2生命。",
+      "source": "事件：共生体",
+      "damageMult": 1.5,
+      "loseHp": 2
+    },
+    {
+      "id": "glam",
+      "name": "华彩",
+      "desc": "这张牌每场战斗能够重放一次。",
+      "source": "遗物：亮片",
+      "replayOnce": true
+    },
+    {
+      "id": "goopy",
+      "name": "黏糊",
+      "desc": "这张牌获得消耗。当被打出时，这张牌的格挡值永久增加1点。",
+      "source": "—",
+      "exhaust": true,
+      "goopyBlock": true
+    },
+    {
+      "id": "imbued",
+      "name": "注能",
+      "desc": "这张牌在每场战斗开始时自动打出。",
+      "source": "遗物：放电异虾",
+      "autoPlayAtStart": true
+    },
+    {
+      "id": "inky",
+      "name": "墨影",
+      "desc": "这张牌会施加1层虚弱。",
+      "source": "—",
+      "applyWeak": 1
+    },
+    {
+      "id": "instinct",
+      "name": "本能",
+      "desc": "这张牌的攻击伤害翻倍。",
+      "source": "遗物：三刃回旋镖",
+      "damageMult": 2
+    },
+    {
+      "id": "momentum",
+      "name": "动量",
+      "desc": "在本场战斗中，每次打出就增加这张牌的攻击伤害5点。",
+      "source": "遗物：拳刃",
+      "momentumPerPlay": 5
+    },
+    {
+      "id": "nimble",
+      "name": "灵巧",
+      "desc": "这张牌获得的格挡增加2点。",
+      "source": "遗物：菲涅耳透镜",
+      "blockBonus": 2
+    },
+    {
+      "id": "perfect_fit",
+      "name": "完美契合",
+      "desc": "每当这张牌要被洗入抽牌堆时，将其放在抽牌堆顶。",
+      "source": "事件：人形洞穴之地",
+      "topOfDrawPile": true
+    },
+    {
+      "id": "royally_approved",
+      "name": "王室认证",
+      "desc": "这张牌拥有固有和保留。",
+      "source": "遗物：王室印章",
+      "innate": true,
+      "retain": true
+    },
+    {
+      "id": "sharp",
+      "name": "锋利",
+      "desc": "这张牌上的伤害值增加3点。",
+      "source": "遗物：扭曲锤子",
+      "damage": 3
+    },
+    {
+      "id": "slither",
+      "name": "蛇行",
+      "desc": "当你抽到这张牌时，使其费用在0到3之间随机变化。",
+      "source": "事件：木雕",
+      "randomizeCost": true
+    },
+    {
+      "id": "slumbering_essence",
+      "name": "沉眠精华",
+      "desc": "回合结束时，如果这张牌在你的手牌中，则将其费用降低1点，直到其被打出。",
+      "source": "—",
+      "reduceCostInHand": true
+    },
+    {
+      "id": "souls_power",
+      "name": "灵魂之力",
+      "desc": "这张牌失去消耗。",
+      "source": "事件：遗忘之墓",
+      "removeExhaust": true
+    },
+    {
+      "id": "sown",
+      "name": "播种",
+      "desc": "你在每场战斗中第一次打出这张牌时，获得1点能量。",
+      "source": "事件：蓝宝石种子",
+      "firstPlayEnergy": 1
+    },
+    {
+      "id": "spiral",
+      "name": "涡旋",
+      "desc": "这张牌获得1层重放。",
+      "source": "事件：螺旋漩涡",
+      "replay1": true
+    },
+    {
+      "id": "steady",
+      "name": "稳定",
+      "desc": "这张牌获得保留。",
+      "source": "—",
+      "retain": true
+    },
+    {
+      "id": "swift",
+      "name": "迅速",
+      "desc": "你第一次打出这张牌时，抽1张牌。",
+      "source": "遗物：羽翼护符",
+      "firstPlayDraw": 1
+    },
+    {
+      "id": "tezcataras_ember",
+      "name": "特兹卡塔拉的余烬",
+      "desc": "费用为0，造成3点额外伤害，且获得永恒。",
+      "source": "遗物：营养汤",
+      "costZero": true,
+      "damage": 3,
+      "unique": true
+    },
+    {
+      "id": "vigorous",
+      "name": "活力",
+      "desc": "第一次打出这张牌时，造成8点额外伤害。",
+      "source": "事件：永恒之石",
+      "firstPlayDamage": 8
+    }
+  ]
+}

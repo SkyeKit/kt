@@ -1,246 +1,4 @@
 {
-  "neowPool": [
-    {
-      "id": "arcane_scroll",
-      "name": "奥术卷轴",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，将一张随机稀有牌加入你的牌组。",
-      "excluded": false
-    },
-    {
-      "id": "silver_crucible",
-      "name": "白银熔炉",
-      "rarity": "先古之民",
-      "trigger": "PASSIVE",
-      "desc": "你遇到的前3次卡牌奖励将是被升级过的。你打开的第一个宝箱将是空的。",
-      "excluded": false
-    },
-    {
-      "id": "hefty_tablet",
-      "name": "沉重石板",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，从3张稀有牌中选择1张加入你的牌组，同时将1张受伤加入你的牌组。",
-      "excluded": false
-    },
-    {
-      "id": "pomander",
-      "name": "橙型香盒",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，升级一张牌。",
-      "excluded": false
-    },
-    {
-      "id": "fishing_rod",
-      "name": "钓鱼竿",
-      "rarity": "先古之民",
-      "trigger": "PASSIVE",
-      "desc": "每3场普通战斗，随机升级你牌组中的一张牌。",
-      "excluded": false
-    },
-    {
-      "id": "booming_conch",
-      "name": "轰鸣海螺",
-      "rarity": "先古之民",
-      "trigger": "ON_COMBAT_START",
-      "desc": "在精英战的战斗开始时，额外抽2张牌并获得1点能量。",
-      "excluded": false
-    },
-    {
-      "id": "silken_tress",
-      "name": "华美发束",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，失去所有金币。为第一次卡牌奖励中的所有牌附魔：华彩。",
-      "excluded": false
-    },
-    {
-      "id": "golden_pearl",
-      "name": "金色珍珠",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，获得150金币。",
-      "excluded": false
-    },
-    {
-      "id": "precise_scissors",
-      "name": "精准剪刀",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，从你的牌组中移除1张牌。",
-      "excluded": false
-    },
-    {
-      "id": "massive_scroll",
-      "name": "巨大卷轴",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，从3张多人游戏牌中选择1张加入你的牌组。",
-      "excluded": true
-    },
-    {
-      "id": "large_capsule",
-      "name": "巨大扭蛋",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，获得2件随机遗物。额外将一对打击和防御，加入你的牌组。",
-      "excluded": false
-    },
-    {
-      "id": "scroll_boxes",
-      "name": "卷轴箱",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，从2个卡牌包中选择1包加入你的牌组。",
-      "excluded": false
-    },
-    {
-      "id": "neows_talisman",
-      "name": "涅奥的护符",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，升级你的1张打击和1张防御。",
-      "excluded": false
-    },
-    {
-      "id": "neows_torment",
-      "name": "涅奥的苦痛",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，将1张涅奥之怒加入你的牌组。",
-      "excluded": false
-    },
-    {
-      "id": "neows_bones",
-      "name": "涅奥骨骰",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，获得2件随机涅奥遗物。将1张随机诅咒加入你的牌组。",
-      "excluded": false
-    },
-    {
-      "id": "lead_paperweight",
-      "name": "铅制镇纸",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，从2张无色牌中选择1张加入你的牌组。",
-      "excluded": false
-    },
-    {
-      "id": "lava_rock",
-      "name": "熔岩石",
-      "rarity": "先古之民",
-      "trigger": "PASSIVE",
-      "desc": "第一阶段的Boss敌人额外掉落2件遗物。",
-      "excluded": false
-    },
-    {
-      "id": "lost_coffer",
-      "name": "失物盒",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，获得1次卡牌奖励和1瓶随机药水。",
-      "excluded": true
-    },
-    {
-      "id": "stone_humidifier",
-      "name": "石炉加湿器",
-      "rarity": "先古之民",
-      "trigger": "ON_REST",
-      "desc": "每当你在休息处休息时，将你的最大生命值提升5点。",
-      "excluded": false
-    },
-    {
-      "id": "leafy_poultice",
-      "name": "树叶药膏",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，变化你的1张打击和1张防御，然后失去12点最大生命。",
-      "excluded": false
-    },
-    {
-      "id": "precarious_shears",
-      "name": "松动羊毛剪",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，从你的牌组中移除2张牌并失去16点生命。",
-      "excluded": false
-    },
-    {
-      "id": "kaleidoscope",
-      "name": "万花筒",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，获得2次来自其他角色的卡牌奖励。",
-      "excluded": true
-    },
-    {
-      "id": "small_capsule",
-      "name": "小型扭蛋",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，获得一件随机遗物。",
-      "excluded": false
-    },
-    {
-      "id": "new_leaf",
-      "name": "新叶",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，变化1张牌。",
-      "excluded": false
-    },
-    {
-      "id": "phial_holster",
-      "name": "药瓶皮套",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，获得1个药水栏位并获得2瓶随机药水。",
-      "excluded": true
-    },
-    {
-      "id": "nutritious_oyster",
-      "name": "营养牡蛎",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，将你的最大生命值提升11。",
-      "excluded": false
-    },
-    {
-      "id": "winged_boots",
-      "name": "羽翼之靴",
-      "rarity": "先古之民",
-      "trigger": "PASSIVE",
-      "desc": "你在选择下一层的房间时有3次机会可以无视当前的路线。",
-      "excluded": false
-    },
-    {
-      "id": "cursed_pearl",
-      "name": "诅咒珍珠",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，获得一张贪婪，获得333金币。",
-      "excluded": false
-    },
-    {
-      "id": "dowsing_rod",
-      "name": "寻龙尺",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，将1张探寻加入你的牌组。",
-      "excluded": false
-    },
-    {
-      "id": "neows_sacrifice",
-      "name": "涅奥的牺牲",
-      "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
-      "desc": "拾起时，获得1瓶龙涎香，并将1张愧疚加入你的牌组。",
-      "excluded": true
-    }
-  ],
   "warrior": [
     {
       "id": "burning_blood",
@@ -248,6 +6,7 @@
       "rarity": "初始",
       "trigger": "ON_COMBAT_END",
       "desc": "在战斗结束时，回复6点生命。",
+      "pool": "warrior",
       "excluded": false
     },
     {
@@ -256,14 +15,16 @@
       "rarity": "初始",
       "trigger": "ON_COMBAT_END",
       "desc": "在战斗结束时，回复12点生命。",
+      "pool": "warrior",
       "excluded": false
     },
     {
       "id": "red_skull",
       "name": "红头骨",
-      "rarity": "罕见",
+      "rarity": "普通",
       "trigger": "PASSIVE",
       "desc": "当你的生命值低于或等于50%时，你额外获得3点力量。",
+      "pool": "warrior",
       "excluded": false
     },
     {
@@ -272,14 +33,16 @@
       "rarity": "罕见",
       "trigger": "PASSIVE",
       "desc": "有易伤状态的敌人受到的伤害增加75%而非50%。",
+      "pool": "warrior",
       "excluded": false
     },
     {
       "id": "self_forming_clay",
       "name": "自成型黏土",
       "rarity": "罕见",
-      "trigger": "ON_DAMAGE_TAKEN",
+      "trigger": "PASSIVE",
       "desc": "每当你在战斗中失去生命，就在下回合获得3点格挡。",
+      "pool": "warrior",
       "excluded": false
     },
     {
@@ -288,22 +51,25 @@
       "rarity": "稀有",
       "trigger": "ON_CARD_EXHAUST",
       "desc": "每当你消耗一张牌，对所有敌人造成3点伤害。",
+      "pool": "warrior",
       "excluded": false
     },
     {
       "id": "demons_tongue",
       "name": "恶魔之舌",
       "rarity": "稀有",
-      "trigger": "ON_DAMAGE_TAKEN",
+      "trigger": "PASSIVE",
       "desc": "每回合第一次在回合内失去生命值时，回复等量的生命值。",
+      "pool": "warrior",
       "excluded": false
     },
     {
       "id": "broken_helmet",
       "name": "损毁头盔",
       "rarity": "稀有",
-      "trigger": "ON_STRENGTH_GAIN",
+      "trigger": "PASSIVE",
       "desc": "你在每场战斗中第一次获得的力量值翻倍。",
+      "pool": "warrior",
       "excluded": false
     },
     {
@@ -312,64 +78,368 @@
       "rarity": "商店",
       "trigger": "ON_TURN_START",
       "desc": "在你的每个回合开始时，你获得2点力量，所有敌人获得1点力量。",
+      "pool": "warrior",
       "excluded": false
+    }
+  ],
+  "silent": [
+    {
+      "id": "snake_ring",
+      "name": "蛇之戒指",
+      "rarity": "初始",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，额外抽2张牌。",
+      "pool": "silent",
+      "excluded": true
+    },
+    {
+      "id": "eel_ring",
+      "name": "长蛇戒指",
+      "rarity": "初始",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在战斗开始时的前3个回合，你额外抽2张牌。",
+      "pool": "silent",
+      "excluded": true
+    },
+    {
+      "id": "serpent_skull",
+      "name": "异蛇头骨",
+      "rarity": "普通",
+      "trigger": "PASSIVE",
+      "desc": "每当你给予敌人中毒时，所给予的中毒层数增加1层。",
+      "pool": "silent",
+      "excluded": true
+    },
+    {
+      "id": "cymbal",
+      "name": "铜钹",
+      "rarity": "罕见",
+      "trigger": "PASSIVE",
+      "desc": "你每在你的回合丢弃一张牌，就对一名随机敌人造成3点伤害。",
+      "pool": "silent",
+      "excluded": true
+    },
+    {
+      "id": "twisted_funnel",
+      "name": "扭曲漏斗",
+      "rarity": "罕见",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，给予所有敌人4层中毒。",
+      "pool": "silent",
+      "excluded": true
+    },
+    {
+      "id": "spiral_dart",
+      "name": "螺线飞镖",
+      "rarity": "稀有",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "你每打出一张小刀，就在本回合获得1点敏捷。",
+      "pool": "silent",
+      "excluded": true
+    },
+    {
+      "id": "paper_crane",
+      "name": "纸鹤",
+      "rarity": "稀有",
+      "trigger": "PASSIVE",
+      "desc": "有虚弱状态的敌人造成的伤害降低40%而非25%。",
+      "pool": "silent",
+      "excluded": true
+    },
+    {
+      "id": "tough_bandage",
+      "name": "结实绷带",
+      "rarity": "稀有",
+      "trigger": "PASSIVE",
+      "desc": "你每在你的回合丢弃一张牌，就获得3点格挡。",
+      "pool": "silent",
+      "excluded": true
+    },
+    {
+      "id": "ninja_scroll",
+      "name": "忍术卷轴",
+      "rarity": "商店",
+      "trigger": "ON_COMBAT_START",
+      "desc": "每场战斗开始时，将3张小刀加入你的手牌。",
+      "pool": "silent",
+      "excluded": true
+    }
+  ],
+  "juggler": [
+    {
+      "id": "innate_majesty",
+      "name": "天赋君权",
+      "rarity": "初始",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，获得3点辉星。",
+      "pool": "juggler",
+      "excluded": true
+    },
+    {
+      "id": "mandate_of_heaven",
+      "name": "天命所归",
+      "rarity": "初始",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，获得6点辉星。",
+      "pool": "juggler",
+      "excluded": true
+    },
+    {
+      "id": "fencing_guide",
+      "name": "击剑指南",
+      "rarity": "普通",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，铸造10。",
+      "pool": "juggler",
+      "excluded": true
+    },
+    {
+      "id": "stellar_dust",
+      "name": "星系尘埃",
+      "rarity": "罕见",
+      "trigger": "ON_CARD_EXHAUST",
+      "desc": "每消耗10点辉星，就获得10点格挡。",
+      "pool": "juggler",
+      "excluded": true
+    },
+    {
+      "id": "king_ore",
+      "name": "君王矿石",
+      "rarity": "罕见",
+      "trigger": "PASSIVE",
+      "desc": "每当你生成一张牌时，获得2点格挡。",
+      "pool": "juggler",
+      "excluded": true
+    },
+    {
+      "id": "moon_pastry",
+      "name": "月亮糕点",
+      "rarity": "稀有",
+      "trigger": "ON_TURN_END",
+      "desc": "在你的回合结束时，获得1点辉星。",
+      "pool": "juggler",
+      "excluded": true
+    },
+    {
+      "id": "mini_juggler",
+      "name": "迷你储君",
+      "rarity": "稀有",
+      "trigger": "PASSIVE",
+      "desc": "每回合你第一次花费1点辉星时，获得1点力量。",
+      "pool": "juggler",
+      "excluded": true
+    },
+    {
+      "id": "orange_lump",
+      "name": "橙色团块",
+      "rarity": "稀有",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，将2张随机无色牌加入你的手牌。",
+      "pool": "juggler",
+      "excluded": true
+    },
+    {
+      "id": "vitruvius_servant",
+      "name": "维特鲁威仆从",
+      "rarity": "商店",
+      "trigger": "PASSIVE",
+      "desc": "名字中有“仆从”的卡牌造成双倍的伤害与格挡。",
+      "pool": "juggler",
+      "excluded": true
+    }
+  ],
+  "religion": [
+    {
+      "id": "soul_locket",
+      "name": "缚魂命匣",
+      "rarity": "初始",
+      "trigger": "ON_TURN_START",
+      "desc": "在你的回合开始时，召唤1个灵魂。",
+      "pool": "religion",
+      "excluded": true
+    },
+    {
+      "id": "boundless_locket",
+      "name": "无界命匣",
+      "rarity": "初始",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，召唤5个灵魂。在你的回合开始时，召唤2个灵魂。",
+      "pool": "religion",
+      "excluded": true
+    },
+    {
+      "id": "bone_flute",
+      "name": "骨笛",
+      "rarity": "普通",
+      "trigger": "PASSIVE",
+      "desc": "每当奥斯提攻击时，获得2点格挡。",
+      "pool": "religion",
+      "excluded": true
+    },
+    {
+      "id": "book_knife",
+      "name": "修书小刀",
+      "rarity": "罕见",
+      "trigger": "PASSIVE",
+      "desc": "每当有一名不是“爪牙”的敌人死于灾厄时，回复3点生命。",
+      "pool": "religion",
+      "excluded": true
+    },
+    {
+      "id": "funeral_mask",
+      "name": "葬礼面具",
+      "rarity": "罕见",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，将3张灵魂加入你的抽牌堆。",
+      "pool": "religion",
+      "excluded": true
+    },
+    {
+      "id": "big_hat",
+      "name": "大帽子",
+      "rarity": "稀有",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，将2张随机虚无牌加入你的手牌。",
+      "pool": "religion",
+      "excluded": true
+    },
+    {
+      "id": "bookmark",
+      "name": "书签",
+      "rarity": "稀有",
+      "trigger": "ON_TURN_END",
+      "desc": "每回合结束时，随机一张被保留的牌在被打出前的耗能减少1。",
+      "pool": "religion",
+      "excluded": true
+    },
+    {
+      "id": "ivory_mahjong",
+      "name": "象牙麻将牌",
+      "rarity": "稀有",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "每当你打出一张耗能大于等于3的牌时，获得1点能量。",
+      "pool": "religion",
+      "excluded": true
+    },
+    {
+      "id": "undying_rune",
+      "name": "不死符文",
+      "rarity": "商店",
+      "trigger": "PASSIVE",
+      "desc": "当敌人的灾厄层数大于等于其生命值时，它造成的伤害降低50%。",
+      "pool": "religion",
+      "excluded": true
+    }
+  ],
+  "robomancer": [
+    {
+      "id": "cracked_core",
+      "name": "破损核心",
+      "rarity": "初始",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，生成1个闪电充能球。",
+      "pool": "robomancer",
+      "excluded": true
+    },
+    {
+      "id": "filled_core",
+      "name": "注能核心",
+      "rarity": "初始",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，生成3个闪电充能球。闪电充能球额外造成1点伤害。",
+      "pool": "robomancer",
+      "excluded": true
+    },
+    {
+      "id": "data_disk",
+      "name": "数据磁盘",
+      "rarity": "普通",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，获得1点集中。",
+      "pool": "robomancer",
+      "excluded": true
+    },
+    {
+      "id": "gilded_cable",
+      "name": "镀金缆线",
+      "rarity": "罕见",
+      "trigger": "PASSIVE",
+      "desc": "你最右侧的充能球会额外触发一次被动效果。",
+      "pool": "robomancer",
+      "excluded": true
+    },
+    {
+      "id": "symbiotic_virus",
+      "name": "共生病毒",
+      "rarity": "罕见",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，生成1个黑暗充能球。",
+      "pool": "robomancer",
+      "excluded": true
+    },
+    {
+      "id": "emotion_chip",
+      "name": "情感芯片",
+      "rarity": "稀有",
+      "trigger": "ON_TURN_START",
+      "desc": "在每回合开始时，如果你在之前回合受到过伤害，则触发所有充能球的被动效果。",
+      "pool": "robomancer",
+      "excluded": true
+    },
+    {
+      "id": "metronome",
+      "name": "节拍器",
+      "rarity": "稀有",
+      "trigger": "PASSIVE",
+      "desc": "每场战斗中你首次生成7个充能球时，对所有敌人造成30点伤害。",
+      "pool": "robomancer",
+      "excluded": true
+    },
+    {
+      "id": "energy_cell",
+      "name": "能量电池",
+      "rarity": "稀有",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，将2张耗能为0的卡牌从你的抽牌堆放入你的手牌。",
+      "pool": "robomancer",
+      "excluded": true
+    },
+    {
+      "id": "runic_capacitor",
+      "name": "符文电容器",
+      "rarity": "商店",
+      "trigger": "ON_COMBAT_START",
+      "desc": "每场战斗开始时，获得3个额外充能球栏位。",
+      "pool": "robomancer",
+      "excluded": true
     }
   ],
   "general": [
     {
-      "id": "vajra",
-      "name": "金刚杵",
-      "rarity": "普通",
-      "trigger": "ON_COMBAT_START",
-      "desc": "在每场战斗开始时，获得1点力量。",
-      "excluded": false
-    },
-    {
-      "id": "anchor",
-      "name": "锚",
-      "rarity": "普通",
-      "trigger": "ON_COMBAT_START",
-      "desc": "每场战斗开始时获得10点格挡。",
-      "excluded": false
-    },
-    {
-      "id": "bag_of_marbles",
-      "name": "弹珠袋",
-      "rarity": "普通",
-      "trigger": "ON_COMBAT_START",
-      "desc": "在每场战斗开始时，给予所有敌人1层易伤。",
-      "excluded": false
-    },
-    {
-      "id": "lantern",
-      "name": "灯笼",
-      "rarity": "普通",
-      "trigger": "ON_TURN_START",
-      "desc": "在每场战斗的第一回合获得1点能量。",
-      "excluded": false
-    },
-    {
-      "id": "red_mask",
-      "name": "红面具",
-      "rarity": "普通",
-      "trigger": "ON_COMBAT_START",
-      "desc": "在每场战斗开始时，给于所有敌人1层虚弱。",
-      "excluded": false
-    },
-    {
-      "id": "happy_flower",
-      "name": "开心小花",
-      "rarity": "普通",
-      "trigger": "ON_TURN_START",
-      "desc": "每3个回合，获得1点能量。",
-      "excluded": false
-    },
-    {
       "id": "centennial_puzzle",
       "name": "百年积木",
       "rarity": "普通",
-      "trigger": "ON_DAMAGE_TAKEN",
+      "trigger": "PASSIVE",
       "desc": "你在每场战斗中第一次损失生命值时，抽3张牌。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "pendulum",
+      "name": "摆动球",
+      "rarity": "普通",
+      "trigger": "PASSIVE",
+      "desc": "每3个回合，抽1张牌。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "meal_ticket",
+      "name": "餐券",
+      "rarity": "普通",
+      "trigger": "ON_SHOP_ENTER",
+      "desc": "每当你进入商店房间时，回复15点生命。",
+      "pool": "general",
       "excluded": false
     },
     {
@@ -378,6 +448,241 @@
       "rarity": "普通",
       "trigger": "ON_PICKUP",
       "desc": "拾起时，将你的最大生命值提升7。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "strike_dummy",
+      "name": "打击木偶",
+      "rarity": "普通",
+      "trigger": "PASSIVE",
+      "desc": "名字中有“打击”的卡牌造成3点额外伤害。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "bag_of_marbles",
+      "name": "弹珠袋",
+      "rarity": "普通",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，给予所有敌人1层易伤。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "lantern",
+      "name": "灯笼",
+      "rarity": "普通",
+      "trigger": "PASSIVE",
+      "desc": "在每场战斗的第一回合获得1点能量。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "buddhist_beads",
+      "name": "佛珠手链",
+      "rarity": "普通",
+      "trigger": "PASSIVE",
+      "desc": "你在?房间中不会再遭遇常规战斗。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "old_tea_set",
+      "name": "古茶具套装",
+      "rarity": "普通",
+      "trigger": "ON_COMBAT_START",
+      "desc": "到达休息处后的下一场战斗开始时额外获得2点能量。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "red_mask",
+      "name": "红面具",
+      "rarity": "普通",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，给于所有敌人1层虚弱。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "throat_guard",
+      "name": "护喉甲",
+      "rarity": "普通",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，获得4层覆甲。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "royal_pillow",
+      "name": "皇家枕头",
+      "rarity": "普通",
+      "trigger": "ON_REST",
+      "desc": "在休息时，额外回复15点生命。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "confetti_cannon",
+      "name": "节日拉炮",
+      "rarity": "普通",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，对所有敌人造成9点伤害。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "vajra",
+      "name": "金刚杵",
+      "rarity": "普通",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，获得1点力量。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "happy_flower",
+      "name": "开心小花",
+      "rarity": "普通",
+      "trigger": "PASSIVE",
+      "desc": "每3个回合，获得1点能量。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "anchor",
+      "name": "锚",
+      "rarity": "普通",
+      "trigger": "ON_COMBAT_START",
+      "desc": "每场战斗开始时获得10点格挡。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "whetstone",
+      "name": "磨刀石",
+      "rarity": "普通",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，随机升级2张攻击牌。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "copper_scales",
+      "name": "铜质鳞片",
+      "rarity": "普通",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，获得3点荆棘。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "five_layers",
+      "name": "五轮书",
+      "rarity": "普通",
+      "trigger": "PASSIVE",
+      "desc": "你每将5张牌加入你的牌组时，回复20点生命。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "blood_vial",
+      "name": "小血瓶",
+      "rarity": "普通",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，回复2点生命。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "potion_belt",
+      "name": "药水腰带",
+      "rarity": "普通",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得2个药水栏位。",
+      "pool": "general",
+      "excluded": true
+    },
+    {
+      "id": "smooth_stone",
+      "name": "意外光滑的石头",
+      "rarity": "普通",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，获得1点敏捷。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "war_paint",
+      "name": "战纹涂料",
+      "rarity": "普通",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，随机升级2张技能牌。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "prep_bag",
+      "name": "准备背包",
+      "rarity": "普通",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，额外抽2张牌。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "amethyst_eggplant",
+      "name": "紫水晶茄子",
+      "rarity": "普通",
+      "trigger": "PASSIVE",
+      "desc": "敌人额外掉落15金币。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "orichalcum",
+      "name": "奥利哈钢",
+      "rarity": "罕见",
+      "trigger": "ON_TURN_END",
+      "desc": "如果你在回合结束时没有任何格挡，获得6点格挡。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "bracer",
+      "name": "臂甲",
+      "rarity": "罕见",
+      "trigger": "PASSIVE",
+      "desc": "每场战斗中，你第一次从卡牌中获得的格挡值翻倍。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "ripple_basin",
+      "name": "波纹水盆",
+      "rarity": "罕见",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "如果你在本回合中没有打出过攻击牌，则获得4点格挡。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "unending_candy",
+      "name": "吃不完的糖",
+      "rarity": "罕见",
+      "trigger": "PASSIVE",
+      "desc": "每两场战斗，你的卡牌奖励就会额外包含一张能力牌。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "red_bull",
+      "name": "赤牛",
+      "rarity": "罕见",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，获得8点活力。",
+      "pool": "general",
       "excluded": false
     },
     {
@@ -386,14 +691,16 @@
       "rarity": "罕见",
       "trigger": "ON_TURN_START",
       "desc": "在你的第二回合开始时，获得14点格挡。",
+      "pool": "general",
       "excluded": false
     },
     {
       "id": "gremlin_horn",
       "name": "地精之角",
       "rarity": "罕见",
-      "trigger": "ON_ENEMY_DEATH",
+      "trigger": "PASSIVE",
       "desc": "每当有一名敌人死亡时，获得1点能量并抽1张牌。",
+      "pool": "general",
       "excluded": false
     },
     {
@@ -402,6 +709,25 @@
       "rarity": "罕见",
       "trigger": "ON_PLAY_CARD",
       "desc": "你每打出的第10张攻击牌将会造成双倍伤害。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "astral_chart",
+      "name": "活动星图",
+      "rarity": "罕见",
+      "trigger": "PASSIVE",
+      "desc": "每当你进入？房间的时候，回复5点生命。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "golden_star",
+      "name": "金纸",
+      "rarity": "罕见",
+      "trigger": "ON_CARD_EXHAUST",
+      "desc": "你每消耗5张牌，就抽1张牌。",
+      "pool": "general",
       "excluded": false
     },
     {
@@ -410,7 +736,53 @@
       "rarity": "罕见",
       "trigger": "ON_PLAY_CARD",
       "desc": "你每在同一回合内打出3张攻击牌，就获得4点格挡。",
+      "pool": "general",
       "excluded": false
+    },
+    {
+      "id": "letter_opener",
+      "name": "开信刀",
+      "rarity": "罕见",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "你每在同一回合内打出3张技能牌，就对所有敌人造成5点伤害。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "pear",
+      "name": "梨子",
+      "rarity": "罕见",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将你的最大生命值提升10。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "reptile_spirit",
+      "name": "爬行动物饰品",
+      "rarity": "罕见",
+      "trigger": "PASSIVE",
+      "desc": "当你使用药水时，在本回合获得3力量。",
+      "pool": "general",
+      "excluded": true
+    },
+    {
+      "id": "shimmering_lipstick",
+      "name": "闪亮口红",
+      "rarity": "罕见",
+      "trigger": "ON_TURN_START",
+      "desc": "在你的第3回合开始时，获得1点力量和1点敏捷。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "petrified_frog",
+      "name": "石化蟾蜍",
+      "rarity": "罕见",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，获得一瓶药水形状的石头。",
+      "pool": "general",
+      "excluded": true
     },
     {
       "id": "nunchaku",
@@ -418,6 +790,142 @@
       "rarity": "罕见",
       "trigger": "ON_PLAY_CARD",
       "desc": "你每打出10张攻击牌，获得1点能量。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "mercury_hourglass",
+      "name": "水银沙漏",
+      "rarity": "罕见",
+      "trigger": "ON_TURN_START",
+      "desc": "在你的回合开始时，对所有敌人造成3点伤害。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "diamond",
+      "name": "碎石钻",
+      "rarity": "罕见",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，在本场战斗中随机升级你抽牌堆中的2张牌。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "scaler",
+      "name": "缩放仪",
+      "rarity": "罕见",
+      "trigger": "PASSIVE",
+      "desc": "在Boss战开始时，回复25点生命值。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "scythe",
+      "name": "锁镰",
+      "rarity": "罕见",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "你每在同一回合内打出3张攻击牌，就随机对一名敌人造成6点伤害。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "micro_cannon",
+      "name": "微型大炮",
+      "rarity": "罕见",
+      "trigger": "PASSIVE",
+      "desc": "升级的攻击牌额外造成3点伤害。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "mail_box",
+      "name": "小邮箱",
+      "rarity": "罕见",
+      "trigger": "ON_REST",
+      "desc": "每当你休息时，获得2瓶随机药水。",
+      "pool": "general",
+      "excluded": true
+    },
+    {
+      "id": "tuning_fork",
+      "name": "音叉",
+      "rarity": "罕见",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "你每打出10张技能牌，获得7点格挡。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "frozen_crystal",
+      "name": "永冻冰晶",
+      "rarity": "罕见",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "当你在战斗中第一次打出能力牌时，获得7点格挡。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "eternal_feather",
+      "name": "永恒羽毛",
+      "rarity": "罕见",
+      "trigger": "ON_REST",
+      "desc": "你的牌组中每有5张牌，当你进入休息处时就会回复3点生命。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "bowler_hat",
+      "name": "圆顶礼帽",
+      "rarity": "罕见",
+      "trigger": "PASSIVE",
+      "desc": "额外获得25%的金币。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "goldfish",
+      "name": "招财异鱼",
+      "rarity": "罕见",
+      "trigger": "PASSIVE",
+      "desc": "每当你将一张卡牌加入你的牌组时，获得15金币。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "parrying_shield",
+      "name": "招架盾",
+      "rarity": "罕见",
+      "trigger": "ON_TURN_END",
+      "desc": "如果你在回合结束时拥有至少10点格挡，则对随机敌人造成6点伤害。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "candlestick",
+      "name": "烛台",
+      "rarity": "罕见",
+      "trigger": "ON_TURN_START",
+      "desc": "在你的第2回合开始时，获得2点能量。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "white_bear",
+      "name": "白兽雕像",
+      "rarity": "稀有",
+      "trigger": "PASSIVE",
+      "desc": "战斗结束后必定掉落药水。",
+      "pool": "general",
+      "excluded": true
+    },
+    {
+      "id": "white_star",
+      "name": "白星",
+      "rarity": "稀有",
+      "trigger": "PASSIVE",
+      "desc": "精英敌人额外掉落一次稀有卡牌奖励。",
+      "pool": "general",
       "excluded": false
     },
     {
@@ -426,6 +934,43 @@
       "rarity": "稀有",
       "trigger": "PASSIVE",
       "desc": "多余的能量可以留到下一回合。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "uneasy_lamp",
+      "name": "不安油灯",
+      "rarity": "稀有",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "你在每场战斗中第一次打出能给予敌人负面状态的牌时，将其效果翻倍。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "endless_top",
+      "name": "不休陀螺",
+      "rarity": "稀有",
+      "trigger": "PASSIVE",
+      "desc": "在你的回合，当你没有手牌时，抽一张牌。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "rainbow_ring",
+      "name": "彩虹戒指",
+      "rarity": "稀有",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "每回合，你第一次打出攻击牌、技能牌和能力牌各一张时，获得1点力量和1点敏捷。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "shovel",
+      "name": "铲子",
+      "rarity": "稀有",
+      "trigger": "ON_REST",
+      "desc": "现在你可以在休息处挖掘遗物。",
+      "pool": "general",
       "excluded": false
     },
     {
@@ -434,6 +979,124 @@
       "rarity": "稀有",
       "trigger": "ON_COMBAT_END",
       "desc": "如果你在战斗结束时生命值等于或低于50%，回复12点生命。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "chandelier",
+      "name": "吊灯",
+      "rarity": "稀有",
+      "trigger": "ON_TURN_START",
+      "desc": "在你的第三回合开始时，获得3点能量。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "frozen_egg",
+      "name": "冻结之蛋",
+      "rarity": "稀有",
+      "trigger": "PASSIVE",
+      "desc": "每当你获得能力牌时，将其升级。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "cloak_clasp",
+      "name": "斗篷扣",
+      "rarity": "稀有",
+      "trigger": "ON_TURN_END",
+      "desc": "在你的回合结束时，每有一张手牌，就获得1点格挡。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "toxic_egg",
+      "name": "毒素之蛋",
+      "rarity": "稀有",
+      "trigger": "PASSIVE",
+      "desc": "每当你获得技能牌时，将其升级。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "gambling_chip",
+      "name": "赌博筹码",
+      "rarity": "稀有",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，丢弃任意张牌，然后抽相同数量张牌。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "rudder",
+      "name": "舵盘",
+      "rarity": "稀有",
+      "trigger": "ON_TURN_START",
+      "desc": "在你的第三回合开始时，获得18点格挡。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "annoying_box",
+      "name": "烦人机关盒",
+      "rarity": "稀有",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，将一张随机卡牌加入你的手牌。这张牌在本回合可以免费打出。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "bellows",
+      "name": "风箱",
+      "rarity": "稀有",
+      "trigger": "ON_COMBAT_START",
+      "desc": "你在每场战斗开始时的手牌，将被升级。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "shriveled_hand",
+      "name": "干瘪之手",
+      "rarity": "稀有",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "你每打出一张能力牌，手牌中就有一张随机牌在这个回合可以免费打出。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "old_coin",
+      "name": "古钱币",
+      "rarity": "稀有",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得300金币。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "scary_helmet",
+      "name": "骇人头盔",
+      "rarity": "稀有",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "每当你打出一张耗能大于等于2的牌，获得4点格挡。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "kettlebell",
+      "name": "壶铃",
+      "rarity": "稀有",
+      "trigger": "ON_REST",
+      "desc": "你现在能在休息处获得力量。（最多3次）",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "pocket_watch",
+      "name": "怀表",
+      "rarity": "稀有",
+      "trigger": "ON_TURN_START",
+      "desc": "当你在本回合打出的牌少于等于3张时，则在你的下个回合开始时额外抽3张牌。",
+      "pool": "general",
       "excluded": false
     },
     {
@@ -442,6 +1105,7 @@
       "rarity": "稀有",
       "trigger": "PASSIVE",
       "desc": "可以跨回合保留最多10点格挡。",
+      "pool": "general",
       "excluded": false
     },
     {
@@ -450,6 +1114,7 @@
       "rarity": "稀有",
       "trigger": "ON_PLAY_CARD",
       "desc": "你每在同一回合内打出3张攻击牌，就获得1点敏捷。",
+      "pool": "general",
       "excluded": false
     },
     {
@@ -458,6 +1123,142 @@
       "rarity": "稀有",
       "trigger": "ON_TURN_END",
       "desc": "在第7回合结束时，对所有敌人造成52点伤害。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "watch_and_learn",
+      "name": "律动残余",
+      "rarity": "稀有",
+      "trigger": "PASSIVE",
+      "desc": "你在一回合内失去的生命值不会超过20点。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "mango",
+      "name": "芒果",
+      "rarity": "稀有",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将你的最大生命值提升14。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "chess_piece",
+      "name": "棋子",
+      "rarity": "稀有",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "每当你打出能力牌时，抽1张牌。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "molten_egg",
+      "name": "熔火之蛋",
+      "rarity": "稀有",
+      "trigger": "PASSIVE",
+      "desc": "每当你获得攻击牌时，将其升级。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "shuriken",
+      "name": "手里剑",
+      "rarity": "稀有",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "你每在同一回合内打出3张攻击牌，获得1点力量。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "deliverer",
+      "name": "送货员",
+      "rarity": "稀有",
+      "trigger": "ON_SHOP_ENTER",
+      "desc": "商人的卡牌、遗物和药水不再会卖光，并且所有商品打折20%。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "sun_tzu",
+      "name": "孙子兵法",
+      "rarity": "稀有",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "如果你在本回合中没有打出过攻击牌，则在下一回合额外获得1点能量。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "razor_tooth",
+      "name": "剃刀牙",
+      "rarity": "稀有",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "你打出攻击牌和技能牌时，将其在本场战斗内升级。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "tungsten_rod",
+      "name": "钨合金棍",
+      "rarity": "稀有",
+      "trigger": "PASSIVE",
+      "desc": "你每次失去生命时，减少失去的生命值1点。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "lizard_tail",
+      "name": "蜥蜴尾巴",
+      "rarity": "稀有",
+      "trigger": "PASSIVE",
+      "desc": "当你的生命值将要降低至0或以下时，回复到最大生命值的50%（仅能起效一次）。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "prayer_wheel",
+      "name": "转经轮",
+      "rarity": "稀有",
+      "trigger": "PASSIVE",
+      "desc": "普通敌人额外掉落一次卡牌奖励。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "dusty_carpet",
+      "name": "肮脏地毯",
+      "rarity": "商店",
+      "trigger": "PASSIVE",
+      "desc": "卡牌奖励现在会包括无色牌。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "cauldron",
+      "name": "大锅",
+      "rarity": "商店",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，制作5瓶随机药水。",
+      "pool": "general",
+      "excluded": true
+    },
+    {
+      "id": "mirror",
+      "name": "多利之镜",
+      "rarity": "商店",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从你的牌组中选择一张牌进行复制。",
+      "pool": "general",
+      "excluded": true
+    },
+    {
+      "id": "toolbox",
+      "name": "工具箱",
+      "rarity": "商店",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，从3张随机无色牌中选择1张加入你的手牌。",
+      "pool": "general",
       "excluded": false
     },
     {
@@ -466,41 +1267,2370 @@
       "rarity": "商店",
       "trigger": "PASSIVE",
       "desc": "耗能为X的牌的效果数值增加2点。",
+      "pool": "general",
       "excluded": false
     },
     {
       "id": "membership_card",
       "name": "会员卡",
       "rarity": "商店",
-      "trigger": "ON_SHOP_ENTER",
+      "trigger": "PASSIVE",
       "desc": "所有商品打折50%！",
+      "pool": "general",
       "excluded": false
+    },
+    {
+      "id": "dragon_fruit",
+      "name": "火龙果",
+      "rarity": "商店",
+      "trigger": "PASSIVE",
+      "desc": "每当你获得金币时，提升1点你的最大生命值。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "screaming_jar",
+      "name": "尖叫酒壶",
+      "rarity": "商店",
+      "trigger": "ON_TURN_END",
+      "desc": "如果你在回合结束时没有任何手牌，则对所有敌人造成20点伤害。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "waffle",
+      "name": "李家华夫饼",
+      "rarity": "商店",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将你的最大生命值提升7点，并回复所有生命。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "bread",
+      "name": "面包",
+      "rarity": "商店",
+      "trigger": "ON_TURN_START",
+      "desc": "在你的第一个回合开始时，失去2点能量。在其余的回合开始时，获得1点能量。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "wooden_piece",
+      "name": "木札",
+      "rarity": "商店",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从你的牌组中选择至多3张牌，附魔：伶俐。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "twisted_hammer",
+      "name": "扭曲锤子",
+      "rarity": "商店",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从你的牌组中选择至多3张攻击牌，附魔：锋利3。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "punch_dagger",
+      "name": "拳刃",
+      "rarity": "商店",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，选择一张攻击牌为它附魔：动量5。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "burning_stick",
+      "name": "燃烧木棍",
+      "rarity": "商店",
+      "trigger": "PASSIVE",
+      "desc": "每场战斗中你第一次消耗技能牌时，将那张牌的复制品加入你的手牌。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "lava_lamp",
+      "name": "熔岩灯",
+      "rarity": "商店",
+      "trigger": "ON_COMBAT_END",
+      "desc": "在战斗结束时，如果你没有受到伤害，则升级你的所有卡牌奖励。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "triangle_drum",
+      "name": "三角铃鼓",
+      "rarity": "商店",
+      "trigger": "PASSIVE",
+      "desc": "在每场战斗的第一回合保留你的手牌。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "mysterious_lighter",
+      "name": "神秘打火机",
+      "rarity": "商店",
+      "trigger": "PASSIVE",
+      "desc": "有附魔的攻击牌额外造成9点伤害。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "abacus",
+      "name": "算盘",
+      "rarity": "商店",
+      "trigger": "PASSIVE",
+      "desc": "你每次将抽牌堆洗牌时，获得6点格挡。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "royal_seal",
+      "name": "王室印章",
+      "rarity": "商店",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从牌组中选择一张攻击牌或技能牌，为它附魔：王室认证。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "mini_tent",
+      "name": "微型帐篷",
+      "rarity": "商店",
+      "trigger": "ON_REST",
+      "desc": "你可以在休息处选择任意数量的选项。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "star_chart",
+      "name": "星系仪",
+      "rarity": "商店",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得5次卡牌奖励。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "belt_buckle",
+      "name": "腰带扣",
+      "rarity": "商店",
+      "trigger": "PASSIVE",
+      "desc": "当你没有药水时，你额外拥有2点敏捷。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "courage_sling",
+      "name": "勇气投石索",
+      "rarity": "商店",
+      "trigger": "PASSIVE",
+      "desc": "在与精英敌人战斗时，获得2点力量。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "ghost_seed",
+      "name": "幽灵种子",
+      "rarity": "商店",
+      "trigger": "PASSIVE",
+      "desc": "打击和防御获得虚无。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "feather_amulet",
+      "name": "羽翼护符",
+      "rarity": "商店",
+      "trigger": "PASSIVE",
+      "desc": "每次卡牌奖励中，都会有随机一张牌被附魔：迅捷1。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "mr_hug",
+      "name": "抱抱先生",
+      "rarity": "事件",
+      "trigger": "ON_TURN_START",
+      "desc": "在你的回合开始时，对所有敌人造成等量于当前回合数的伤害。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "bing_bang",
+      "name": "宾邦",
+      "rarity": "事件",
+      "trigger": "PASSIVE",
+      "desc": "每当你往牌组中增添卡牌时，都将额外添加一张相同的牌。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "dream_catcher",
+      "name": "捕梦网",
+      "rarity": "事件",
+      "trigger": "ON_REST",
+      "desc": "每当你休息时，可以添加一张牌到你的牌组。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "big_mushroom",
+      "name": "大蘑菇",
+      "rarity": "事件",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将你的最大生命值提升20。在每场战斗开始时，少抽2张牌。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "clockwork_boots",
+      "name": "发条靴",
+      "rarity": "事件",
+      "trigger": "PASSIVE",
+      "desc": "每当你造成小于等于4点未被格挡的攻击伤害时，将伤害提升为5。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "fragrant_mushroom",
+      "name": "芳香蘑菇",
+      "rarity": "事件",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，失去15点生命，然后随机升级2张牌。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "fresnel_lens",
+      "name": "菲涅耳透镜",
+      "rarity": "事件",
+      "trigger": "PASSIVE",
+      "desc": "每当你将一张带有格挡的牌加入你的牌组时，为那张牌附魔：灵巧2。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "wind_daughter",
+      "name": "风的女儿",
+      "rarity": "事件",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "每当你打出一张攻击牌时，获得1点格挡。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "bone_tea",
+      "name": "骨茶",
+      "rarity": "事件",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在你接下来的1场战斗开始时，升级你的初始手牌。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "black_stele",
+      "name": "黑石护符",
+      "rarity": "事件",
+      "trigger": "PASSIVE",
+      "desc": "每当你获得一张诅咒，就将你的最大生命值提升6。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "pollen_core",
+      "name": "花粉核心",
+      "rarity": "事件",
+      "trigger": "PASSIVE",
+      "desc": "每4个回合，额外抽2张牌。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "giant_jaw",
+      "name": "巨口储蓄罐",
+      "rarity": "事件",
+      "trigger": "ON_SHOP_ENTER",
+      "desc": "每攀爬一层楼层，就获得12金币。一旦在商店中花费金币就会使其失效。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "history_lesson",
+      "name": "历史课",
+      "rarity": "事件",
+      "trigger": "ON_TURN_START",
+      "desc": "在你的回合开始时，打出一张你上一回合最后打出的攻击牌或技能牌的复制品。",
+      "pool": "general",
+      "excluded": true
+    },
+    {
+      "id": "lost_ghost_fire",
+      "name": "迷失鬼火",
+      "rarity": "事件",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "你每打出一张能力牌，就对所有敌人造成8点伤害。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "stone_sword",
+      "name": "石之剑",
+      "rarity": "事件",
+      "trigger": "PASSIVE",
+      "desc": "在击败5名精英敌人之后将变化为一件强力遗物。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "hand_drill",
+      "name": "手钻",
+      "rarity": "事件",
+      "trigger": "PASSIVE",
+      "desc": "每当你突破敌人的格挡时，给予其2层易伤。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "chosen_cheese",
+      "name": "天选芝士",
+      "rarity": "事件",
+      "trigger": "ON_COMBAT_END",
+      "desc": "在战斗结束时，获得1点最大生命值。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "royal_poison",
+      "name": "王室猛毒",
+      "rarity": "事件",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，失去4点生命。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "grateful_badge",
+      "name": "旺购客户感恩徽章",
+      "rarity": "事件",
+      "trigger": "PASSIVE",
+      "desc": "没有任何作用。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "mystery_ticket",
+      "name": "旺购神秘券",
+      "rarity": "事件",
+      "trigger": "PASSIVE",
+      "desc": "在5场战斗后，获得随机3件遗物。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "rude_tea",
+      "name": "无礼之茶",
+      "rarity": "事件",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在下一场战斗开始时，将2张晕眩放入你的抽牌堆。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "forgotten_soul",
+      "name": "遗忘之魂",
+      "rarity": "事件",
+      "trigger": "ON_CARD_EXHAUST",
+      "desc": "每当你消耗一张牌，随机对一名敌人造成1点伤害。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "bird_baby",
+      "name": "异鸟宝宝",
+      "rarity": "事件",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得一张异鸟扑击。一只幼年异鸟会在战斗中陪伴你。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "ember_tea",
+      "name": "余烬茶",
+      "rarity": "事件",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在接下来的5场战斗开始时，获得2点力量。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "jade_sword",
+      "name": "玉之剑",
+      "rarity": "事件",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，获得3点力量。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "circlet",
+      "name": "头环",
+      "rarity": "遗物",
+      "trigger": "PASSIVE",
+      "desc": "这是一个头环。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "orichalcum_ev",
+      "name": "奥利哈钢？？？",
+      "rarity": "事件",
+      "trigger": "ON_TURN_END",
+      "desc": "如果你在回合结束时没有任何格挡，获得3点格挡。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "strike_dummy_ev",
+      "name": "打击木偶？？？",
+      "rarity": "事件",
+      "trigger": "PASSIVE",
+      "desc": "名字中有“打击”的卡牌造成1点额外伤害。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "old_tea_set_ev",
+      "name": "古茶具套装？？？",
+      "rarity": "事件",
+      "trigger": "ON_COMBAT_START",
+      "desc": "到达休息处后的下一场战斗开始时额外获得1点能量。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "happy_flower_ev",
+      "name": "开心小花？？？",
+      "rarity": "事件",
+      "trigger": "PASSIVE",
+      "desc": "每5个回合，获得1点能量。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "waffle_ev",
+      "name": "李家华夫饼？？？",
+      "rarity": "事件",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，回复你10%的生命值。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "mango_ev",
+      "name": "芒果？？？",
+      "rarity": "事件",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将你的最大生命值提升3。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "anchor_ev",
+      "name": "锚？？？",
+      "rarity": "事件",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，获得4点格挡。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "merchant_carpet_ev",
+      "name": "商人的地毯？？？",
+      "rarity": "事件",
+      "trigger": "PASSIVE",
+      "desc": "低劣的仿制品。没有任何作用。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "blood_vial_ev",
+      "name": "小血瓶？？？",
+      "rarity": "事件",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，回复1点生命。",
+      "pool": "general",
+      "excluded": false
+    },
+    {
+      "id": "serpent_eye_ev",
+      "name": "异蛇之眼？？？",
+      "rarity": "事件",
+      "trigger": "ON_COMBAT_START",
+      "desc": "每场战斗开始时获得混乱效果。",
+      "pool": "general",
+      "excluded": false
+    }
+  ],
+  "neowPool": [
+    {
+      "id": "arcane_scroll",
+      "name": "奥术卷轴",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将一张随机稀有牌加入你的牌组。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "silver_crucible",
+      "name": "白银熔炉",
+      "rarity": "先古之民",
+      "trigger": "PASSIVE",
+      "desc": "你遇到的前3次卡牌奖励将是被升级过的。你打开的第一个宝箱将是空的。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "hefty_tablet",
+      "name": "沉重石板",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从3张稀有牌中选择1张加入你的牌组，同时将1张受伤加入你的牌组。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "pomander",
+      "name": "橙型香盒",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，升级一张牌。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "fishing_rod",
+      "name": "钓鱼竿",
+      "rarity": "先古之民",
+      "trigger": "PASSIVE",
+      "desc": "每3场普通战斗，随机升级你牌组中的一张牌。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "booming_conch",
+      "name": "轰鸣海螺",
+      "rarity": "先古之民",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在精英战的战斗开始时，额外抽2张牌并获得1点能量。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "silken_tress",
+      "name": "华美发束",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，失去所有金币。为第一次卡牌奖励中的所有牌附魔：华彩。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "golden_pearl",
+      "name": "金色珍珠",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得150金币。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "precise_scissors",
+      "name": "精准剪刀",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从你的牌组中移除1张牌。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "massive_scroll",
+      "name": "巨大卷轴",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从3张多人游戏牌中选择1张加入你的牌组。",
+      "pool": "neowPool",
+      "excluded": true
+    },
+    {
+      "id": "large_capsule",
+      "name": "巨大扭蛋",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得2件随机遗物。额外将一对打击和防御，加入你的牌组。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "scroll_boxes",
+      "name": "卷轴箱",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从2个卡牌包中选择1包加入你的牌组。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "neows_talisman",
+      "name": "涅奥的护符",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，升级你的1张打击和1张防御。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "neows_torment",
+      "name": "涅奥的苦痛",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将1张涅奥之怒加入你的牌组。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "neows_bones",
+      "name": "涅奥骨骰",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得2件随机涅奥遗物。将1张随机诅咒加入你的牌组。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "lead_paperweight",
+      "name": "铅制镇纸",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从2张无色牌中选择1张加入你的牌组。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "lava_rock",
+      "name": "熔岩石",
+      "rarity": "先古之民",
+      "trigger": "PASSIVE",
+      "desc": "第一阶段的Boss敌人额外掉落2件遗物。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "lost_coffer",
+      "name": "失物盒",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得1次卡牌奖励和1瓶随机药水。",
+      "pool": "neowPool",
+      "excluded": true
+    },
+    {
+      "id": "stone_humidifier",
+      "name": "石炉加湿器",
+      "rarity": "先古之民",
+      "trigger": "ON_REST",
+      "desc": "每当你在休息处休息时，将你的最大生命值提升5点。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "leafy_poultice",
+      "name": "树叶药膏",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，变化你的1张打击和1张防御，然后失去12点最大生命。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "precarious_shears",
+      "name": "松动羊毛剪",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从你的牌组中移除2张牌并失去16点生命。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "kaleidoscope",
+      "name": "万花筒",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得2次来自其他角色的卡牌奖励。",
+      "pool": "neowPool",
+      "excluded": true
+    },
+    {
+      "id": "small_capsule",
+      "name": "小型扭蛋",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得一件随机遗物。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "new_leaf",
+      "name": "新叶",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，变化1张牌。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "phial_holster",
+      "name": "药瓶皮套",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得1个药水栏位并获得2瓶随机药水。",
+      "pool": "neowPool",
+      "excluded": true
+    },
+    {
+      "id": "nutritious_oyster",
+      "name": "营养牡蛎",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将你的最大生命值提升11。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "winged_boots",
+      "name": "羽翼之靴",
+      "rarity": "先古之民",
+      "trigger": "PASSIVE",
+      "desc": "你在选择下一层的房间时有3次机会可以无视当前的路线。",
+      "pool": "neowPool",
+      "excluded": true
+    },
+    {
+      "id": "cursed_pearl",
+      "name": "诅咒珍珠",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得一张贪婪，获得333金币。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "dowsing_rod",
+      "name": "寻龙尺",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将1张探寻加入你的牌组。",
+      "pool": "neowPool",
+      "excluded": false
+    },
+    {
+      "id": "neows_sacrifice",
+      "name": "涅奥的牺牲",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得1瓶龙涎香，并将1张愧疚加入你的牌组。",
+      "pool": "neowPool",
+      "excluded": true
     }
   ],
   "ancient": [
     {
-      "id": "black_star",
-      "name": "黑星",
+      "id": "glass_eye",
+      "name": "玻璃眼珠",
       "rarity": "先古之民",
-      "trigger": "ON_COMBAT_END",
-      "desc": "精英敌人在被打败时多掉落一件遗物。",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得2组普通、2组罕见、和1组稀有卡牌奖励。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "glowing_pearl",
+      "name": "发光珍珠",
+      "rarity": "先古之民",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，将1张冷光加入你的手牌。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "static_shrimp",
+      "name": "放电异虾",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，选择一张技能牌为它附魔：注能。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "flotsam",
+      "name": "浮木",
+      "rarity": "先古之民",
+      "trigger": "PASSIVE",
+      "desc": "你可以在每一个卡牌奖励中重掷一次。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "ancient_tooth",
+      "name": "古老牙齿",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将一张初始卡牌变化为先古版本。",
+      "pool": "ancient",
+      "excluded": true
+    },
+    {
+      "id": "sea_glass",
+      "name": "海玻璃",
+      "rarity": "先古之民",
+      "trigger": "PASSIVE",
+      "desc": "查看15张来自其他角色的牌。从中选择任意数量的卡牌加入你的牌组。",
+      "pool": "ancient",
+      "excluded": true
+    },
+    {
+      "id": "prismatic_gem",
+      "name": "棱彩宝石",
+      "rarity": "先古之民",
+      "trigger": "ON_TURN_START",
+      "desc": "在每个回合开始时获得1点能量。卡牌奖励现在会包含其他颜色的卡牌。",
+      "pool": "ancient",
+      "excluded": true
+    },
+    {
+      "id": "alchemy_box",
+      "name": "炼金箱",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得4个放有随机药水的药水栏位。",
+      "pool": "ancient",
+      "excluded": true
+    },
+    {
+      "id": "eolobas_touch",
+      "name": "欧洛巴斯之触",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将你的初始遗物替换为先古版本。",
+      "pool": "ancient",
+      "excluded": true
+    },
+    {
+      "id": "sandcastle",
+      "name": "沙堡",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，随机升级6张牌。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "percy_soldier",
+      "name": "佩尔的士兵",
+      "rarity": "先古之民",
+      "trigger": "PASSIVE",
+      "desc": "将你从一张卡牌中获得的格挡翻倍，然后此遗物会休眠2回合。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "percy_growth",
+      "name": "佩尔的增生组织",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从牌组中选择一张牌，为其附魔：克隆。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "percy_horn",
+      "name": "佩尔之角",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将2张放松加入你的牌组。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "percy_tear",
+      "name": "佩尔之泪",
+      "rarity": "先古之民",
+      "trigger": "PASSIVE",
+      "desc": "如果你在拥有未花费的能量情况下结束回合，则下个回合额外获得2点能量。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "percy_meat",
+      "name": "佩尔之肉",
+      "rarity": "先古之民",
+      "trigger": "ON_TURN_START",
+      "desc": "从你的第3回合开始，在回合开始时额外获得1点能量。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "percy_blood",
+      "name": "佩尔之血",
+      "rarity": "先古之民",
+      "trigger": "ON_TURN_START",
+      "desc": "在你的回合开始时，额外抽1张牌。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "percy_tooth",
+      "name": "佩尔之牙",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从你的牌组中选择5张牌移除。在每场战斗结束时，将其中随机1张牌升级然后返还。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "percy_eye",
+      "name": "佩尔之眼",
+      "rarity": "先古之民",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "你在每场战斗中第一次没有打出任何牌就结束回合时，消耗所有手牌然后进行一个额外回合。",
+      "pool": "ancient",
+      "excluded": true
+    },
+    {
+      "id": "percy_wing",
+      "name": "佩尔之翼",
+      "rarity": "先古之民",
+      "trigger": "PASSIVE",
+      "desc": "你可以将你的卡牌奖励献祭给佩尔。每献祭2次，就能获得一件遗物。",
+      "pool": "ancient",
+      "excluded": true
+    },
+    {
+      "id": "percy_claw",
+      "name": "佩尔之爪",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，为所有的“防御”附魔：黏糊。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "big_hug",
+      "name": "大～抱抱",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从你的牌组中移除4张牌。每当你的抽牌堆打乱洗牌时，将一张煤灰加入你的抽牌堆。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "storybook",
+      "name": "故事书",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将1张至亮之焰添加到你的牌组中。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "baking_glove",
+      "name": "烘焙手套",
+      "rarity": "先古之民",
+      "trigger": "ON_TURN_START",
+      "desc": "在你的回合开始时，消耗你抽牌堆顶部的牌并获得1点力量。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "golden_compass",
+      "name": "黄金罗盘",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将第2阶段的地图替换为一条特殊的直道。",
+      "pool": "ancient",
+      "excluded": true
+    },
+    {
+      "id": "golden_stamp",
+      "name": "黄金印",
+      "rarity": "先古之民",
+      "trigger": "ON_TURN_START",
+      "desc": "在你的回合开始时，花费5金币来获得1点能量。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "delicious_cookie",
+      "name": "美味饼干",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，升级4张牌。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "pumpkin_candle",
+      "name": "南瓜蜡烛",
+      "rarity": "先古之民",
+      "trigger": "ON_TURN_START",
+      "desc": "在每个回合开始时获得1点能量。这件遗物会在5场战斗后熄灭。可以在休息处为其添火。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "hot_cocoa",
+      "name": "烫嘴可可",
+      "rarity": "先古之民",
+      "trigger": "PASSIVE",
+      "desc": "在每场战斗的第一回合额外获得4点能量。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "toy_box",
+      "name": "玩具盒",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得4件蜡制遗物。每经过3场战斗，你最左侧的蜡制遗物将会融化。",
+      "pool": "ancient",
+      "excluded": true
+    },
+    {
+      "id": "nourishing_soup",
+      "name": "营养汤",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，为你牌组中的所有“打击”附魔：特兹卡塔拉的余烬。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "cloth_fruit",
+      "name": "布质果实",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将你的最大生命值提升31。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "blessed_antlers",
+      "name": "赐福鹿角",
+      "rarity": "先古之民",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每回合开始时获得1点能量。在战斗开始时，将3张晕眩放入你的抽牌堆。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "gorgeous_bracelet",
+      "name": "华美手镯",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从你的牌组中选择3张牌，附魔：迅捷3。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "delicate_fern",
+      "name": "娇嫩蕨草",
+      "rarity": "先古之民",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，用随机药水将你的空药水栏位填满。",
+      "pool": "ancient",
+      "excluded": true
+    },
+    {
+      "id": "sequins",
+      "name": "亮片",
+      "rarity": "先古之民",
+      "trigger": "PASSIVE",
+      "desc": "为之后的所有卡牌奖励附魔：华彩。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "fur_coat",
+      "name": "皮草大衣",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，随机标记7处战斗。这些战斗中的敌人将只有1点生命。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "signet_ring",
+      "name": "图章戒指",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得999金币。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "gaudy_scarf",
+      "name": "艳丽围巾",
+      "rarity": "先古之民",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "你每回合从你的手牌打出的第5张牌可以被免费打出。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "jewel_box",
+      "name": "珠宝盒",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将1张神化加入你的牌组。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "diamond_crown",
+      "name": "钻石头冠",
+      "rarity": "先古之民",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "如果你在本回合打出的牌少于等于2张，则受到敌人的伤害减半。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "hairpin",
+      "name": "钗",
+      "rarity": "先古之民",
+      "trigger": "ON_TURN_START",
+      "desc": "在你的回合开始时，获得7点格挡。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "spiked_gauntlet",
+      "name": "带刺手甲",
+      "rarity": "先古之民",
+      "trigger": "ON_TURN_START",
+      "desc": "在每回合开始时获得1点能量。能力牌的耗能增加1。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "claws",
+      "name": "利爪",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将至多6张牌变化为撕咬。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "cleaver",
+      "name": "切肉刀",
+      "rarity": "先古之民",
+      "trigger": "ON_REST",
+      "desc": "你可以在休息处进行烹饪。",
+      "pool": "ancient",
+      "excluded": true
+    },
+    {
+      "id": "tri_blade_boomerang",
+      "name": "三刃回旋镖",
+      "rarity": "先古之民",
+      "trigger": "PASSIVE",
+      "desc": "从你的牌组中选择3张攻击牌。为这些牌附魔：本能。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "crossbow",
+      "name": "十字弓",
+      "rarity": "先古之民",
+      "trigger": "ON_TURN_START",
+      "desc": "在你的回合开始时，将一张随机攻击牌加入你的手牌。这张牌在本回合可以免费打出。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "tanks_whistle",
+      "name": "坦克斯的哨子",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将1张吹哨加入你的牌组。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "iron_staff",
+      "name": "铁棒",
+      "rarity": "先古之民",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "你每打出4张牌，就抽1张牌。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "throwing_axe",
+      "name": "投斧",
+      "rarity": "先古之民",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "你在每场战斗中打出的第一张牌会多打出一次。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "war_hammer",
+      "name": "战锤",
+      "rarity": "先古之民",
+      "trigger": "PASSIVE",
+      "desc": "每当你击败一名精英敌人的时候，随机升级4张牌。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "gem_mask",
+      "name": "宝石面具",
+      "rarity": "先古之民",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，将一张随机能力牌从你的抽牌堆放入你的手牌，这张牌在本场战斗可以免费打出。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "whisper_earring",
+      "name": "低语耳环",
+      "rarity": "先古之民",
+      "trigger": "ON_TURN_START",
+      "desc": "在每个回合开始时，获得1点能量。瓦库将接管你的第一回合。",
+      "pool": "ancient",
+      "excluded": true
+    },
+    {
+      "id": "lord_umbrella",
+      "name": "领主阳伞",
+      "rarity": "先古之民",
+      "trigger": "ON_SHOP_ENTER",
+      "desc": "当你遇见商人时，立刻获得他所出售的所有物品。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "violin",
+      "name": "小提琴",
+      "rarity": "先古之民",
+      "trigger": "ON_TURN_START",
+      "desc": "在每个回合开始时，额外抽2张牌。你在回合进行中不再能抽任何牌。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "choice_paradox",
+      "name": "选择悖论",
+      "rarity": "先古之民",
+      "trigger": "ON_COMBAT_START",
+      "desc": "在每场战斗开始时，从5张随机牌中选择1张放入你的手牌。被选中的牌获得保留。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "blood_rose",
+      "name": "血染玫瑰",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将1张执迷加入你的牌组。在回合开始时获得1点能量。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "pickled_mist",
+      "name": "腌制活雾",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，从你的牌组中移除3张牌。将一张愚行加入你的牌组。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "music_box",
+      "name": "音乐盒",
+      "rarity": "先古之民",
+      "trigger": "ON_PLAY_CARD",
+      "desc": "将你每回合打出的第一张攻击牌的一张虚无复制品加入你的手牌。",
+      "pool": "ancient",
+      "excluded": true
+    },
+    {
+      "id": "primordial_claw",
+      "name": "原初之爪",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，将2张随机诅咒牌和3张许愿加入你的牌组。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "paramount_cloak",
+      "name": "卓越斗篷",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，失去9点最大生命值。将3张灵体加入你的牌组。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "dusty_tome",
+      "name": "尘封魔典",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得一张先古牌。",
+      "pool": "ancient",
       "excluded": false
     },
     {
       "id": "runic_pyramid",
       "name": "符文金字塔",
       "rarity": "先古之民",
-      "trigger": "PASSIVE",
+      "trigger": "ON_TURN_END",
       "desc": "你在回合结束时不再自动丢弃所有手牌。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "black_star",
+      "name": "黑星",
+      "rarity": "先古之民",
+      "trigger": "PASSIVE",
+      "desc": "精英敌人在被打败时多掉落一件遗物。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "empty_birdcage",
+      "name": "空鸟笼",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，选择移除牌组中的2张牌。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "ectoplasm",
+      "name": "灵体外质",
+      "rarity": "先古之民",
+      "trigger": "ON_TURN_START",
+      "desc": "你不能再获得任何金币。在回合开始时获得1点能量。",
+      "pool": "ancient",
       "excluded": false
     },
     {
       "id": "pandoras_box",
       "name": "潘多拉魔盒",
       "rarity": "先古之民",
-      "trigger": "ON_PICKUP",
+      "trigger": "PASSIVE",
       "desc": "变化所有“打击”和“防御”。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "velvet_collar",
+      "name": "天鹅绒颈圈",
+      "rarity": "先古之民",
+      "trigger": "ON_TURN_START",
+      "desc": "在每回合开始时获得1点能量。你每回合不能打出超过6张牌。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "add_water",
+      "name": "添水",
+      "rarity": "先古之民",
+      "trigger": "ON_TURN_START",
+      "desc": "你无法再获得药水。在每回合开始时获得1点能量。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "philosophers_stone",
+      "name": "贤者之石",
+      "rarity": "先古之民",
+      "trigger": "ON_TURN_START",
+      "desc": "在每回合开始时获得1点能量。所有敌人初始获得1点力量。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "astrolabe",
+      "name": "星盘",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，选择3张牌进行变化，然后将这些牌升级。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "serpent_eye",
+      "name": "异蛇之眼",
+      "rarity": "先古之民",
+      "trigger": "ON_COMBAT_START",
+      "desc": "每回合多抽2张牌。每场战斗开始时获得混乱效果。",
+      "pool": "ancient",
+      "excluded": false
+    },
+    {
+      "id": "calling_bell",
+      "name": "召唤铃铛",
+      "rarity": "先古之民",
+      "trigger": "ON_PICKUP",
+      "desc": "拾起时，获得一个独特的诅咒和3件遗物。",
+      "pool": "ancient",
       "excluded": false
     }
-  ]
+  ],
+  "ancientDetail": {
+    "neow": [
+      {
+        "id": "arcane_scroll",
+        "name": "奥术卷轴",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，将一张随机稀有牌加入你的牌组。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "silver_crucible",
+        "name": "白银熔炉",
+        "rarity": "先古之民",
+        "trigger": "PASSIVE",
+        "desc": "你遇到的前3次卡牌奖励将是被升级过的。你打开的第一个宝箱将是空的。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "hefty_tablet",
+        "name": "沉重石板",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，从3张稀有牌中选择1张加入你的牌组，同时将1张受伤加入你的牌组。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "pomander",
+        "name": "橙型香盒",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，升级一张牌。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "fishing_rod",
+        "name": "钓鱼竿",
+        "rarity": "先古之民",
+        "trigger": "PASSIVE",
+        "desc": "每3场普通战斗，随机升级你牌组中的一张牌。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "booming_conch",
+        "name": "轰鸣海螺",
+        "rarity": "先古之民",
+        "trigger": "ON_COMBAT_START",
+        "desc": "在精英战的战斗开始时，额外抽2张牌并获得1点能量。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "silken_tress",
+        "name": "华美发束",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，失去所有金币。为第一次卡牌奖励中的所有牌附魔：华彩。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "golden_pearl",
+        "name": "金色珍珠",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，获得150金币。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "precise_scissors",
+        "name": "精准剪刀",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，从你的牌组中移除1张牌。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "massive_scroll",
+        "name": "巨大卷轴",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，从3张多人游戏牌中选择1张加入你的牌组。",
+        "pool": "neowPool",
+        "excluded": true
+      },
+      {
+        "id": "large_capsule",
+        "name": "巨大扭蛋",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，获得2件随机遗物。额外将一对打击和防御，加入你的牌组。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "scroll_boxes",
+        "name": "卷轴箱",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，从2个卡牌包中选择1包加入你的牌组。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "neows_talisman",
+        "name": "涅奥的护符",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，升级你的1张打击和1张防御。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "neows_torment",
+        "name": "涅奥的苦痛",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，将1张涅奥之怒加入你的牌组。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "neows_bones",
+        "name": "涅奥骨骰",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，获得2件随机涅奥遗物。将1张随机诅咒加入你的牌组。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "lead_paperweight",
+        "name": "铅制镇纸",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，从2张无色牌中选择1张加入你的牌组。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "lava_rock",
+        "name": "熔岩石",
+        "rarity": "先古之民",
+        "trigger": "PASSIVE",
+        "desc": "第一阶段的Boss敌人额外掉落2件遗物。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "lost_coffer",
+        "name": "失物盒",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，获得1次卡牌奖励和1瓶随机药水。",
+        "pool": "neowPool",
+        "excluded": true
+      },
+      {
+        "id": "stone_humidifier",
+        "name": "石炉加湿器",
+        "rarity": "先古之民",
+        "trigger": "ON_REST",
+        "desc": "每当你在休息处休息时，将你的最大生命值提升5点。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "leafy_poultice",
+        "name": "树叶药膏",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，变化你的1张打击和1张防御，然后失去12点最大生命。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "precarious_shears",
+        "name": "松动羊毛剪",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，从你的牌组中移除2张牌并失去16点生命。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "kaleidoscope",
+        "name": "万花筒",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，获得2次来自其他角色的卡牌奖励。",
+        "pool": "neowPool",
+        "excluded": true
+      },
+      {
+        "id": "small_capsule",
+        "name": "小型扭蛋",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，获得一件随机遗物。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "new_leaf",
+        "name": "新叶",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，变化1张牌。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "phial_holster",
+        "name": "药瓶皮套",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，获得1个药水栏位并获得2瓶随机药水。",
+        "pool": "neowPool",
+        "excluded": true
+      },
+      {
+        "id": "nutritious_oyster",
+        "name": "营养牡蛎",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，将你的最大生命值提升11。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "winged_boots",
+        "name": "羽翼之靴",
+        "rarity": "先古之民",
+        "trigger": "PASSIVE",
+        "desc": "你在选择下一层的房间时有3次机会可以无视当前的路线。",
+        "pool": "neowPool",
+        "excluded": true
+      },
+      {
+        "id": "cursed_pearl",
+        "name": "诅咒珍珠",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，获得一张贪婪，获得333金币。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "dowsing_rod",
+        "name": "寻龙尺",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，将1张探寻加入你的牌组。",
+        "pool": "neowPool",
+        "excluded": false
+      },
+      {
+        "id": "neows_sacrifice",
+        "name": "涅奥的牺牲",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，获得1瓶龙涎香，并将1张愧疚加入你的牌组。",
+        "pool": "neowPool",
+        "excluded": true
+      }
+    ],
+    "eolobas": [
+      {
+        "id": "glass_eye",
+        "name": "玻璃眼珠",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，获得2组普通、2组罕见、和1组稀有卡牌奖励。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "glowing_pearl",
+        "name": "发光珍珠",
+        "rarity": "先古之民",
+        "trigger": "ON_COMBAT_START",
+        "desc": "在每场战斗开始时，将1张冷光加入你的手牌。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "static_shrimp",
+        "name": "放电异虾",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，选择一张技能牌为它附魔：注能。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "flotsam",
+        "name": "浮木",
+        "rarity": "先古之民",
+        "trigger": "PASSIVE",
+        "desc": "你可以在每一个卡牌奖励中重掷一次。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "ancient_tooth",
+        "name": "古老牙齿",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，将一张初始卡牌变化为先古版本。",
+        "pool": "ancient",
+        "excluded": true
+      },
+      {
+        "id": "sea_glass",
+        "name": "海玻璃",
+        "rarity": "先古之民",
+        "trigger": "PASSIVE",
+        "desc": "查看15张来自其他角色的牌。从中选择任意数量的卡牌加入你的牌组。",
+        "pool": "ancient",
+        "excluded": true
+      },
+      {
+        "id": "prismatic_gem",
+        "name": "棱彩宝石",
+        "rarity": "先古之民",
+        "trigger": "ON_TURN_START",
+        "desc": "在每个回合开始时获得1点能量。卡牌奖励现在会包含其他颜色的卡牌。",
+        "pool": "ancient",
+        "excluded": true
+      },
+      {
+        "id": "alchemy_box",
+        "name": "炼金箱",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，获得4个放有随机药水的药水栏位。",
+        "pool": "ancient",
+        "excluded": true
+      },
+      {
+        "id": "eolobas_touch",
+        "name": "欧洛巴斯之触",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，将你的初始遗物替换为先古版本。",
+        "pool": "ancient",
+        "excluded": true
+      },
+      {
+        "id": "sandcastle",
+        "name": "沙堡",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，随机升级6张牌。",
+        "pool": "ancient",
+        "excluded": false
+      }
+    ],
+    "pert": [
+      {
+        "id": "percy_soldier",
+        "name": "佩尔的士兵",
+        "rarity": "先古之民",
+        "trigger": "PASSIVE",
+        "desc": "将你从一张卡牌中获得的格挡翻倍，然后此遗物会休眠2回合。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "percy_growth",
+        "name": "佩尔的增生组织",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，从牌组中选择一张牌，为其附魔：克隆。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "percy_horn",
+        "name": "佩尔之角",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，将2张放松加入你的牌组。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "percy_tear",
+        "name": "佩尔之泪",
+        "rarity": "先古之民",
+        "trigger": "PASSIVE",
+        "desc": "如果你在拥有未花费的能量情况下结束回合，则下个回合额外获得2点能量。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "percy_meat",
+        "name": "佩尔之肉",
+        "rarity": "先古之民",
+        "trigger": "ON_TURN_START",
+        "desc": "从你的第3回合开始，在回合开始时额外获得1点能量。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "percy_blood",
+        "name": "佩尔之血",
+        "rarity": "先古之民",
+        "trigger": "ON_TURN_START",
+        "desc": "在你的回合开始时，额外抽1张牌。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "percy_tooth",
+        "name": "佩尔之牙",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，从你的牌组中选择5张牌移除。在每场战斗结束时，将其中随机1张牌升级然后返还。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "percy_eye",
+        "name": "佩尔之眼",
+        "rarity": "先古之民",
+        "trigger": "ON_PLAY_CARD",
+        "desc": "你在每场战斗中第一次没有打出任何牌就结束回合时，消耗所有手牌然后进行一个额外回合。",
+        "pool": "ancient",
+        "excluded": true
+      },
+      {
+        "id": "percy_wing",
+        "name": "佩尔之翼",
+        "rarity": "先古之民",
+        "trigger": "PASSIVE",
+        "desc": "你可以将你的卡牌奖励献祭给佩尔。每献祭2次，就能获得一件遗物。",
+        "pool": "ancient",
+        "excluded": true
+      },
+      {
+        "id": "percy_claw",
+        "name": "佩尔之爪",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，为所有的“防御”附魔：黏糊。",
+        "pool": "ancient",
+        "excluded": false
+      }
+    ],
+    "tez": [
+      {
+        "id": "big_hug",
+        "name": "大～抱抱",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，从你的牌组中移除4张牌。每当你的抽牌堆打乱洗牌时，将一张煤灰加入你的抽牌堆。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "storybook",
+        "name": "故事书",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，将1张至亮之焰添加到你的牌组中。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "baking_glove",
+        "name": "烘焙手套",
+        "rarity": "先古之民",
+        "trigger": "ON_TURN_START",
+        "desc": "在你的回合开始时，消耗你抽牌堆顶部的牌并获得1点力量。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "golden_compass",
+        "name": "黄金罗盘",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，将第2阶段的地图替换为一条特殊的直道。",
+        "pool": "ancient",
+        "excluded": true
+      },
+      {
+        "id": "golden_stamp",
+        "name": "黄金印",
+        "rarity": "先古之民",
+        "trigger": "ON_TURN_START",
+        "desc": "在你的回合开始时，花费5金币来获得1点能量。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "delicious_cookie",
+        "name": "美味饼干",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，升级4张牌。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "pumpkin_candle",
+        "name": "南瓜蜡烛",
+        "rarity": "先古之民",
+        "trigger": "ON_TURN_START",
+        "desc": "在每个回合开始时获得1点能量。这件遗物会在5场战斗后熄灭。可以在休息处为其添火。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "hot_cocoa",
+        "name": "烫嘴可可",
+        "rarity": "先古之民",
+        "trigger": "PASSIVE",
+        "desc": "在每场战斗的第一回合额外获得4点能量。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "toy_box",
+        "name": "玩具盒",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，获得4件蜡制遗物。每经过3场战斗，你最左侧的蜡制遗物将会融化。",
+        "pool": "ancient",
+        "excluded": true
+      },
+      {
+        "id": "nourishing_soup",
+        "name": "营养汤",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，为你牌组中的所有“打击”附魔：特兹卡塔拉的余烬。",
+        "pool": "ancient",
+        "excluded": false
+      }
+    ],
+    "nonupup": [
+      {
+        "id": "cloth_fruit",
+        "name": "布质果实",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，将你的最大生命值提升31。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "blessed_antlers",
+        "name": "赐福鹿角",
+        "rarity": "先古之民",
+        "trigger": "ON_COMBAT_START",
+        "desc": "在每回合开始时获得1点能量。在战斗开始时，将3张晕眩放入你的抽牌堆。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "gorgeous_bracelet",
+        "name": "华美手镯",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，从你的牌组中选择3张牌，附魔：迅捷3。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "delicate_fern",
+        "name": "娇嫩蕨草",
+        "rarity": "先古之民",
+        "trigger": "ON_COMBAT_START",
+        "desc": "在每场战斗开始时，用随机药水将你的空药水栏位填满。",
+        "pool": "ancient",
+        "excluded": true
+      },
+      {
+        "id": "sequins",
+        "name": "亮片",
+        "rarity": "先古之民",
+        "trigger": "PASSIVE",
+        "desc": "为之后的所有卡牌奖励附魔：华彩。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "fur_coat",
+        "name": "皮草大衣",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，随机标记7处战斗。这些战斗中的敌人将只有1点生命。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "signet_ring",
+        "name": "图章戒指",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，获得999金币。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "gaudy_scarf",
+        "name": "艳丽围巾",
+        "rarity": "先古之民",
+        "trigger": "ON_PLAY_CARD",
+        "desc": "你每回合从你的手牌打出的第5张牌可以被免费打出。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "jewel_box",
+        "name": "珠宝盒",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，将1张神化加入你的牌组。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "diamond_crown",
+        "name": "钻石头冠",
+        "rarity": "先古之民",
+        "trigger": "ON_PLAY_CARD",
+        "desc": "如果你在本回合打出的牌少于等于2张，则受到敌人的伤害减半。",
+        "pool": "ancient",
+        "excluded": false
+      }
+    ],
+    "tanks": [
+      {
+        "id": "hairpin",
+        "name": "钗",
+        "rarity": "先古之民",
+        "trigger": "ON_TURN_START",
+        "desc": "在你的回合开始时，获得7点格挡。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "spiked_gauntlet",
+        "name": "带刺手甲",
+        "rarity": "先古之民",
+        "trigger": "ON_TURN_START",
+        "desc": "在每回合开始时获得1点能量。能力牌的耗能增加1。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "claws",
+        "name": "利爪",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，将至多6张牌变化为撕咬。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "cleaver",
+        "name": "切肉刀",
+        "rarity": "先古之民",
+        "trigger": "ON_REST",
+        "desc": "你可以在休息处进行烹饪。",
+        "pool": "ancient",
+        "excluded": true
+      },
+      {
+        "id": "tri_blade_boomerang",
+        "name": "三刃回旋镖",
+        "rarity": "先古之民",
+        "trigger": "PASSIVE",
+        "desc": "从你的牌组中选择3张攻击牌。为这些牌附魔：本能。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "crossbow",
+        "name": "十字弓",
+        "rarity": "先古之民",
+        "trigger": "ON_TURN_START",
+        "desc": "在你的回合开始时，将一张随机攻击牌加入你的手牌。这张牌在本回合可以免费打出。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "tanks_whistle",
+        "name": "坦克斯的哨子",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，将1张吹哨加入你的牌组。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "iron_staff",
+        "name": "铁棒",
+        "rarity": "先古之民",
+        "trigger": "ON_PLAY_CARD",
+        "desc": "你每打出4张牌，就抽1张牌。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "throwing_axe",
+        "name": "投斧",
+        "rarity": "先古之民",
+        "trigger": "ON_PLAY_CARD",
+        "desc": "你在每场战斗中打出的第一张牌会多打出一次。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "war_hammer",
+        "name": "战锤",
+        "rarity": "先古之民",
+        "trigger": "PASSIVE",
+        "desc": "每当你击败一名精英敌人的时候，随机升级4张牌。",
+        "pool": "ancient",
+        "excluded": false
+      }
+    ],
+    "vaku": [
+      {
+        "id": "gem_mask",
+        "name": "宝石面具",
+        "rarity": "先古之民",
+        "trigger": "ON_COMBAT_START",
+        "desc": "在每场战斗开始时，将一张随机能力牌从你的抽牌堆放入你的手牌，这张牌在本场战斗可以免费打出。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "whisper_earring",
+        "name": "低语耳环",
+        "rarity": "先古之民",
+        "trigger": "ON_TURN_START",
+        "desc": "在每个回合开始时，获得1点能量。瓦库将接管你的第一回合。",
+        "pool": "ancient",
+        "excluded": true
+      },
+      {
+        "id": "lord_umbrella",
+        "name": "领主阳伞",
+        "rarity": "先古之民",
+        "trigger": "ON_SHOP_ENTER",
+        "desc": "当你遇见商人时，立刻获得他所出售的所有物品。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "violin",
+        "name": "小提琴",
+        "rarity": "先古之民",
+        "trigger": "ON_TURN_START",
+        "desc": "在每个回合开始时，额外抽2张牌。你在回合进行中不再能抽任何牌。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "choice_paradox",
+        "name": "选择悖论",
+        "rarity": "先古之民",
+        "trigger": "ON_COMBAT_START",
+        "desc": "在每场战斗开始时，从5张随机牌中选择1张放入你的手牌。被选中的牌获得保留。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "blood_rose",
+        "name": "血染玫瑰",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，将1张执迷加入你的牌组。在回合开始时获得1点能量。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "pickled_mist",
+        "name": "腌制活雾",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，从你的牌组中移除3张牌。将一张愚行加入你的牌组。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "music_box",
+        "name": "音乐盒",
+        "rarity": "先古之民",
+        "trigger": "ON_PLAY_CARD",
+        "desc": "将你每回合打出的第一张攻击牌的一张虚无复制品加入你的手牌。",
+        "pool": "ancient",
+        "excluded": true
+      },
+      {
+        "id": "primordial_claw",
+        "name": "原初之爪",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，将2张随机诅咒牌和3张许愿加入你的牌组。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "paramount_cloak",
+        "name": "卓越斗篷",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，失去9点最大生命值。将3张灵体加入你的牌组。",
+        "pool": "ancient",
+        "excluded": false
+      }
+    ],
+    "davu": [
+      {
+        "id": "dusty_tome",
+        "name": "尘封魔典",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，获得一张先古牌。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "runic_pyramid",
+        "name": "符文金字塔",
+        "rarity": "先古之民",
+        "trigger": "ON_TURN_END",
+        "desc": "你在回合结束时不再自动丢弃所有手牌。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "black_star",
+        "name": "黑星",
+        "rarity": "先古之民",
+        "trigger": "PASSIVE",
+        "desc": "精英敌人在被打败时多掉落一件遗物。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "empty_birdcage",
+        "name": "空鸟笼",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，选择移除牌组中的2张牌。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "ectoplasm",
+        "name": "灵体外质",
+        "rarity": "先古之民",
+        "trigger": "ON_TURN_START",
+        "desc": "你不能再获得任何金币。在回合开始时获得1点能量。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "pandoras_box",
+        "name": "潘多拉魔盒",
+        "rarity": "先古之民",
+        "trigger": "PASSIVE",
+        "desc": "变化所有“打击”和“防御”。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "velvet_collar",
+        "name": "天鹅绒颈圈",
+        "rarity": "先古之民",
+        "trigger": "ON_TURN_START",
+        "desc": "在每回合开始时获得1点能量。你每回合不能打出超过6张牌。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "add_water",
+        "name": "添水",
+        "rarity": "先古之民",
+        "trigger": "ON_TURN_START",
+        "desc": "你无法再获得药水。在每回合开始时获得1点能量。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "philosophers_stone",
+        "name": "贤者之石",
+        "rarity": "先古之民",
+        "trigger": "ON_TURN_START",
+        "desc": "在每回合开始时获得1点能量。所有敌人初始获得1点力量。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "astrolabe",
+        "name": "星盘",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，选择3张牌进行变化，然后将这些牌升级。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "serpent_eye",
+        "name": "异蛇之眼",
+        "rarity": "先古之民",
+        "trigger": "ON_COMBAT_START",
+        "desc": "每回合多抽2张牌。每场战斗开始时获得混乱效果。",
+        "pool": "ancient",
+        "excluded": false
+      },
+      {
+        "id": "calling_bell",
+        "name": "召唤铃铛",
+        "rarity": "先古之民",
+        "trigger": "ON_PICKUP",
+        "desc": "拾起时，获得一个独特的诅咒和3件遗物。",
+        "pool": "ancient",
+        "excluded": false
+      }
+    ]
+  }
 }

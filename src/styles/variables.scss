@@ -60,10 +60,30 @@ body,
 }
 
 body {
-  background: radial-gradient(1200px 600px at 50% -10%, #241d18 0%, var(--bg-deep) 55%);
+  // 背景：顶部烛光式暖光 + 底角暗红晕，叠加深褐基底，营造哥特石厅氛围（纯 CSS 渐变，不引入图片）
+  background:
+    radial-gradient(1000px 500px at 50% -8%, rgba(90, 48, 32, 0.28), transparent 60%),
+    radial-gradient(900px 600px at 85% 110%, rgba(122, 50, 32, 0.16), transparent 55%),
+    radial-gradient(1200px 600px at 50% -10%, #241d18 0%, var(--bg-deep) 55%);
   color: var(--text-main);
   font-family: var(--font-main);
+  // 全局基准排版：轻微字距 + 舒适行高，serif 正文更清晰
+  letter-spacing: 0.02em;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+// 文本选中：哥特金（与 --gold 呼应），区别于系统默认蓝
+::selection {
+  background: rgba(201, 162, 39, 0.32);
+  color: #f6ecd2;
+}
+
+// 键盘焦点可见性：金色光环（可访问性 + 与按钮/卡牌描边统一）
+:focus-visible {
+  outline: 2px solid rgba(201, 162, 39, 0.75);
+  outline-offset: 2px;
 }
 
 /* 通用按钮 */
@@ -76,17 +96,30 @@ body {
   font-family: inherit;
   font-size: 15px;
   cursor: pointer;
+  letter-spacing: 0.04em;
+  // 内顶高光 + 底部投影：按钮有"浮雕"立体感
+  box-shadow:
+    inset 0 1px 0 rgba(255, 235, 205, 0.05),
+    0 1px 2px rgba(0, 0, 0, 0.4);
   transition:
     border-color 0.15s,
     color 0.15s,
-    transform 0.05s;
+    transform 0.05s,
+    box-shadow 0.15s,
+    background 0.15s;
 }
 .btn:hover:not(:disabled) {
   border-color: var(--accent-strong);
   color: var(--accent-strong);
+  // hover 泛起猩红辉光，呼应烛光
+  box-shadow:
+    inset 0 1px 0 rgba(255, 235, 205, 0.06),
+    0 0 10px rgba(217, 102, 63, 0.28);
 }
 .btn:active:not(:disabled) {
   transform: translateY(1px);
+  // 按下内凹：阴影收进按钮内部
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 .btn:disabled {
   opacity: 0.4;
@@ -95,18 +128,27 @@ body {
 .btn-primary {
   border-color: var(--accent);
   color: var(--accent-strong);
+  // 主按钮文字带微弱猩红光晕，突出层级
+  text-shadow: 0 0 8px rgba(217, 102, 63, 0.25);
 }
 .btn-primary:hover:not(:disabled) {
   background: linear-gradient(180deg, var(--accent-dim), var(--bg-raised));
   color: #f5d9c8;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 235, 205, 0.08),
+    0 0 14px rgba(217, 102, 63, 0.4);
 }
 
-/* 面板 */
+/* 面板：石质双边框 + 外投影 + 内顶高光（哥特质感） */
 .panel {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, rgba(38, 32, 28, 0.9), rgba(20, 16, 14, 0.95));
+  background: linear-gradient(180deg, rgba(38, 32, 28, 0.92), rgba(20, 16, 14, 0.96));
   padding: 16px;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.35),
+    0 8px 24px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 235, 205, 0.04);
 }
 
 /* 标题 */
@@ -117,11 +159,22 @@ body {
   text-shadow: 0 0 12px rgba(217, 102, 63, 0.35);
 }
 
-/* 滚动条 */
+/* 滚动条：透明轨道 + 深褐滑块，hover 泛猩红（哥特感，纯 CSS） */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(20, 16, 14, 0.35);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
-  border-radius: 4px;
+  background: linear-gradient(180deg, var(--border-strong), var(--border));
+  border-radius: 5px;
+  border: 2px solid rgba(20, 16, 14, 0.6);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--accent-dim), var(--accent));
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
 }

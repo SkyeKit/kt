@@ -8,13 +8,13 @@
  *   - 技能/能力卡：拖拽到玩家身上或手牌外松手即可直接打出
  *   - 兼容点击：点击攻击卡 → 进入选择态 → 再点怪物
  */
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useBattle } from '@/composables/useBattle'
 import { useGameStore } from '@/stores/gameStore'
 import { useSettingsStore } from '@/stores/settingsStore'
 import { getCard, getRelic } from '@/data'
 import SingleRunStatusBar from '@/components/common/SingleRunStatusBar.vue'
-import type { CombatFx } from '@/engine/combatEngine'
+import type { CombatFx, CombatUnit } from '@/engine/combatEngine'
 
 const { ctx, hand, enemies, canPlay } = useBattle()
 const store = useGameStore()
@@ -213,9 +213,10 @@ function onEnemyClick(unitId: string): void {
   selectedCardId.value = null
 }
 
-// 真正出牌入口
+// 真正出牌入口：先播打出动画（页面正中心翻转消失），再交给引擎结算（PRD §5.3 卡牌打出）
 function play(cardId: string, targetId?: string): void {
   if (readonly.value) return
+  spawnPlayGhost(cardId)
   store.playCard(cardId, targetId)
 }
 
@@ -240,7 +241,7 @@ const inspectingCards = computed(() => {
       : inspectingPile.value === 'discard'
         ? ctx.value!.discardPile.slice().reverse()
         : ctx.value!.exhaustPile.slice().reverse()
-  return list.map((id) => ({ id, card: getCard(id) }))
+  return list.map((en) => ({ id: en.id, card: getCard(en.id), upgrade: en.upgrade }))
 })
 function openPile(pile: 'draw' | 'discard' | 'exhaust'): void {
   inspectingPile.value = inspectingPile.value === pile ? null : pile
@@ -251,6 +252,14 @@ const pileLabel: Record<'draw' | 'discard' | 'exhaust', string> = {
   discard: '弃牌堆',
   exhaust: '消耗牌堆',
 }
+
+// 各牌堆当前张数（供全屏查看标题显示，格式与"卡组（N）"一致）
+const pileCount = computed<number>(() => {
+  const p = inspectingPile.value
+  if (p === 'draw') return ctx.value?.drawPile.length ?? 0
+  if (p === 'discard') return ctx.value?.discardPile.length ?? 0
+  return ctx.value?.exhaustPile.length ?? 0
+})
 
 // ===== 卡牌扇形角度 =====
 function fanStyle(index: number, total: number): Record<string, string> {
@@ -342,6 +351,151 @@ function fxOf(unitId: string): CombatFx[] {
 }
 // 玩家卡 fx（飘字渲染在玩家卡上方）
 const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
+
+// ===== 战斗动画（PRD §5.3）=====
+
+// ① 抽牌动画：回合开始卡牌逐张进入（间隔 90ms，单张 500ms）
+const dealing = ref(false)
+let dealTimer: number | undefined
+function triggerDeal(): void {
+  dealing.value = true
+  window.clearTimeout(dealTimer)
+  // 最后一张的延迟 = 手牌数×90ms，再加单张动画时长 500ms 后清除类名
+  dealTimer = window.setTimeout(
+    () => {
+      dealing.value = false
+    },
+    hand.value.length * 90 + 600,
+  )
+}
+// 回合变化（含开局）→ 重新触发逐张入场
+watch(() => ctx.value?.turn ?? 0, triggerDeal, { immediate: true })
+
+// ② 卡牌打出动画：卡牌在页面正中心出现，随后翻转消失（PRD §5.3 卡牌打出）
+interface PlayGhost {
+  key: number
+  cardId: string
+}
+const playGhost = ref<PlayGhost | null>(null)
+// 生成打出幻影：只记录卡牌 id 与唯一 key，播放居中翻转动画后移除
+function spawnPlayGhost(cardId: string): void {
+  playGhost.value = { key: Date.now(), cardId }
+  // 动画时长约 500ms，结束后移除幻影
+  window.setTimeout(() => {
+    if (playGhost.value?.cardId === cardId) playGhost.value = null
+  }, 520)
+}
+
+// ③ 敌人攻击突进动画（600ms）：玩家受击时让"攻击意图"的敌人前冲
+const lungeEnemyId = ref<string | null>(null)
+const lungeTick = ref(0) // 同一敌人连续攻击时强制重触发动画（配合 :key）
+let lungeTimer: number | undefined
+// ④ 玩家格挡获得 / Buff 施加闪光（450ms / 500ms）
+const playerFlash = ref<'block' | 'buff' | null>(null)
+let flashTimer: number | undefined
+// 监听战斗特效队列：新特效出现时驱动对应动画
+watch(
+  () => ctx.value?.fx.length ?? 0,
+  (len, old) => {
+    if (!ctx.value || len <= (old ?? 0)) return
+    const newFx = ctx.value.fx.slice(old ?? 0)
+    // 玩家受击 → 敌人突进
+    if (newFx.some((f) => f.unitId === ctx.value!.player.id && f.kind === 'damage')) {
+      const attacker = enemies.value.find((e) => e.intentType === 'attack')
+      if (attacker) {
+        lungeEnemyId.value = attacker.id
+        lungeTick.value++
+        window.clearTimeout(lungeTimer)
+        lungeTimer = window.setTimeout(() => {
+          lungeEnemyId.value = null
+        }, 650)
+      }
+    }
+    // 玩家获得格挡 / 增益 → 玩家卡闪光
+    const pKind = newFx.find((f) => f.unitId === ctx.value!.player.id)?.kind
+    if (pKind === 'block' || pKind === 'buff') {
+      playerFlash.value = pKind
+      window.clearTimeout(flashTimer)
+      flashTimer = window.setTimeout(() => {
+        playerFlash.value = null
+      }, 500)
+    }
+  },
+)
+
+// ⑤ 敌人死亡动画（600ms）：保留死去的敌人快照，播放消散后移除
+const dyingEnemies = ref<CombatUnit[]>([])
+let lastAliveMap = new Map<string, boolean>()
+watch(
+  () => ctx.value?.enemies.map((e) => `${e.id}:${e.alive}`).join('|') ?? '',
+  (_sig) => {
+    if (!ctx.value) return
+    const now = new Map(ctx.value.enemies.map((e) => [e.id, e.alive]))
+    // 找出由存活 → 死亡的敌人，加入消散队列
+    for (const e of ctx.value.enemies) {
+      if (!e.alive && lastAliveMap.get(e.id) === true) {
+        dyingEnemies.value.push({ ...e })
+        window.setTimeout(() => {
+          dyingEnemies.value = dyingEnemies.value.filter((d) => d.id !== e.id)
+        }, 950)
+      }
+    }
+    lastAliveMap = now
+  },
+  { immediate: true },
+)
+// 已激活能力牌的被动（ctx.powers 登记，combatEngine.playCard 打出 power 时写入）：
+// 以"能力徽章"展示在角色下方，让玩家直观看到本场生效的能力被动（能力牌只会用到一次已进消耗堆）
+const activePowers = computed(() =>
+  [...(ctx.value?.powers.entries() ?? [])].map(([id, up]) => ({
+    id,
+    name: getCard(id)?.name ?? id,
+    upgraded: up,
+  })),
+)
+
+// 战场渲染单位：存活敌人 + 正在消散的敌人（保持原相对顺序，保证消散位置正确）
+const renderUnits = computed<CombatUnit[]>(() => {
+  const dying = dyingEnemies.value
+  if (dying.length === 0) return enemies.value
+  const raw = ctx.value?.enemies ?? []
+  const result: CombatUnit[] = []
+  for (const e of raw) {
+    if (e.alive) result.push(e)
+    else {
+      const ghost = dying.find((d) => d.id === e.id)
+      if (ghost) result.push(ghost)
+    }
+  }
+  return result
+})
+
+// ⑥ 洗牌回抽动画（PRD §5.3 洗牌回抽）：弃牌堆卡牌带流光逐张飞回抽牌堆
+const shuffling = ref(false)
+let shuffleTimer: number | undefined
+let lastDrawPileLen: number | null = null
+watch(
+  () => (ctx.value ? ctx.value.drawPile.length : -1),
+  (len) => {
+    // ctx 尚未初始化（-1）时忽略；首次有效值仅记录初始长度，避免开局误触发
+    if (len < 0) return
+    if (lastDrawPileLen === null) {
+      lastDrawPileLen = len
+      return
+    }
+    // 抽牌堆长度增大 = 弃牌堆被洗回抽牌堆 → 触发流光回抽动画
+    if (len > lastDrawPileLen) {
+      shuffling.value = true
+      window.clearTimeout(shuffleTimer)
+      // 7 条流光错峰 55ms，末条约 385ms 后开始 + 550ms 动画，共约 950ms
+      shuffleTimer = window.setTimeout(() => {
+        shuffling.value = false
+      }, 950)
+    }
+    lastDrawPileLen = len
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
@@ -360,7 +514,11 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
     <!-- ② 战场：左玩家 | 右怪物 -->
     <div ref="fieldRef" class="field" @click.stop>
       <div class="player-side">
-        <div ref="playerRef" class="player-card">
+        <div
+          ref="playerRef"
+          class="player-card"
+          :class="{ 'flash-block': playerFlash === 'block', 'flash-buff': playerFlash === 'buff' }"
+        >
           <!-- 伤害数字跳动（玩家头上） -->
           <div class="fx-layer">
             <span v-for="f in playerFx" :key="f.id" class="fx-num" :class="'fx-' + f.kind">
@@ -376,23 +534,40 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
             />
           </div>
           <div class="player-stats">
-            <span>格挡 {{ ctx.player.block }}</span>
-            <span>力量 {{ ctx.player.strength }}</span>
+            <UnitStatusChips :unit="ctx.player" />
+            <!-- 能力徽章：展示本场已激活的能力牌被动（金色徽章），让玩家确认能力已生效 -->
+            <div v-if="activePowers.length" class="power-chips">
+              <span
+                v-for="p in activePowers"
+                :key="p.id"
+                class="power-chip"
+                :class="{ up: p.upgraded }"
+              >
+                {{ p.upgraded ? p.name + '+' : p.name }}
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
       <div class="enemy-side">
         <EnemyView
-          v-for="e in enemies"
-          :key="e.id"
-          :ref="(el) => setEnemyRef(e.id, el)"
+          v-for="e in renderUnits"
+          :key="e.id + (lungeEnemyId === e.id ? '-' + lungeTick : '')"
+          :ref="(el) => (e.alive ? setEnemyRef(e.id, el) : undefined)"
           :unit="e"
           :targetable="(Boolean(selectedCardId) || Boolean(isDraggingAttack)) && !readonly"
           :hovered="hoveredEnemyId === e.id"
-          :fx="fxOf(e.id)"
+          :fx="e.alive ? fxOf(e.id) : []"
+          :lunge="lungeEnemyId === e.id"
+          :dying="!e.alive"
           @select="onEnemyClick(e.id)"
         />
+      </div>
+
+      <!-- 卡牌打出动画：卡牌在页面正中心出现，随后翻转消失（PRD §5.3 卡牌打出） -->
+      <div v-if="playGhost" :key="playGhost.key" class="play-ghost">
+        <CardView :card="getCard(playGhost.cardId)" />
       </div>
 
       <!-- 拖拽中的 SVG 虚线箭头叠加层 -->
@@ -434,6 +609,10 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
 
     <!-- ③ 底栏：左 [能量 / 抽牌堆] / 中 [手牌] / 右 [结束回合 / 消耗堆 / 弃牌堆] -->
     <div class="bottom">
+      <!-- 洗牌回抽流光动画：弃牌堆卡牌带流光逐张飞回抽牌堆（PRD §5.3） -->
+      <div v-if="shuffling" class="shuffle-anim" aria-hidden="true">
+        <span v-for="n in 7" :key="n" class="shuffle-card" :style="{ '--n': n }"></span>
+      </div>
       <div class="side-col">
         <div
           class="side-pile energy-orb"
@@ -460,11 +639,13 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
             v-for="(h, i) in hand"
             :key="h.id + i"
             class="hand-slot"
+            :class="{ deal: dealing }"
             :data-card-id="h.id"
             :style="fanStyle(i, hand.length)"
           >
             <CardView
               :card="h.card"
+              :upgraded="h.upgrade"
               :playable="!readonly && canPlay(h.card)"
               :selected="selectedCardId === h.id && !draggingCard"
               @select="onCardClick(h.id)"
@@ -481,7 +662,7 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
         </p>
       </div>
 
-      <!-- 右侧：结束回合（最上方）+ 消耗堆 + 弃牌堆 -->
+      <!-- 右侧：结束回合 -->
       <div class="side-col">
         <button
           v-if="!readonly"
@@ -520,24 +701,10 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
       <div class="page-panel">
         <h3 class="page-title">
           {{ pileLabel[inspectingPile] }}
-          <span class="dim"
-            >（{{
-              inspectingPile === 'draw'
-                ? ctx.drawPile.length
-                : inspectingPile === 'discard'
-                  ? ctx.discardPile.length
-                  : ctx.exhaustPile.length
-            }}
-            张）</span
-          >
+          <span class="dim">（{{ pileCount }}）</span>
         </h3>
-        <p class="page-hint">
-          <span v-if="inspectingPile === 'draw'">顶部在前（下一个抽到）</span>
-          <span v-else-if="inspectingPile === 'discard'">弃牌堆顶在前（最近弃掉的牌）</span>
-          <span v-else>消耗堆顶在前（最近消耗的牌）</span>
-        </p>
         <div class="page-cards-grid">
-          <CardView v-for="c in inspectingCards" :key="c.id" :card="c.card" />
+          <CardView v-for="c in inspectingCards" :key="c.id" :card="c.card" :upgraded="c.upgrade" />
         </div>
       </div>
       <button class="back-arrow" title="返回当前场景" @click="inspectingPile = null">← 返回</button>
@@ -555,7 +722,7 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 10px 18px;
+  padding: 10px 20px; // 左右各 20px：角色距左边框 20px、怪物距右边框 20px
   padding-top: 80px; // 让出 SingleRunStatusBar 顶栏空间（顶栏 fixed）
   gap: 8px;
   user-select: none;
@@ -571,6 +738,7 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
   gap: 20px;
   min-height: 0;
   position: relative;
+  // 左右边距由 .battle 的 20px padding 统一控制，这里不再叠加
 }
 .player-side {
   display: flex;
@@ -605,7 +773,7 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
   font-weight: bold;
   font-size: 20px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-  animation: fx-rise 0.9s ease-out forwards;
+  animation: fx-rise 1.1s ease-out forwards;
   white-space: nowrap;
 }
 // 多条数字依次错开（第 1 条最新在顶部）
@@ -655,6 +823,42 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
   border-color: var(--gold);
   box-shadow: 0 0 12px rgba(201, 162, 39, 0.3);
 }
+// 格挡获得闪光（PRD §5.3：防御结算，450ms）
+.player-card.flash-block {
+  animation: flash-block 0.45s ease-out;
+}
+// Buff/Debuff 施加闪光（PRD §5.3：状态变更，500ms）
+.player-card.flash-buff {
+  animation: flash-buff 0.5s ease-out;
+}
+@keyframes flash-block {
+  0% {
+    box-shadow: 0 0 0 rgba(106, 168, 214, 0);
+    border-color: var(--border);
+  }
+  40% {
+    box-shadow: 0 0 18px rgba(106, 168, 214, 0.85);
+    border-color: #6aa8d6;
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(106, 168, 214, 0);
+    border-color: var(--border);
+  }
+}
+@keyframes flash-buff {
+  0% {
+    box-shadow: 0 0 0 rgba(201, 162, 39, 0);
+    border-color: var(--border);
+  }
+  40% {
+    box-shadow: 0 0 18px rgba(201, 162, 39, 0.85);
+    border-color: var(--gold);
+  }
+  100% {
+    box-shadow: 0 0 0 rgba(201, 162, 39, 0);
+    border-color: var(--border);
+  }
+}
 .player-avatar {
   font-size: 44px;
 }
@@ -676,17 +880,41 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
 }
 .player-stats {
   display: flex;
-  justify-content: center;
-  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
   font-size: 12px;
   color: var(--text-dim);
+}
+// 能力徽章：金色胶囊内显示已激活能力牌名称，升级版后缀 "+"
+.power-chips {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.power-chip {
+  padding: 1px 8px;
+  border-radius: 10px;
+  background: rgba(201, 162, 39, 0.16);
+  border: 1px solid rgba(201, 162, 39, 0.55);
+  color: var(--gold);
+  font-weight: bold;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.power-chip.up {
+  color: #7ed389;
+  border-color: rgba(88, 196, 106, 0.6);
+  background: rgba(88, 196, 106, 0.12);
 }
 .enemy-side {
   flex: 1;
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
-  gap: 14px;
+  justify-content: flex-end; // 怪物组右对齐，距右边框 20px（由 .battle padding 控制）
+  align-items: center; // 与左侧玩家垂直对齐（平行）
+  gap: 28px; // 怪物之间保持明显间距（避免贴太近）
   flex-wrap: wrap;
 }
 
@@ -700,12 +928,79 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
   z-index: 5;
 }
 
+/* 卡牌打出动画：卡牌在页面正中心出现，随后翻转消失（PRD §5.3 卡牌打出，500ms） */
+.play-ghost {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 132px;
+  height: 190px;
+  z-index: 40;
+  pointer-events: none;
+  animation: card-play 0.5s ease-in-out forwards;
+}
+.play-ghost :deep(.card) {
+  width: 132px !important;
+  height: 190px !important;
+}
+@keyframes card-play {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+  35% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.15) rotateY(100deg);
+  }
+}
+
 /* ③ 底栏 */
 .bottom {
   display: flex;
   align-items: center;
   gap: 12px;
   padding-top: 6px;
+  position: relative; // 洗牌流光动画定位基准
+}
+// 洗牌回抽流光动画（PRD §5.3 洗牌回抽 500ms）：流光从弃牌堆（右侧）飞回抽牌堆（左侧）
+.shuffle-anim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 8;
+  overflow: hidden;
+}
+.shuffle-card {
+  position: absolute;
+  top: 55%;
+  left: 0;
+  width: 10px;
+  height: 24px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, rgba(201, 162, 39, 0.15), rgba(201, 162, 39, 0.85));
+  box-shadow: 0 0 10px rgba(201, 162, 39, 0.7);
+  opacity: 0;
+  animation: shuffle-fly 0.55s ease-in forwards;
+  animation-delay: calc(var(--n) * 55ms);
+}
+@keyframes shuffle-fly {
+  0% {
+    left: 84%;
+    opacity: 0;
+    transform: translateY(0) rotate(-8deg);
+  }
+  12% {
+    opacity: 1;
+  }
+  100% {
+    left: 12%;
+    opacity: 0;
+    transform: translateY(-6px) rotate(8deg);
+  }
 }
 .side-col {
   display: flex;
@@ -792,6 +1087,51 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
 .hand-slot {
   transition: transform 0.12s;
 }
+// 抽牌动画：回合开始卡牌从左侧逐张滑入手牌区（PRD §5.3 逐张出现并呈扇形分布）
+// 通过 nth-child 递增动画延迟实现逐张出现；类名由 dealing 状态控制
+.hand-slot.deal .card {
+  animation: card-draw 0.65s ease-out both;
+}
+.hand-slot.deal:nth-child(1) .card {
+  animation-delay: 0ms;
+}
+.hand-slot.deal:nth-child(2) .card {
+  animation-delay: 90ms;
+}
+.hand-slot.deal:nth-child(3) .card {
+  animation-delay: 180ms;
+}
+.hand-slot.deal:nth-child(4) .card {
+  animation-delay: 270ms;
+}
+.hand-slot.deal:nth-child(5) .card {
+  animation-delay: 360ms;
+}
+.hand-slot.deal:nth-child(6) .card {
+  animation-delay: 450ms;
+}
+.hand-slot.deal:nth-child(7) .card {
+  animation-delay: 540ms;
+}
+.hand-slot.deal:nth-child(8) .card {
+  animation-delay: 630ms;
+}
+.hand-slot.deal:nth-child(9) .card {
+  animation-delay: 720ms;
+}
+.hand-slot.deal:nth-child(n + 10) .card {
+  animation-delay: 810ms;
+}
+@keyframes card-draw {
+  from {
+    opacity: 0;
+    transform: translate(-110px, 24px) scale(0.85); // 从左侧（抽牌堆方向）滑入
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+}
 .target-hint {
   color: var(--gold);
   font-size: 12px;
@@ -804,19 +1144,20 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
   font-weight: bold;
 }
 
-/* 全屏覆盖页：覆盖整个屏幕、两边透明可看当前场景、中央 panel 不透明 */
+/* 全屏覆盖页：覆盖整个屏幕、两边透明可看当前场景、中央 panel 不透明。
+   布局与顶部"卡组"全屏页完全一致：inset:0 撑满 + 水平居中 + 垂直撑满(stretch)，
+   panel 自身 height:100%，内部网格滚动——避免超高卡牌时 justify-content:center 造成裁切/偏左 */
 .full-page {
   position: fixed;
-  inset: 1;
+  inset: 0;
   pointer-events: auto;
   display: flex;
-  flex-direction: column;
-  align-items: center; // panel 水平居中
-  justify-content: center; // panel 垂直居中
-  padding: 70px 24px 80px; // 顶避顶栏、底避返回按钮
+  justify-content: center; // 水平居中 panel
+  align-items: stretch; // 垂直方向撑满剩余屏幕高度
+  padding-top: 69px; // 顶部让出固定状态栏（与卡组全屏页一致），面板不越过该行
   z-index: 20;
-  overflow: auto;
-  background: transparent; // 显式透明，panel 之外能透出场景
+  overflow: auto; // 面板超高时允许滚动
+  background: transparent; // 显式透明，左右透出当前场景
 }
 .page-panel {
   pointer-events: auto;
@@ -829,6 +1170,7 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
   display: flex;
   flex-direction: column;
   gap: 14px;
+  height: 100%; // 与顶部"卡组"面板一致：上下填满全屏高度
   backdrop-filter: blur(2px);
 }
 .page-title {
@@ -846,11 +1188,7 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
   font-weight: normal;
   margin-left: 8px;
 }
-.page-hint {
-  font-size: 13px;
-  color: var(--text-faint);
-  margin: 0;
-}
+// 牌堆查看网格：与卡组界面(.page-deck-grid)完全一致的 6 列 × 132px 布局 / 撑满剩余高度 / 内部滚动
 .page-cards-grid {
   display: grid;
   grid-template-columns: repeat(6, 132px);
@@ -858,6 +1196,9 @@ const playerFx = computed(() => fxOf(ctx.value?.player.id ?? 'player'))
   justify-content: center;
   width: 100%;
   margin: 0 auto;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
 }
 // CardView 在 grid item 中自适应列宽（深选择器穿透 scoped）
 .page-cards-grid :deep(.card) {
